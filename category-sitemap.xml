@@ -7,19 +7,17 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/2018/07/19/kubernetest/</loc>
+        <loc>https://skarlsla.github.io/categories/%EC%9B%B9%EA%B0%9C%EB%B0%9C/</loc>
         <lastmod>2018-07-19T06:55:25.429Z</lastmod>
         <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
+        <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/2018/07/19/markdonw%EB%AC%B8%EB%B2%95/</loc>
-        <lastmod>2018-07-19T06:22:46.860Z</lastmod>
+        <loc>https://skarlsla.github.io/categories/%EC%9B%B9%EA%B0%9C%EB%B0%9C/Kubernetes/</loc>
+        <lastmod>2018-07-19T06:55:25.429Z</lastmod>
         <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
+        <priority>0.2</priority>
     </url>
 
 </urlset>
