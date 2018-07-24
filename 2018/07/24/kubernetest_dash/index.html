@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>kubernetes dashboard 설치 | </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. dashboard,admin-rbac, heapster 설치12345678910111213git clone https://github.com/DragOnMe/k8s-1.8-dashboard-heapster-mod.gitcd k8s-1.8.1-dashboard/kubectl apply -f kubernetes-dashboard.yamlkubectl a">
+<meta name="keywords" content="kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kubernetes dashboard 설치">
+<meta property="og:url" content="https://skarlsla.github.io/2018/07/24/kubernetest_dash/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="1. dashboard,admin-rbac, heapster 설치12345678910111213git clone https://github.com/DragOnMe/k8s-1.8-dashboard-heapster-mod.gitcd k8s-1.8.1-dashboard/kubectl apply -f kubernetes-dashboard.yamlkubectl a">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2018-07-24T07:59:22.010Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kubernetes dashboard 설치">
+<meta name="twitter:description" content="1. dashboard,admin-rbac, heapster 설치12345678910111213git clone https://github.com/DragOnMe/k8s-1.8-dashboard-heapster-mod.gitcd k8s-1.8.1-dashboard/kubectl apply -f kubernetes-dashboard.yamlkubectl a">
+  
+    <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo"></a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skarlsla.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-kubernetest_dash" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/24/kubernetest_dash/" class="article-date">
+  <time datetime="2018-07-24T08:24:13.000Z" itemprop="datePublished">2018-07-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/웹개발/">웹개발</a>►<a class="article-category-link" href="/categories/웹개발/Kubernetes/">Kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      kubernetes dashboard 설치
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-dashboard-admin-rbac-heapster-설치"><a href="#1-dashboard-admin-rbac-heapster-설치" class="headerlink" title="1. dashboard,admin-rbac, heapster 설치"></a>1. dashboard,admin-rbac, heapster 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DragOnMe/k8s-1.8-dashboard-heapster-mod.git</span><br><span class="line"><span class="built_in">cd</span> k8s-1.8.1-dashboard/</span><br><span class="line">kubectl apply -f kubernetes-dashboard.yaml</span><br><span class="line">kubectl apply -f kubernetes-dashboard-admin-rbac.yaml</span><br><span class="line"><span class="built_in">cd</span> ../</span><br><span class="line">kubectl apply -f k8s-heapster/</span><br><span class="line"></span><br><span class="line">[root@localhost k8s-1.8.1-dashboard]<span class="comment"># kubectl get pods -nkube-system -w</span></span><br><span class="line">NAME                                            READY     STATUS    RESTARTS   AGE</span><br><span class="line">heapster-dfd674df9-k6vr7                        1/1       Running   0          3d</span><br><span class="line">kubernetes-dashboard-5bd6f767c7-2h6wv           1/1       Running   0          2d</span><br><span class="line">monitoring-grafana-76848b566c-cts9n             1/1       Running   0          3d</span><br><span class="line">monitoring-influxdb-6c4b84d695-d8j4t            1/1       Running   0          3d</span><br></pre></td></tr></table></figure>
+<p>kubernetes-dashboard.yaml 수정</p>
+<ol>
+<li>image 변경 (1.8.1 -&gt; 1.8.3)</li>
+<li>service nodeport 설정<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: kubernetes-dashboard</span><br><span class="line">        image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3</span><br><span class="line">//==========================================================</span><br><span class="line"></span><br><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">  name: kubernetes-dashboard</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  <span class="comment"># Added NodePort</span></span><br><span class="line">  <span class="built_in">type</span>: NodePort</span><br><span class="line">  ports:</span><br><span class="line">    - port: 443</span><br><span class="line">      targetPort: 8443</span><br><span class="line">      <span class="comment"># Added nodePort: 30000</span></span><br><span class="line">      nodePort: 30000</span><br><span class="line">  selector:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h3 id="2-dashboard-접근-token-조회"><a href="#2-dashboard-접근-token-조회" class="headerlink" title="2. dashboard 접근 token 조회"></a>2. dashboard 접근 token 조회</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost]<span class="comment"># kubectl -n kube-system get secret | grep kubernetes-dashboard-admin</span></span><br><span class="line">kubernetes-dashboard-admin-token-mcx5k           kubernetes.io/service-account-token </span><br><span class="line">[root@localhost]<span class="comment"># kubectl describe -nkube-system secret kubernetes-dashboard-admin-token-mcx5k</span></span><br><span class="line">Name:         kubernetes-dashboard-admin-token-mcx5k</span><br><span class="line">Namespace:    kube-system</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubernetes.io/service-account.name=kubernetes-dashboard-admin</span><br><span class="line">              kubernetes.io/service-account.uid=1d1aa7aa-30c1-11e8-a365-002590a7058c</span><br><span class="line"></span><br><span class="line">Type:  kubernetes.io/service-account-token</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">ca.crt:     1025 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsInR....중략...</span><br><span class="line">FhyrXH_2ZZlAkYvm0oCT5VZMYCnKQ77NZEdyFXvZpsrXTA4BwfKyPFaFxUPKA</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="3-서버local이-아닌-브라우저에서-접근하기위해-nginx수정"><a href="#3-서버local이-아닌-브라우저에서-접근하기위해-nginx수정" class="headerlink" title="3. 서버local이 아닌 브라우저에서 접근하기위해 nginx수정"></a>3. 서버local이 아닌 브라우저에서 접근하기위해 nginx수정</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen 443;</span><br><span class="line">        server_name &lt;접근호스트&gt;;</span><br><span class="line">        ssl on;</span><br><span class="line">        ssl_certificate /etc/kubernetes/pki/ca.crt;</span><br><span class="line">        ssl_certificate_key  /etc/kubernetes/pki/ca.key;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass https://&lt;master-ip&gt;:30000;</span><br><span class="line">                proxy_http_version 1.1;</span><br><span class="line">                proxy_set_header Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">                proxy_set_header Connection <span class="string">'upgrade'</span>;</span><br><span class="line">                proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">                proxy_cache_bypass <span class="variable">$http_upgrade</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjjzetb9e0001hgv50mdxwe2p" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/19/kubernetest/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">kubernetes 설치 For CentOS7</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/웹개발/">웹개발</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/웹개발/Kubernetes/">Kubernetes</a></li></ul></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a>
+    </div>
+  </div>
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/24/kubernetest_dash/">kubernetes dashboard 설치</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/19/kubernetest/">kubernetes 설치 For CentOS7</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/19/markdonw문법/">마크다운 문법</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+    
+    
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 NamGi YOON<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
