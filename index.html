@@ -62,6 +62,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-algori" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/26/algori/" class="article-date">
+  <time datetime="2018-07-26T05:39:13.000Z" itemprop="datePublished">2018-07-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/26/algori/">알고리즘 연습문제</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-slice-max"><a href="#1-slice-max" class="headerlink" title="1. slice max"></a>1. slice max</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 정수값을 가진 배열이 있을 때, 임의의 x,y,z 값을 정하고, 0&lt;= x &lt; y &lt; z &lt;= arr.length 라고 정의한다.</span></span><br><span class="line"><span class="comment">문제) a[x+1]에서 a[y-1] 사이의 값들과 a[y+1]에서 a[z-1] 사이의 값을 모두 더했을 때 최대값은 무엇인지 구하시오.</span></span><br><span class="line"><span class="comment">function slice(arr)</span></span><br><span class="line"><span class="comment">(3 &lt;= arr.length &lt;= 100,000)</span></span><br><span class="line"><span class="comment">(-10,000 &lt;= n &lt;= 10,000)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">예를 들어 a = [3,2,6, -1,4,5, -1,2] 일 때,</span></span><br><span class="line"><span class="comment">(x=0, y=3, z=6) 일 때 a[1] + a[2] + a[4] + a[5] =&gt; 2 + 6 + 4 + 5 = 17,</span></span><br><span class="line"><span class="comment">(0, 3, 7) a[1] + a[2] + a[4] + a[5] + a[6] =&gt; 2 + 6 + 4 + 5 − 1 = 16,</span></span><br><span class="line"><span class="comment">(3, 4, 5) 사이 값이 없으므로 0.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">따라서 최대값은 17이 된다. */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">slice_origin</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> sum = <span class="number">0</span> ;</span><br><span class="line">    <span class="comment">// x = 0~ arr.length-3</span></span><br><span class="line">    <span class="comment">// y = 1~ arr.length-2</span></span><br><span class="line">    <span class="comment">// z = 2~ arr.length-1</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> x=<span class="number">0</span>; x&lt;arr.length<span class="number">-3</span>; x++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> y=<span class="number">0</span>; y&lt;arr.length<span class="number">-2</span>; y++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> z=<span class="number">0</span>; z&lt;arr.length<span class="number">-1</span>; z++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(x&lt;y &amp;&amp; y&lt;z)&#123;</span><br><span class="line">                    <span class="keyword">var</span> temp_sum = sums(x,y,z,arr);</span><br><span class="line">                    <span class="keyword">if</span>(sum &lt; temp_sum)&#123;</span><br><span class="line">                        sum = temp_sum;         </span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"==="</span>);               </span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"sum"</span>+sum);</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"==="</span>);     </span><br><span class="line">                        <span class="built_in">console</span>.log(x,y,z);</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"==="</span>);     </span><br><span class="line">                    &#125;</span><br><span class="line">                 &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">sums</span>(<span class="params">x,y,z,arr</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> xy = arr.slice(x+<span class="number">1</span>,y);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;xy.length; i++)&#123;          </span><br><span class="line">            sum += xy[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> yz = arr.slice(y+<span class="number">1</span>,z);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>; j&lt;yz.length; j++)&#123;</span><br><span class="line">            sum += yz[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">-3</span>,<span class="number">-1</span>,<span class="number">10</span>,<span class="number">-6</span>,<span class="number">-3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">-1</span>,<span class="number">-5</span>,<span class="number">-1</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">-5</span>,<span class="number">-1</span>,<span class="number">-5</span>,<span class="number">-11111</span>,<span class="number">-2</span>,<span class="number">0</span>,<span class="number">-9</span>,<span class="number">-10</span>,<span class="number">14</span>,<span class="number">1</span>,<span class="number">-1</span>];<span class="comment">//  [200,6,1,4,5,1,10,2,4,6,-100,-10000] ;</span></span><br><span class="line">slice_origin(arr);</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-bracket"><a href="#2-bracket" class="headerlink" title="2. bracket"></a>2. bracket</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Visual Studio Code와 유사한 Editor+++라는 에디터가 있다.</span></span><br><span class="line"><span class="comment">Visual Studio Code에서는 괄호를 입력하면 자동으로 닫는 괄호가 입력되는 것처럼 Editor+++도 자동으로 괄호를 닫는다.</span></span><br><span class="line"><span class="comment">그런데 Editor+++는 가끔 버그로 인해 닫는 괄호를 늦게 다는 경우가 있다. </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">여기에 Editor+++에서 작성한 텍스트가 있는데 이 텍스트를 Visual Studio Code로 복사하고자 하는데</span></span><br><span class="line"><span class="comment">이 때 괄호가 올바른지 아래와 같이 검증하고자 한다.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">예를 들어 (), &#123;()&#125; &#123;()()&#125; 처럼 입력할 때 닫는 괄호가 올바르게 표시되며 이는 올바른 형태이다.</span></span><br><span class="line"><span class="comment">그러나 ([)()] 의 경우 모두 쌍은 맞으나 괄호가 올바를 위치에 있지 않으므로 이는 올바르지 않은 형태이다.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">문제) Editor+++에서 작성한 괄호값을 가진 임의의 텍스트가 있을 때, Visual Studio Code에서 인식이 가능한지 파악하고, 가능하면 true, 불가능하면 false를 출력하라. */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bracket_replace</span>(<span class="params">str</span>)</span>&#123;    </span><br><span class="line">    <span class="keyword">var</span> result = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span>(str.length%<span class="number">2</span>==<span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">var</span> startlength = str.length;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        str = str.replace(<span class="regexp">/\(\)|\&#123;\&#125;|\[\]/g</span>,<span class="string">''</span>);</span><br><span class="line">        <span class="keyword">if</span>(str.length==<span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span>(str.length == startlength) result = <span class="literal">false</span>;</span><br><span class="line">        startlength=str.length;</span><br><span class="line">    &#125; <span class="keyword">while</span> (result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="3-count-arr"><a href="#3-count-arr" class="headerlink" title="3. count arr"></a>3. count arr</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 배열 A가 있다. 이 배열은 배열 B의 몇번째 위치에 값을 증가(++) 시켜야 하는지에 대한 정보를 담고 있다.</span></span><br><span class="line"><span class="comment">예를 들어 a = [3,4,4,5,1,4,4] 인 배열이 있다고 할 때,</span></span><br><span class="line"><span class="comment">a[0]= 3 이므로 배열의 3번째 값을 증가 시켜라 (0,0,1,0,0)</span></span><br><span class="line"><span class="comment">a[1]= 4 이므로 배열의 4번째 값을 증가 시켜라 (0,0,1,1,0)</span></span><br><span class="line"><span class="comment">a[2]= 4 이므로 배열의 4번째 값을 증가 시켜라 (0,0,1,2,0)</span></span><br><span class="line"><span class="comment">이 것을 반복하면 배열 B는 [1,0,1,4,1] 값을 갖는다. */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count_arr</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> max = arr.reduce( <span class="function"><span class="keyword">function</span> (<span class="params">previous, current</span>) </span>&#123; </span><br><span class="line">		<span class="keyword">return</span> previous &gt; current ? previous:current;</span><br><span class="line">	&#125;);</span><br><span class="line">    <span class="keyword">var</span> return_arr = <span class="keyword">new</span> <span class="built_in">Array</span>(max);</span><br><span class="line">    return_arr.fill(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> val <span class="keyword">of</span> arr)&#123;</span><br><span class="line">        return_arr[val<span class="number">-1</span>] = return_arr[val<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> return_arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjk0nedo80000zcv5ktkps65f" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-kubernetes_ingressLB" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/07/25/kubernetes_ingressLB/" class="article-date">
@@ -287,7 +334,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjk0m4qqn0004nwv5whp97lun" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjk0nedok0006zcv5cgkdbcqf" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -340,7 +387,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjk0m4qqq0006nwv5ul4aktl2" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjk0nedoo000azcv5u2ywsx2s" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
@@ -395,7 +442,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjk0m4qqc0000nwv5cjxrltvr" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjk0nedod0001zcv55wrefomo" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -450,7 +497,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjk0m4qqp0005nwv5d903foi2" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjk0nedoi0004zcv5ktfy4s7g" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -525,7 +572,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjk0m4qqu000anwv5ua1teocw" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjk0nedoq000bzcv5xvt1ifcy" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -601,7 +648,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjk0m4qqh0001nwv5svhvhxn1" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjk0nedok0005zcv542zkgr8x" class="article-share-link">공유</a>
       
       
     </footer>
@@ -621,7 +668,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">카테고리</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li></ul>
     </div>
   </div>
 
@@ -631,7 +678,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li></ul>
     </div>
   </div>
 
@@ -641,7 +688,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/ingress/" style="font-size: 10px;">ingress</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
+      <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/ingress/" style="font-size: 10px;">ingress</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
     </div>
   </div>
     
@@ -663,6 +710,10 @@ rules:
       <ul>
         
           <li>
+            <a href="/2018/07/26/algori/">알고리즘 연습문제</a>
+          </li>
+        
+          <li>
             <a href="/2018/07/25/kubernetes_ingressLB/">nginx 컨테이너를 활용한 ingress load balancer 구성</a>
           </li>
         
@@ -676,10 +727,6 @@ rules:
         
           <li>
             <a href="/2018/07/24/kubernetest_dash/">kubernetes dashboard 설치</a>
-          </li>
-        
-          <li>
-            <a href="/2018/07/19/kubernetest/">kubernetes 설치 For CentOS7</a>
           </li>
         
       </ul>
