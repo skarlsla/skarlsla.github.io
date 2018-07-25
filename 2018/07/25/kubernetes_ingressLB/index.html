@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>nginx 컨테이너를 활용한 ingress load balancer 구성 | </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 테스트용 웹 백엔드 생성 back-end-deployment.yaml123456789101112131415161718192021222324252627282930313233343536373839404142434445apiVersion: extensions/v1beta1kind: Deploymentmetadata:  name: deploy-test-1s">
+<meta name="keywords" content="ingress">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx 컨테이너를 활용한 ingress load balancer 구성">
+<meta property="og:url" content="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="1. 테스트용 웹 백엔드 생성 back-end-deployment.yaml123456789101112131415161718192021222324252627282930313233343536373839404142434445apiVersion: extensions/v1beta1kind: Deploymentmetadata:  name: deploy-test-1s">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2018-07-25T04:06:25.920Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx 컨테이너를 활용한 ingress load balancer 구성">
+<meta name="twitter:description" content="1. 테스트용 웹 백엔드 생성 back-end-deployment.yaml123456789101112131415161718192021222324252627282930313233343536373839404142434445apiVersion: extensions/v1beta1kind: Deploymentmetadata:  name: deploy-test-1s">
+  
+    <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo"></a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skarlsla.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-kubernetes_ingressLB" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/25/kubernetes_ingressLB/" class="article-date">
+  <time datetime="2018-07-25T06:30:13.000Z" itemprop="datePublished">2018-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      nginx 컨테이너를 활용한 ingress load balancer 구성
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-테스트용-웹-백엔드-생성"><a href="#1-테스트용-웹-백엔드-생성" class="headerlink" title="1. 테스트용 웹 백엔드 생성"></a>1. 테스트용 웹 백엔드 생성</h3><ul>
+<li>back-end-deployment.yaml<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">deploy-test-1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">2</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">web-front-end</span></span><br><span class="line"><span class="attr">        department:</span> <span class="string">group1</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">m-client-web</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">xxx/client:latest</span></span><br><span class="line"><span class="attr">        env:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">PORT_ARGS</span></span><br><span class="line"><span class="attr">          value:</span> <span class="string">"--port=80"</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="attr">        - containerPort:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">          name:</span> <span class="string">web-port</span></span><br><span class="line"><span class="attr">          protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">deploy-test-2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">2</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">web-front-end</span></span><br><span class="line"><span class="attr">        department:</span> <span class="string">group2</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">tiny-webserver-2</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">xxx/node-api:latest</span></span><br><span class="line"><span class="attr">        env:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">PORT_ARGS</span></span><br><span class="line"><span class="attr">          value:</span> <span class="string">"--port=3501"</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="attr">        - containerPort:</span> <span class="number">3501</span></span><br><span class="line"><span class="attr">          name:</span> <span class="string">web-port</span></span><br><span class="line"><span class="attr">          protocol:</span> <span class="string">TCP</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li>back-end-service.yaml<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">backend-svc-1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">    protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="string">web-port</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">web-front-end</span></span><br><span class="line"><span class="attr">    department:</span> <span class="string">group1</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">backend-svc-2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">    protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="string">web-port</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">web-front-end</span></span><br><span class="line"><span class="attr">    department:</span> <span class="string">group2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li>실행<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f back-end-deployment.yaml</span><br><span class="line">kubectl apply -f back-end-service.yaml</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="2-테스트용-ingress용-백엔드-생성"><a href="#2-테스트용-ingress용-백엔드-생성" class="headerlink" title="2. 테스트용 ingress용 백엔드 생성"></a>2. 테스트용 ingress용 백엔드 생성</h3><ul>
+<li><p>default-back-end-deployment.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">default-http-backend</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">2</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">default-http-backend</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      terminationGracePeriodSeconds:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">default-http-backend</span></span><br><span class="line">        <span class="comment"># Any image is permissable as long as:</span></span><br><span class="line">        <span class="comment"># 1. It serves a 404 page at /</span></span><br><span class="line">        <span class="comment"># 2. It serves 200 on a /healthz endpoint</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">gcr.io/google_containers/defaultbackend:1.0</span></span><br><span class="line"><span class="attr">        livenessProbe:</span></span><br><span class="line"><span class="attr">          httpGet:</span></span><br><span class="line"><span class="attr">            path:</span> <span class="string">/healthz</span></span><br><span class="line"><span class="attr">            port:</span> <span class="number">8080</span></span><br><span class="line"><span class="attr">            scheme:</span> <span class="string">HTTP</span></span><br><span class="line"><span class="attr">          initialDelaySeconds:</span> <span class="number">30</span></span><br><span class="line"><span class="attr">          timeoutSeconds:</span> <span class="number">5</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="attr">        - containerPort:</span> <span class="number">8080</span></span><br><span class="line"><span class="attr">        resources:</span></span><br><span class="line"><span class="attr">          limits:</span></span><br><span class="line"><span class="attr">            cpu:</span> <span class="number">10</span><span class="string">m</span></span><br><span class="line"><span class="attr">            memory:</span> <span class="number">20</span><span class="string">Mi</span></span><br><span class="line"><span class="attr">          requests:</span></span><br><span class="line"><span class="attr">            cpu:</span> <span class="number">10</span><span class="string">m</span></span><br><span class="line"><span class="attr">            memory:</span> <span class="number">20</span><span class="string">Mi</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>default-back-end-service.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">default-http-backend</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">ClusterIP</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">    protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="number">8080</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">default-http-backend</span></span><br><span class="line"><span class="string">```</span>    </span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="string">실행</span></span><br><span class="line"><span class="string">```bash</span></span><br><span class="line"><span class="string">kubectl</span> <span class="string">apply</span> <span class="bullet">-f</span> <span class="string">default-back-end-deployment.yaml</span></span><br><span class="line"><span class="string">kubectl</span> <span class="string">apply</span> <span class="bullet">-f</span> <span class="string">default-back-end-service.yaml</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="4-Nginx-Ingress-Controller-설정값-저장을-위한-Configmap-등록"><a href="#4-Nginx-Ingress-Controller-설정값-저장을-위한-Configmap-등록" class="headerlink" title="4. Nginx Ingress Controller 설정값 저장을 위한 Configmap 등록"></a>4. Nginx Ingress Controller 설정값 저장을 위한 Configmap 등록</h3><ul>
+<li>configmap.yaml<pre><code class="yaml"><span class="attr">apiVersion:</span> <span class="string">v1</span>
+<span class="attr">kind:</span> <span class="string">ConfigMap</span>
+<span class="attr">metadata:</span>
+<span class="attr">name:</span> <span class="string">nginx-ingress-controller-conf</span>
+<span class="attr">labels:</span>
+<span class="attr">  app:</span> <span class="string">nginx-ingress-lb</span>
+<span class="attr">  group:</span> <span class="string">lb</span>
+<span class="attr">data:</span>
+<span class="comment"># for VTS page of the Nginx load balancer</span>
+<span class="attr">enable-vts-status:</span> <span class="string">'true'</span>
+<span class="attr">enable-sticky-sessions:</span> <span class="string">'true'</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h3 id="5-Nginx-Ingress-Controller-생성"><a href="#5-Nginx-Ingress-Controller-생성" class="headerlink" title="5. Nginx Ingress Controller 생성"></a>5. Nginx Ingress Controller 생성</h3><ul>
+<li>SA, ClusterRole, ClusterRoleBinding<br><code>`</code>yaml<h1 id="Add-SA-ClusterRole-ClusterRoleBinding"><a href="#Add-SA-ClusterRole-ClusterRoleBinding" class="headerlink" title="Add: SA, ClusterRole, ClusterRoleBinding"></a>Add: SA, ClusterRole, ClusterRoleBinding</h1><h1 id="Name-Space-default"><a href="#Name-Space-default" class="headerlink" title="Name Space: default"></a>Name Space: default</h1></li>
+</ul>
+<hr>
+<p>apiVersion: v1<br>kind: ServiceAccount<br>metadata:<br>  name: ingress</p>
+<h2 id="namespace-default"><a href="#namespace-default" class="headerlink" title="  namespace: default"></a>  namespace: default</h2><p>apiVersion: rbac.authorization.k8s.io/v1beta1<br>kind: ClusterRole<br>metadata:<br>  name: system:ingress<br>rules:</p>
+<ul>
+<li>apiGroups:<ul>
+<li>“”<br>resources: [“configmaps”,”secrets”,”endpoints”,”events”,”services”]<br>verbs: [“list”,”watch”,”create”,”update”,”delete”,”get”]</li>
+</ul>
+</li>
+<li>apiGroups:<ul>
+<li>“”</li>
+<li>“extensions”<br>resources: [“services”,”nodes”,”ingresses”,”pods”,”ingresses/status”]<br>verbs: [“list”,”watch”,”create”,”update”,”delete”,”get”]</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>apiVersion: rbac.authorization.k8s.io/v1beta1<br>kind: ClusterRoleBinding<br>metadata:<br>  name: ingress<br>roleRef:<br>  apiGroup: rbac.authorization.k8s.io<br>  kind: ClusterRole<br>  name: system:ingress<br>subjects:</p>
+<ul>
+<li>kind: ServiceAccount<br>name: ingress<h1 id="Could-be-like-‘kube-system’-…"><a href="#Could-be-like-‘kube-system’-…" class="headerlink" title="Could be like ‘kube-system’ …"></a>Could be like ‘kube-system’ …</h1>namespace: default<br><code>`</code>    </li>
+</ul>
+<hr>
+<ul>
+<li>deployment<br><code>`</code>yaml<br>apiVersion: extensions/v1beta1<br>kind: Deployment<br>metadata:<br>name: nginx-ingress-controller<h1 id="Could-be-like-‘kube-system’-…-1"><a href="#Could-be-like-‘kube-system’-…-1" class="headerlink" title="Could be like ‘kube-system’ …"></a>Could be like ‘kube-system’ …</h1>namespace: default<br>spec:<br>replicas: 2<br>revisionHistoryLimit: 3<br>template:<br>  metadata:<pre><code>labels:
+  app: nginx-ingress-lb
+</code></pre>  spec:<pre><code>serviceAccountName: ingress
+terminationGracePeriodSeconds: 60
+containers:
+  - name: nginx-ingress-controller
+    image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.2
+    imagePullPolicy: IfNotPresent
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: 18080
+        scheme: HTTP
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 18080
+        scheme: HTTP
+      initialDelaySeconds: 10
+      timeoutSeconds: 5
+    args:
+      - /nginx-ingress-controller
+      - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
+      - --configmap=$(POD_NAMESPACE)/nginx-ingress-controller-conf
+    env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+    ports:
+      - containerPort: 443
+      - containerPort: 18080
+</code></pre></li>
+</ul>
+<pre><code>
+
+### 5. Ingress Rule 디플로이
+
+- default-back-end-service.yaml
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: default
+spec:
+  rules:
+  - host: [svc1 도메인]
+    http:
+      paths:
+      - backend:
+          serviceName: backend-svc-1
+          servicePort: 80
+  - host: [svc2 도메인]
+    http:
+      paths:
+      - backend:
+          serviceName: backend-svc-2
+          servicePort: 80
+  - host: [통합 도메인]
+    http:
+      paths:
+      - path: /svc1
+        backend:
+          serviceName: backend-svc-1
+          servicePort: 80
+      - path: /svc2
+        backend:
+          serviceName: backend-svc-2
+          servicePort: 80
+      - path: /nginx_status
+        backend:
+          serviceName: nginx-ingress-nodeport
+          servicePort: 18080
+</code></pre><hr>
+<h3 id="참고링크"><a href="#참고링크" class="headerlink" title="참고링크"></a>참고링크</h3><p><a href="https://tistory3.daumcdn.net/tistory/467568/skin/images/Ingress-concept-and-logical-arch-v01.png" target="_blank" rel="noopener">Ingress Load Balancer 개념도</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjk0lw55j000140v5eeycau40" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/25/redis_pod/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">redis simple deployment 및 service 작성</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kubernetes/">kubernetes</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/ingress/" style="font-size: 10px;">ingress</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
+    </div>
+  </div>
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/25/kubernetes_ingressLB/">nginx 컨테이너를 활용한 ingress load balancer 구성</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/25/redis_pod/">redis simple deployment 및 service 작성</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/25/docker/">docker build &amp; push to docker-hub</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/24/kubernetest_dash/">kubernetes dashboard 설치</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/19/kubernetest/">kubernetes 설치 For CentOS7</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+    
+    
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 NamGi YOON<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
