@@ -94,10 +94,12 @@
 <h3 id="2-bracket"><a href="#2-bracket" class="headerlink" title="2. bracket"></a>2. bracket</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Visual Studio Code와 유사한 Editor+++라는 에디터가 있다.</span></span><br><span class="line"><span class="comment">Visual Studio Code에서는 괄호를 입력하면 자동으로 닫는 괄호가 입력되는 것처럼 Editor+++도 자동으로 괄호를 닫는다.</span></span><br><span class="line"><span class="comment">그런데 Editor+++는 가끔 버그로 인해 닫는 괄호를 늦게 다는 경우가 있다. </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">여기에 Editor+++에서 작성한 텍스트가 있는데 이 텍스트를 Visual Studio Code로 복사하고자 하는데</span></span><br><span class="line"><span class="comment">이 때 괄호가 올바른지 아래와 같이 검증하고자 한다.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">예를 들어 (), &#123;()&#125; &#123;()()&#125; 처럼 입력할 때 닫는 괄호가 올바르게 표시되며 이는 올바른 형태이다.</span></span><br><span class="line"><span class="comment">그러나 ([)()] 의 경우 모두 쌍은 맞으나 괄호가 올바를 위치에 있지 않으므로 이는 올바르지 않은 형태이다.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">문제) Editor+++에서 작성한 괄호값을 가진 임의의 텍스트가 있을 때, Visual Studio Code에서 인식이 가능한지 파악하고, 가능하면 true, 불가능하면 false를 출력하라. */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bracket_replace</span>(<span class="params">str</span>)</span>&#123;    </span><br><span class="line">    <span class="keyword">var</span> result = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span>(str.length%<span class="number">2</span>==<span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">var</span> startlength = str.length;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        str = str.replace(<span class="regexp">/\(\)|\&#123;\&#125;|\[\]/g</span>,<span class="string">''</span>);</span><br><span class="line">        <span class="keyword">if</span>(str.length==<span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span>(str.length == startlength) result = <span class="literal">false</span>;</span><br><span class="line">        startlength=str.length;</span><br><span class="line">    &#125; <span class="keyword">while</span> (result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
 <h3 id="3-count-arr"><a href="#3-count-arr" class="headerlink" title="3. count arr"></a>3. count arr</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 배열 A가 있다. 이 배열은 배열 B의 몇번째 위치에 값을 증가(++) 시켜야 하는지에 대한 정보를 담고 있다.</span></span><br><span class="line"><span class="comment">예를 들어 a = [3,4,4,5,1,4,4] 인 배열이 있다고 할 때,</span></span><br><span class="line"><span class="comment">a[0]= 3 이므로 배열의 3번째 값을 증가 시켜라 (0,0,1,0,0)</span></span><br><span class="line"><span class="comment">a[1]= 4 이므로 배열의 4번째 값을 증가 시켜라 (0,0,1,1,0)</span></span><br><span class="line"><span class="comment">a[2]= 4 이므로 배열의 4번째 값을 증가 시켜라 (0,0,1,2,0)</span></span><br><span class="line"><span class="comment">이 것을 반복하면 배열 B는 [1,0,1,4,1] 값을 갖는다. */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count_arr</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> max = arr.reduce( <span class="function"><span class="keyword">function</span> (<span class="params">previous, current</span>) </span>&#123; </span><br><span class="line">		<span class="keyword">return</span> previous &gt; current ? previous:current;</span><br><span class="line">	&#125;);</span><br><span class="line">    <span class="keyword">var</span> return_arr = <span class="keyword">new</span> <span class="built_in">Array</span>(max);</span><br><span class="line">    return_arr.fill(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> val <span class="keyword">of</span> arr)&#123;</span><br><span class="line">        return_arr[val<span class="number">-1</span>] = return_arr[val<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> return_arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="4-quick-sort"><a href="#4-quick-sort" class="headerlink" title="4. quick sort"></a>4. quick sort</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.quickSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> r = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> less = [], greater = [];</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">var</span> pivot = r.splice(<span class="built_in">Math</span>.floor(r.length / <span class="number">2</span>),<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"중간지점값:"</span>+pivot);</span><br><span class="line">     <span class="comment">// 중간값 기준 작은 값 or 큰 값</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = r.length - <span class="number">1</span> ; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">      <span class="keyword">if</span> ( r[i] &lt;= pivot) &#123;</span><br><span class="line">        less.push(r[i]);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        greater.push(r[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="keyword">var</span> c = [];</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">return</span> c.concat(less.quickSort(), pivot, greater.quickSort());</span><br><span class="line">  </span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> a = [<span class="number">3</span>,<span class="number">1</span>,<span class="number">43</span>,<span class="number">5</span>,<span class="number">123</span>,<span class="number">6</span>,<span class="number">231</span>,<span class="number">0</span>];</span><br><span class="line">  <span class="built_in">console</span>.log(a.quickSort());</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjk0nedo80000zcv5ktkps65f" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjk0uchme0000e4v5gyv41ju5" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -334,7 +336,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjk0nedok0006zcv5cgkdbcqf" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjk0uchmi0001e4v5nlhemrgo" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -387,7 +389,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjk0nedoo000azcv5u2ywsx2s" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjk0ucho1000ge4v5kaakkw9x" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
@@ -442,7 +444,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjk0nedod0001zcv55wrefomo" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjk0ucho7000ke4v56gb5hn2l" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -497,7 +499,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjk0nedoi0004zcv5ktfy4s7g" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjk0uchnz000fe4v5ub8ubr44" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -572,7 +574,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjk0nedoq000bzcv5xvt1ifcy" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjk0uchmn0004e4v5jt209t0o" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -648,7 +650,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjk0nedok0005zcv542zkgr8x" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjk0ucho3000ie4v5tksyuar3" class="article-share-link">공유</a>
       
       
     </footer>
