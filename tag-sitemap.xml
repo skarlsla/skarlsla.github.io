@@ -2,13 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://skarlsla.github.io/tags/kubernetes/</loc>
-        <lastmod>2018-07-24T08:03:15.324Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/docker/</loc>
         <lastmod>2018-07-25T04:06:04.147Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -23,15 +16,22 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/ingress/</loc>
-        <lastmod>2018-07-25T04:17:40.001Z</lastmod>
+        <loc>https://skarlsla.github.io/tags/algorithm/</loc>
+        <lastmod>2018-07-25T08:01:46.676Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/algorithm/</loc>
-        <lastmod>2018-07-25T08:01:46.676Z</lastmod>
+        <loc>https://skarlsla.github.io/tags/ingress/</loc>
+        <lastmod>2018-09-19T08:38:44.132Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/kubernetes/</loc>
+        <lastmod>2018-09-19T08:54:15.252Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
