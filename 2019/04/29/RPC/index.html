@@ -5,20 +5,20 @@
   
 
   
-  <title>docker build &amp; push to docker-hub | </title>
+  <title>RPC | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
-<meta name="keywords" content="docker">
+  <meta name="description" content="원격 프로시져 호출 (RPC)RabbitMQ는 Request-Response로 Client와 Server를 이어주기 위해 RPC라는 개념으로 기능을 제공한다. RPC라는 거창한 이름을 사용하였지만 실제로는 Client의 request를 Server에 전달하고 , Server가 처리한 결과를 알맞은 Client 요청에 대한 응답으로 전달 할 수 있는 방법을">
+<meta name="keywords" content="rpc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker build &amp; push to docker-hub">
-<meta property="og:url" content="https://skarlsla.github.io/2018/07/25/docker/index.html">
+<meta property="og:title" content="RPC">
+<meta property="og:url" content="https://skarlsla.github.io/2019/04/29/RPC/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
+<meta property="og:description" content="원격 프로시져 호출 (RPC)RabbitMQ는 Request-Response로 Client와 Server를 이어주기 위해 RPC라는 개념으로 기능을 제공한다. RPC라는 거창한 이름을 사용하였지만 실제로는 Client의 request를 Server에 전달하고 , Server가 처리한 결과를 알맞은 Client 요청에 대한 응답으로 전달 할 수 있는 방법을">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2018-07-25T04:06:04.147Z">
+<meta property="og:updated_time" content="2019-04-29T08:14:44.160Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker build &amp; push to docker-hub">
-<meta name="twitter:description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
+<meta name="twitter:title" content="RPC">
+<meta name="twitter:description" content="원격 프로시져 호출 (RPC)RabbitMQ는 Request-Response로 Client와 Server를 이어주기 위해 RPC라는 개념으로 기능을 제공한다. RPC라는 거창한 이름을 사용하였지만 실제로는 Client의 request를 Server에 전달하고 , Server가 처리한 결과를 알맞은 Client 요청에 대한 응답으로 전달 할 수 있는 방법을">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -65,14 +65,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-docker" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-RPC" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/07/25/docker/" class="article-date">
-  <time datetime="2018-07-25T05:22:13.000Z" itemprop="datePublished">2018-07-25</time>
+    <a href="/2019/04/29/RPC/" class="article-date">
+  <time datetime="2019-04-29T08:13:45.000Z" itemprop="datePublished">2019-04-29</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/docker/">docker</a>
+    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
   </div>
 
   </div>
@@ -83,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      docker build &amp; push to docker-hub
+      RPC
     </h1>
   
 
@@ -92,26 +92,29 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="1-docker-이미지-추출"><a href="#1-docker-이미지-추출" class="headerlink" title="1. docker 이미지 추출"></a>1. docker 이미지 추출</h3><ul>
-<li>node.js<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">FROM node:9.4-alpine</span><br><span class="line">MAINTAINER authorize &lt;xxx@gmail.com&gt;</span><br><span class="line"><span class="comment">#작업 디렉토리</span></span><br><span class="line">WORKDIR /src</span><br><span class="line"><span class="comment">#원본 소스복사</span></span><br><span class="line">COPY ./freebex-integrated .</span><br><span class="line"><span class="comment"># npm 설치</span></span><br><span class="line">RUN npm install </span><br><span class="line"><span class="comment">#환경변수 NODE_ENV 의 값을 development 로 설정</span></span><br><span class="line"><span class="comment">#ENV NODE_ENV development</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#오픈할 포트 multi: EXPOSE 80 3000</span></span><br><span class="line">EXPOSE 3501</span><br><span class="line"><span class="comment">#CMD["npm","start"]</span></span><br><span class="line">CMD node ./bin/www</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+<h3 id="원격-프로시져-호출-RPC"><a href="#원격-프로시져-호출-RPC" class="headerlink" title="원격 프로시져 호출 (RPC)"></a>원격 프로시져 호출 (RPC)</h3><p>RabbitMQ는 Request-Response로 Client와 Server를 이어주기 위해 RPC라는 개념으로 기능을 제공한다.</p>
+<p>RPC라는 거창한 이름을 사용하였지만 실제로는 Client의 request를 Server에 전달하고 , Server가 처리한 결과를 알맞은 Client 요청에 대한 응답으로 전달 할 수 있는 방법을 말한다.</p>
+<p>Message Properties 설명<br>DeliveryMode : persistent인지 transient인지 표시 (휘발성인지 비휘발성인지 구분자)</p>
+<p>ContentType : 내용물의 mime-type</p>
+<p>ReplyTo : Callback Queue의 이름</p>
+<p>CorrelationID : 요청을 구분할 수 있는 유일값</p>
+<p>처리 흐름<br>Client가 CorrelationID, ReplyTo 주어서 RabbitMQ의 특정 Request보관용 Queue에 데이터를 Push한다.</p>
+<p>Request용 Queue에 데이터를 Server에서 Consume하여 요청을 처리한다.</p>
+<p>요청처리 후 Request에서 받은 CorrelationID 와 ReplyTo를 추출하여, 요청ID를 속성으로 갖는 Response를 ReplyToQueue에 Push한다.</p>
+<p>Client는 ReplyTo Queue를 subscribe하고 있다가 Response가 오면 CorrelationID를 보고 어떤 요청에 대한 응답인지를 구분하여 처리한다.</p>
 <hr>
-<ul>
-<li>html on nginx<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#alpine image</span></span><br><span class="line">FROM nginx:alpine</span><br><span class="line"><span class="comment">#create the server and location configuration</span></span><br><span class="line">COPY default.conf /etc/nginx/conf.d/default.conf</span><br><span class="line"><span class="comment">#copies the build app to the default location</span></span><br><span class="line">COPY client/dist/mobile /usr/share/nginx/html</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h3 id="2-이미지-빌드"><a href="#2-이미지-빌드" class="headerlink" title="2. 이미지 빌드"></a>2. 이미지 빌드</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build --rm -f Dockerfile -t [image-name]:latest .</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="3-이미지-푸시-docker-hub"><a href="#3-이미지-푸시-docker-hub" class="headerlink" title="3. 이미지 푸시(docker hub)"></a>3. 이미지 푸시(docker hub)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag [image-name]:latest [docker-hub ID]/[image-name]:latest</span><br><span class="line">docker push [docker-hub ID]/[image-name]:latest</span><br></pre></td></tr></table></figure>
+<h3 id="RPC의-이점"><a href="#RPC의-이점" class="headerlink" title="RPC의 이점"></a>RPC의 이점</h3><p>RPC 구조를 응용하면 아래와 같은 상황에 이점을 얻을 수 있다.</p>
+<p>서버처리 이점<br>서버 처리속도가 느려서 성능을 증가 시키려고 할 때, RPC 서버를 하나 더 두고 같은 Request Queue를 바라보게 하면 됨 ( Round Robin 하므로 )</p>
+<p>Client 이점<br>하나의 메시지를 개별 Round Trip으로 처리를 위해 queueDeclare같은 동기처리 요청이 필요없다. (임시 Queue를 생성하여 Client마다 다른 Queue를 사용하므로)</p>
+<p>RPC 구성시 고려할 점<br>돌아가는 서버가 없을 때 Client 처리<br>요청 Timeout시 Client 처리<br>서버 Exception이나 오동작시 Client에게 이를 어떻게 전달할지<br>Invalid한 데이터가 서버로 전달 되었을 때의 처리</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjv23eap8000a5gnvig9k333s" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RPC/" data-id="cjv23eap200055gnvglgjw45k" class="article-share-link">공유</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
 
     </footer>
   </div>
@@ -119,19 +122,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/07/25/redis_pod/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">최신</strong>
       <div class="article-nav-title">
         
-          redis simple deployment 및 service 작성
+          RabbitMQ가 재기동 됐을때 대응책
         
       </div>
     </a>
   
   
-    <a href="/2018/07/24/kubernetest_dash/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/04/29/Persistent-Durable-Ack/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">kubernetes dashboard 설치</div>
+      <div class="article-nav-title">Persistent, Durable, Ack</div>
     </a>
   
 </nav>

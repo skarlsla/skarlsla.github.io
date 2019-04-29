@@ -5,20 +5,20 @@
   
 
   
-  <title>docker build &amp; push to docker-hub | </title>
+  <title>reply-to 옵션에 대한 분석 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
-<meta name="keywords" content="docker">
+  <meta name="description" content="1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-tohttp://www.rabbitmq.com/direct-reply-to.html 링크 발췌내용 중 사용법 UseTo use direct reply-to, an RPC client should: Consume from the pseudo-queue amq.rabbitmq.reply-to i">
+<meta name="keywords" content="reply-to">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker build &amp; push to docker-hub">
-<meta property="og:url" content="https://skarlsla.github.io/2018/07/25/docker/index.html">
+<meta property="og:title" content="reply-to 옵션에 대한 분석">
+<meta property="og:url" content="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
+<meta property="og:description" content="1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-tohttp://www.rabbitmq.com/direct-reply-to.html 링크 발췌내용 중 사용법 UseTo use direct reply-to, an RPC client should: Consume from the pseudo-queue amq.rabbitmq.reply-to i">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2018-07-25T04:06:04.147Z">
+<meta property="og:updated_time" content="2019-04-29T08:20:00.389Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker build &amp; push to docker-hub">
-<meta name="twitter:description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
+<meta name="twitter:title" content="reply-to 옵션에 대한 분석">
+<meta name="twitter:description" content="1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-tohttp://www.rabbitmq.com/direct-reply-to.html 링크 발췌내용 중 사용법 UseTo use direct reply-to, an RPC client should: Consume from the pseudo-queue amq.rabbitmq.reply-to i">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -65,14 +65,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-docker" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-reply-to-옵션에-대한-분석" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/07/25/docker/" class="article-date">
-  <time datetime="2018-07-25T05:22:13.000Z" itemprop="datePublished">2018-07-25</time>
+    <a href="/2019/04/29/reply-to-옵션에-대한-분석/" class="article-date">
+  <time datetime="2019-04-29T08:18:30.000Z" itemprop="datePublished">2019-04-29</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/docker/">docker</a>
+    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
   </div>
 
   </div>
@@ -83,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      docker build &amp; push to docker-hub
+      reply-to 옵션에 대한 분석
     </h1>
   
 
@@ -92,26 +92,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="1-docker-이미지-추출"><a href="#1-docker-이미지-추출" class="headerlink" title="1. docker 이미지 추출"></a>1. docker 이미지 추출</h3><ul>
-<li>node.js<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">FROM node:9.4-alpine</span><br><span class="line">MAINTAINER authorize &lt;xxx@gmail.com&gt;</span><br><span class="line"><span class="comment">#작업 디렉토리</span></span><br><span class="line">WORKDIR /src</span><br><span class="line"><span class="comment">#원본 소스복사</span></span><br><span class="line">COPY ./freebex-integrated .</span><br><span class="line"><span class="comment"># npm 설치</span></span><br><span class="line">RUN npm install </span><br><span class="line"><span class="comment">#환경변수 NODE_ENV 의 값을 development 로 설정</span></span><br><span class="line"><span class="comment">#ENV NODE_ENV development</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#오픈할 포트 multi: EXPOSE 80 3000</span></span><br><span class="line">EXPOSE 3501</span><br><span class="line"><span class="comment">#CMD["npm","start"]</span></span><br><span class="line">CMD node ./bin/www</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+<h3 id="1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to"><a href="#1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to" class="headerlink" title="1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to"></a>1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to</h3><p><a href="http://www.rabbitmq.com/direct-reply-to.html" target="_blank" rel="noopener">http://www.rabbitmq.com/direct-reply-to.html</a></p>
+<p>링크 발췌내용 중 사용법</p>
+<p>Use<br>To use direct reply-to, an RPC client should:</p>
+<p>Consume from the pseudo-queue amq.rabbitmq.reply-to in no-ack mode. There is no need to declare this “queue” first, although the client can do so if it wants.<br>Set the reply-to property in their request message to amq.rabbitmq.reply-to.<br>The RPC server will then see a reply-to property with a generated name. It should publish to the default exchange (“”) with the routing key set to this value (i.e. just as if it were sending to a reply queue as usual). The message will then be sent straight to the client consumer.</p>
+<p>If the RPC server is going to perform some expensive computation it might wish to check if the client has gone away. To do this the server can declare the generated reply name first on a disposable channel in order to determine whether it still exists. Note that even if you declare the “queue” with passive=false there is no way to create it; the declare will just succeed (with 0 messages ready and 1 consumer) or fail.</p>
+<p>결론적으로  클라이언트에서 consume(대기큐)를 할때  옵션으로 reply-to = amq.rabbitmq.reply-to 넣고  no-ack 모드로 실행한다.<br>그러면 따로 큐를 생성해 놓지 않더라도 amq.rabbitmq.reply-to 라는 큐가 생성되고  서버에서는 reply-to property를 통해  클라이언트에게 리턴한다. </p>
+<p>서버에서 특이점은 publish 할때 따로 exchange name 을 적지 않고 routingkey 자리에 reply-to에서 온 값을 넣으면된다.<br>서버에서 reply-to 리턴하는 queue를 찍어보면 amq.rabbitmq.reply-to.g2dkAA1yYWJiaXRAdHdlYjAyAAAvugAAAAMB.N2mDRUJksXuxZHf1leTCKg==<br>이런식으로 뒤에 임의의 값이 붙어서 나온다.  여러 서버를 띄어도 저 값은 변하지 않았다.  rabbitmq 서버에서 관리하는 것으로 보인다.     </p>
 <hr>
-<ul>
-<li>html on nginx<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#alpine image</span></span><br><span class="line">FROM nginx:alpine</span><br><span class="line"><span class="comment">#create the server and location configuration</span></span><br><span class="line">COPY default.conf /etc/nginx/conf.d/default.conf</span><br><span class="line"><span class="comment">#copies the build app to the default location</span></span><br><span class="line">COPY client/dist/mobile /usr/share/nginx/html</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h3 id="2-이미지-빌드"><a href="#2-이미지-빌드" class="headerlink" title="2. 이미지 빌드"></a>2. 이미지 빌드</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build --rm -f Dockerfile -t [image-name]:latest .</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="3-이미지-푸시-docker-hub"><a href="#3-이미지-푸시-docker-hub" class="headerlink" title="3. 이미지 푸시(docker hub)"></a>3. 이미지 푸시(docker hub)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag [image-name]:latest [docker-hub ID]/[image-name]:latest</span><br><span class="line">docker push [docker-hub ID]/[image-name]:latest</span><br></pre></td></tr></table></figure>
+<h3 id="2-reply-to를-사용하지-않으면"><a href="#2-reply-to를-사용하지-않으면" class="headerlink" title="2.  reply-to를 사용하지 않으면"></a>2.  reply-to를 사용하지 않으면</h3><p>reply-to 옵션을 쓰지않고 지정된 큐로 작업이 가능하다.<br>ack모드를 사용할수있어 데이터 유지하는 옵션을 사용할수있다.<br>하지만 옵션을 사용시 rabbitmq에서 제공하는 큐생성 및 사용시 추가적인 작업이 필요해 보인다.  </p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjv23eap8000a5gnvig9k333s" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="cjv23eaq0000x5gnvecek8cm5" class="article-share-link">공유</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reply-to/">reply-to</a></li></ul>
 
     </footer>
   </div>
@@ -119,19 +116,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/07/25/redis_pod/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">최신</strong>
-      <div class="article-nav-title">
-        
-          redis simple deployment 및 service 작성
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/07/24/kubernetest_dash/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">kubernetes dashboard 설치</div>
+      <div class="article-nav-title">RabbitMQ가 재기동 됐을때 대응책</div>
     </a>
   
 </nav>

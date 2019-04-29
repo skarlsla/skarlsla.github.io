@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-04-29T06:31:29.884Z</updated>
+  <updated>2019-04-29T08:20:00.389Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,137 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>reply-to 옵션에 대한 분석</title>
+    <link href="https://skarlsla.github.io/2019/04/29/reply-to-%EC%98%B5%EC%85%98%EC%97%90-%EB%8C%80%ED%95%9C-%EB%B6%84%EC%84%9D/"/>
+    <id>https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/</id>
+    <published>2019-04-29T08:18:30.000Z</published>
+    <updated>2019-04-29T08:20:00.389Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to"><a href="#1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to" class="headerlink" title="1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to"></a>1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to</h3><p><a href="http://www.rabbitmq.com/direct-reply-to.html" target="_blank" rel="noopener">http://www.rabbitmq.com/direct-reply-to.html</a></p><p>링크 발췌내용 중 사용법</p><p>Use<br>To use direct reply-to, an RPC client should:</p><p>Consume from the pseudo-queue amq.rabbitmq.reply-to in no-ack mode. There is no need to declare this “queue” first, although the client can do so if it wants.<br>Set the reply-to property in their request message to amq.rabbitmq.reply-to.<br>The RPC server will then see a reply-to property with a generated name. It should publish to the default exchange (“”) with the routing key set to this value (i.e. just as if it were sending to a reply queue as usual). The message will then be sent straight to the client consumer.</p><p>If the RPC server is going to perform some expensive computation it might wish to check if the client has gone away. To do this the server can declare the generated reply name first on a disposable channel in order to determine whether it still exists. Note that even if you declare the “queue” with passive=false there is no way to create it; the declare will just succeed (with 0 messages ready and 1 consumer) or fail.</p><p>결론적으로  클라이언트에서 consume(대기큐)를 할때  옵션으로 reply-to = amq.rabbitmq.reply-to 넣고  no-ack 모드로 실행한다.<br>그러면 따로 큐를 생성해 놓지 않더라도 amq.rabbitmq.reply-to 라는 큐가 생성되고  서버에서는 reply-to property를 통해  클라이언트에게 리턴한다. </p><p>서버에서 특이점은 publish 할때 따로 exchange name 을 적지 않고 routingkey 자리에 reply-to에서 온 값을 넣으면된다.<br>서버에서 reply-to 리턴하는 queue를 찍어보면 amq.rabbitmq.reply-to.g2dkAA1yYWJiaXRAdHdlYjAyAAAvugAAAAMB.N2mDRUJksXuxZHf1leTCKg==<br>이런식으로 뒤에 임의의 값이 붙어서 나온다.  여러 서버를 띄어도 저 값은 변하지 않았다.  rabbitmq 서버에서 관리하는 것으로 보인다.     </p><hr><h3 id="2-reply-to를-사용하지-않으면"><a href="#2-reply-to를-사용하지-않으면" class="headerlink" title="2.  reply-to를 사용하지 않으면"></a>2.  reply-to를 사용하지 않으면</h3><p>reply-to 옵션을 쓰지않고 지정된 큐로 작업이 가능하다.<br>ack모드를 사용할수있어 데이터 유지하는 옵션을 사용할수있다.<br>하지만 옵션을 사용시 rabbitmq에서 제공하는 큐생성 및 사용시 추가적인 작업이 필요해 보인다.  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to&quot;&gt;&lt;a href=&quot;#1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to&quot; class=&quot;headerlink&quot; title=&quot;1. rabbitmq(amq
+      
+    
+    </summary>
+    
+      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
+    
+    
+      <category term="reply-to" scheme="https://skarlsla.github.io/tags/reply-to/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ가 재기동 됐을때 대응책</title>
+    <link href="https://skarlsla.github.io/2019/04/29/RabbitMQ%EA%B0%80-%EC%9E%AC%EA%B8%B0%EB%8F%99-%EB%90%90%EC%9D%84%EB%95%8C-%EB%8C%80%EC%9D%91%EC%B1%85/"/>
+    <id>https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/</id>
+    <published>2019-04-29T08:14:56.000Z</published>
+    <updated>2019-04-29T08:16:51.048Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="RabbitMQ가-재기동-됐을때-대응책"><a href="#RabbitMQ가-재기동-됐을때-대응책" class="headerlink" title="RabbitMQ가 재기동 됐을때 대응책"></a>RabbitMQ가 재기동 됐을때 대응책</h3><p>메시지를 Queue에 넣은 뒤 Consumer에게 전달하기 전에 RabittMQ 서버가 죽는다면 기본적으로 해당 메시지는 날라가버리게 된다. 이런 상황을 방지 하기 위해 durable이라는 개념을 가지고 있다.</p><p>Message durability<br>메시지는 Queue에 보관할 때 file에도 같이 쓰도록 만드는 방법이다.<br>아래와 같은 방법으로 설정해야 동작한다.</p><p>queue생성시 durable속성을 true로 주고 만든다.<br>message publish할때 MessageProperties.PERSISTENT_TEXT_PLAIN을 설정함<br>1,2번 모두 만족해야 메시지가 Queue에 남아있을 때 restart해도 날라가지 않는다.</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/q_durable.png" alt="rpc"></p><p>※ 메시지의 persistent는 완변히 보장되진 않음. 메번 메시지마다 fsync 로 동기화히지 않기 때문에 짧은시간이나마 아직 Disk에 쓰여지지 않았을 경우가 있다. 좀더 강력한 방법을 보장하기 위해서는 publisher confirms를 사용</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;RabbitMQ가-재기동-됐을때-대응책&quot;&gt;&lt;a href=&quot;#RabbitMQ가-재기동-됐을때-대응책&quot; class=&quot;headerlink&quot; title=&quot;RabbitMQ가 재기동 됐을때 대응책&quot;&gt;&lt;/a&gt;RabbitMQ가 재기동 됐을때 
+      
+    
+    </summary>
+    
+      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>RPC</title>
+    <link href="https://skarlsla.github.io/2019/04/29/RPC/"/>
+    <id>https://skarlsla.github.io/2019/04/29/RPC/</id>
+    <published>2019-04-29T08:13:45.000Z</published>
+    <updated>2019-04-29T08:14:44.160Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="원격-프로시져-호출-RPC"><a href="#원격-프로시져-호출-RPC" class="headerlink" title="원격 프로시져 호출 (RPC)"></a>원격 프로시져 호출 (RPC)</h3><p>RabbitMQ는 Request-Response로 Client와 Server를 이어주기 위해 RPC라는 개념으로 기능을 제공한다.</p><p>RPC라는 거창한 이름을 사용하였지만 실제로는 Client의 request를 Server에 전달하고 , Server가 처리한 결과를 알맞은 Client 요청에 대한 응답으로 전달 할 수 있는 방법을 말한다.</p><p>Message Properties 설명<br>DeliveryMode : persistent인지 transient인지 표시 (휘발성인지 비휘발성인지 구분자)</p><p>ContentType : 내용물의 mime-type</p><p>ReplyTo : Callback Queue의 이름</p><p>CorrelationID : 요청을 구분할 수 있는 유일값</p><p>처리 흐름<br>Client가 CorrelationID, ReplyTo 주어서 RabbitMQ의 특정 Request보관용 Queue에 데이터를 Push한다.</p><p>Request용 Queue에 데이터를 Server에서 Consume하여 요청을 처리한다.</p><p>요청처리 후 Request에서 받은 CorrelationID 와 ReplyTo를 추출하여, 요청ID를 속성으로 갖는 Response를 ReplyToQueue에 Push한다.</p><p>Client는 ReplyTo Queue를 subscribe하고 있다가 Response가 오면 CorrelationID를 보고 어떤 요청에 대한 응답인지를 구분하여 처리한다.</p><hr><h3 id="RPC의-이점"><a href="#RPC의-이점" class="headerlink" title="RPC의 이점"></a>RPC의 이점</h3><p>RPC 구조를 응용하면 아래와 같은 상황에 이점을 얻을 수 있다.</p><p>서버처리 이점<br>서버 처리속도가 느려서 성능을 증가 시키려고 할 때, RPC 서버를 하나 더 두고 같은 Request Queue를 바라보게 하면 됨 ( Round Robin 하므로 )</p><p>Client 이점<br>하나의 메시지를 개별 Round Trip으로 처리를 위해 queueDeclare같은 동기처리 요청이 필요없다. (임시 Queue를 생성하여 Client마다 다른 Queue를 사용하므로)</p><p>RPC 구성시 고려할 점<br>돌아가는 서버가 없을 때 Client 처리<br>요청 Timeout시 Client 처리<br>서버 Exception이나 오동작시 Client에게 이를 어떻게 전달할지<br>Invalid한 데이터가 서버로 전달 되었을 때의 처리</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;원격-프로시져-호출-RPC&quot;&gt;&lt;a href=&quot;#원격-프로시져-호출-RPC&quot; class=&quot;headerlink&quot; title=&quot;원격 프로시져 호출 (RPC)&quot;&gt;&lt;/a&gt;원격 프로시져 호출 (RPC)&lt;/h3&gt;&lt;p&gt;RabbitMQ는 Req
+      
+    
+    </summary>
+    
+      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
+    
+    
+      <category term="rpc" scheme="https://skarlsla.github.io/tags/rpc/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Persistent, Durable, Ack</title>
+    <link href="https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/"/>
+    <id>https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/</id>
+    <published>2019-04-29T08:09:10.000Z</published>
+    <updated>2019-04-29T08:13:18.936Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="1-메시지-수신-자동-확인-ack-noAck"><a href="#1-메시지-수신-자동-확인-ack-noAck" class="headerlink" title="1. 메시지 수신 자동 확인(ack , noAck)"></a>1. 메시지 수신 자동 확인(ack , noAck)</h3><p>작업을 수행하는 데 몇 초가 걸릴 수 있습니다. </p><p>소비자 중 한 명이 긴 작업을 시작하고 부분적으로 만 수행되어 사망하는 경우 어떻게되는지 궁금 할 수 있습니다. </p><p>현재의 코드(</p><p>noAck : true<br>)를 사용하면 RabbitMQ가 고객에게 메시지를 전달하면 바로 삭제 표시가됩니다. </p><p>이 경우 작업자를 죽이면 처리중인 메시지가 손실됩니다. </p><p>이 특정 작업자에게 발송되었지만 아직 처리되지 않은 모든 메시지도 손실됩니다.</p><p>noAck : false<br>ack를 전송하지 않고 소비자가 죽거나 (채널이 닫히거나 연결이 끊어 지거나 TCP 연결이 끊어지는 경우),</p><p>RabbitMQ는 메시지가 완전히 처리되지 않았 음을 인식하고 다시 대기합니다.</p><p>가끔씩 사망하더라도 메시지를 잃어 버리지 않을 것입니다.</p><p>메시지 시간 초과가 없습니다. RabbitMQ는 소비자가 사망 할 때 메시지를 재전송합니다. </p><p>메시지 처리가 매우 오랜 시간이 걸리는 경우에도 괜찮습니다.</p><p>앞의 예에서 메시지 수신 확인이 해제되었습니다. 작업을 마친 후 에는  noAck : false    </p><p>옵션 을 사용하여 설정을 해제하고 작업자에게 적절한 응답을 보내야합니다.</p><p>ex) 자동 응답</p><p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p><p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>  }, secs * 1000);<br>}, {noAck: true});</p><p>ex) 자동 미응답 &amp; ack(msg)</p><p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p><p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>    ch.ack(msg);<br>  }, secs * 1000);<br>}, {noAck: false});</p><hr><h3 id="2-메시지-내구성-durable-지속성-persistent"><a href="#2-메시지-내구성-durable-지속성-persistent" class="headerlink" title="2.  메시지 내구성(durable) , 지속성(persistent)"></a>2.  메시지 내구성(durable) , 지속성(persistent)</h3><p>우리는 소비자가 사망하더라도 작업이 손실되지 않도록하는 방법을 배웠습니다.  그러나 RabbitMQ 서버가 중지되면 우리의 작업은 여전히 손실됩니다.</p><p>RabbitMQ가 종료되거나 충돌하면 사용자가 알리지 않는 한 대기열과 메시지를 잊어 버리게됩니다. 메시지가 손실되지 않도록하려면 큐와 메시지를 모두 튼튼하게 표시해야합니다.</p><p>첫째, 우리는 RabbitMQ가 결코 우리 큐를 잃지 않도록해야합니다. 그렇게하기 위해서 우리는 그것을 durable 으로 선언 할 필요가있다 .</p><p>ex) </p><p>큐 할당시 </p><p>ch.assertQueue ( ‘hello’ , { durable : true });<br>큐로 전송시 옵션</p><p>ch.sendToQueue(q, new Buffer(msg), {persistent: true});</p><hr><h3 id="3-최종적으로-구현해야-할-옵션을-포함한-소스"><a href="#3-최종적으로-구현해야-할-옵션을-포함한-소스" class="headerlink" title="3.  최종적으로  구현해야 할 옵션을 포함한  소스"></a>3.  최종적으로  구현해야 할 옵션을 포함한  소스</h3><p>new_task.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line">    <span class="keyword">var</span> msg = process.argv.slice(<span class="number">2</span>).join(<span class="string">' '</span>) || <span class="string">"Hello World!"</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.sendToQueue(q, <span class="keyword">new</span> Buffer(msg), &#123;<span class="attr">persistent</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [x] Sent '%s'"</span>, msg);</span><br><span class="line">  &#125;);</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; conn.close(); process.exit(<span class="number">0</span>) &#125;, <span class="number">500</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><p>worker.js</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.prefetch(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [*] Waiting for messages in %s. To exit press CTRL+C"</span>, q);</span><br><span class="line">    ch.consume(q, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> secs = msg.content.toString().split(<span class="string">'.'</span>).length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">" [x] Received %s"</span>, msg.content.toString());</span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">" [x] Done"</span>);</span><br><span class="line">        ch.ack(msg);</span><br><span class="line">      &#125;, secs * <span class="number">1000</span>);</span><br><span class="line">    &#125;, &#123;<span class="attr">noAck</span>: <span class="literal">false</span>&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;1-메시지-수신-자동-확인-ack-noAck&quot;&gt;&lt;a href=&quot;#1-메시지-수신-자동-확인-ack-noAck&quot; class=&quot;headerlink&quot; title=&quot;1. 메시지 수신 자동 확인(ack , noAck)&quot;&gt;&lt;/a&gt;1. 메시
+      
+    
+    </summary>
+    
+      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
+    
+    
+      <category term="rabbitmq" scheme="https://skarlsla.github.io/tags/rabbitmq/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RPC 패턴과 pub/sub패턴에서의 ack 사용차이</title>
+    <link href="https://skarlsla.github.io/2019/04/29/RPC-%ED%8C%A8%ED%84%B4%EA%B3%BC-pub-sub%ED%8C%A8%ED%84%B4%EC%97%90%EC%84%9C%EC%9D%98-ack-%EC%82%AC%EC%9A%A9%EC%B0%A8%EC%9D%B4/"/>
+    <id>https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/</id>
+    <published>2019-04-29T08:03:40.000Z</published>
+    <updated>2019-04-29T08:07:24.944Z</updated>
+    
+    <content type="html"><![CDATA[<p>기본적으로  noAck, durable 옵션으로 큐에서의 삭제와 ack의 사용을 조정할수있다.</p><hr><h3 id="1-Publish-Subscribe"><a href="#1-Publish-Subscribe" class="headerlink" title="1.   Publish/Subscribe"></a>1.   Publish/Subscribe</h3><p>로그를 쌓는 서비스를 예를 들어보면</p><p>보내는(pub)서버와 처리하는(subs)서버가 있겠다.</p><p>pub에서 메세지를 보내고 큐에 쌓인다.  subs 서버는 이를 하나씩 꺼내어 처리한다.</p><p>큐에 보낸 메세지를 잃어 버리지 않기 위해서는 durable 옵션으로 큐를 생성하고  </p><p>큐에 전송시 persistent 옵션을 주면된다. </p><p>그러면 rabbitmq가 죽더라고 큐에 들어간 내용들은 재기동시 다시 살아난다.</p><p>하지만 subs서버가 큐에서 꺼낸 메세지를 작업중 죽는다면 메세지는 소실된다.</p><p>이를 위해 consume함수 옵션(noAck)을 사용한다. 기본적으로 noAck를 하면 자동으로 ack가 실행되고</p><p>큐에서 사라진다. 하지만 noAck 옵션을 false로 선언하면 subs서버에서 작업을 처리한후 ack를 보내야한다.</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_pub_sub.png" alt="pub/sub"></p><hr><h3 id="2-RPC-req-res"><a href="#2-RPC-req-res" class="headerlink" title="2.   RPC(req/res)"></a>2.   RPC(req/res)</h3><p>The RPC client must consume in no-ack mode. </p><p>This is because there is no queue for the reply message to be returned to</p><p>if the client disconnects or rejects the reply message.</p><p>RPC 클라이언트는 반드시 consume을 사용할 때 no-ack 모드를 사용해야한다.</p><p>클라이언트에서 연결이 끊기거나 reject 에러가 나면 서버에서 전달할 방법이 없기 때문이다.</p><p>reply queue는 요청시 생성되고 결과받고 사라지는 임시큐이다.</p><p>메세지가 유실되면 안되는 서비스의 처리는 별도로 처리하는 것이 맞겠다.</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_rpc.png" alt="rpc"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;기본적으로  noAck, durable 옵션으로 큐에서의 삭제와 ack의 사용을 조정할수있다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;1-Publish-Subscribe&quot;&gt;&lt;a href=&quot;#1-Publish-Subscribe&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
+    
+    
+      <category term="rpc" scheme="https://skarlsla.github.io/tags/rpc/"/>
+    
+      <category term="ack" scheme="https://skarlsla.github.io/tags/ack/"/>
+    
+  </entry>
   
   <entry>
     <title>DEVOPS란...</title>

@@ -5,20 +5,15 @@
   
 
   
-  <title>docker build &amp; push to docker-hub | </title>
+  <title>태그: reply-to | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
-<meta name="keywords" content="docker">
-<meta property="og:type" content="article">
-<meta property="og:title" content="docker build &amp; push to docker-hub">
-<meta property="og:url" content="https://skarlsla.github.io/2018/07/25/docker/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title">
+<meta property="og:url" content="https://skarlsla.github.io/tags/reply-to/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2018-07-25T04:06:04.147Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker build &amp; push to docker-hub">
-<meta name="twitter:description" content="1. docker 이미지 추출 node.js123456789101112131415FROM node:9.4-alpineMAINTAINER authorize &amp;lt;xxx@gmail.com&amp;gt;#작업 디렉토리WORKDIR /src#원본 소스복사COPY ./freebex-integrated .# npm 설치RUN npm install #환경변수 NODE_EN">
+<meta name="twitter:title">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -65,79 +60,40 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-docker" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/25/docker/" class="article-date">
-  <time datetime="2018-07-25T05:22:13.000Z" itemprop="datePublished">2018-07-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/docker/">docker</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      docker build &amp; push to docker-hub
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2019/04/29/reply-to-옵션에-대한-분석/" class="archive-article-date">
+  <time datetime="2019-04-29T08:18:30.000Z" itemprop="datePublished">4월 29</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/04/29/reply-to-옵션에-대한-분석/">reply-to 옵션에 대한 분석</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-docker-이미지-추출"><a href="#1-docker-이미지-추출" class="headerlink" title="1. docker 이미지 추출"></a>1. docker 이미지 추출</h3><ul>
-<li>node.js<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">FROM node:9.4-alpine</span><br><span class="line">MAINTAINER authorize &lt;xxx@gmail.com&gt;</span><br><span class="line"><span class="comment">#작업 디렉토리</span></span><br><span class="line">WORKDIR /src</span><br><span class="line"><span class="comment">#원본 소스복사</span></span><br><span class="line">COPY ./freebex-integrated .</span><br><span class="line"><span class="comment"># npm 설치</span></span><br><span class="line">RUN npm install </span><br><span class="line"><span class="comment">#환경변수 NODE_ENV 의 값을 development 로 설정</span></span><br><span class="line"><span class="comment">#ENV NODE_ENV development</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#오픈할 포트 multi: EXPOSE 80 3000</span></span><br><span class="line">EXPOSE 3501</span><br><span class="line"><span class="comment">#CMD["npm","start"]</span></span><br><span class="line">CMD node ./bin/www</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<ul>
-<li>html on nginx<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#alpine image</span></span><br><span class="line">FROM nginx:alpine</span><br><span class="line"><span class="comment">#create the server and location configuration</span></span><br><span class="line">COPY default.conf /etc/nginx/conf.d/default.conf</span><br><span class="line"><span class="comment">#copies the build app to the default location</span></span><br><span class="line">COPY client/dist/mobile /usr/share/nginx/html</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h3 id="2-이미지-빌드"><a href="#2-이미지-빌드" class="headerlink" title="2. 이미지 빌드"></a>2. 이미지 빌드</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build --rm -f Dockerfile -t [image-name]:latest .</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="3-이미지-푸시-docker-hub"><a href="#3-이미지-푸시-docker-hub" class="headerlink" title="3. 이미지 푸시(docker hub)"></a>3. 이미지 푸시(docker hub)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag [image-name]:latest [docker-hub ID]/[image-name]:latest</span><br><span class="line">docker push [docker-hub ID]/[image-name]:latest</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjv23eap8000a5gnvig9k333s" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/07/25/redis_pod/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">최신</strong>
-      <div class="article-nav-title">
-        
-          redis simple deployment 및 service 작성
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/07/24/kubernetest_dash/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">kubernetes dashboard 설치</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         
