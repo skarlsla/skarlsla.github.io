@@ -5,15 +5,20 @@
   
 
   
-  <title>카테고리: DevOps | </title>
+  <title>ANSIBLE Ad-Hoc | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="https://skarlsla.github.io/categories/DevOps/index.html">
+  <meta name="description" content="커맨드 명령으로 원격지 /etc/ansible/hosts 에 정의된 서버노드들에 대해 명령을 보낸다.  EXAMPLE1ansible webservers -a &quot;ls -al&quot; 파일전송1$ ansible webservers -m file -a &quot;dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=direct">
+<meta name="keywords" content="cd,배포">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ANSIBLE Ad-Hoc">
+<meta property="og:url" content="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/index.html">
 <meta property="og:site_name">
+<meta property="og:description" content="커맨드 명령으로 원격지 /etc/ansible/hosts 에 정의된 서버노드들에 대해 명령을 보낸다.  EXAMPLE1ansible webservers -a &quot;ls -al&quot; 파일전송1$ ansible webservers -m file -a &quot;dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=direct">
 <meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2019-05-08T03:19:32.071Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title">
+<meta name="twitter:title" content="ANSIBLE Ad-Hoc">
+<meta name="twitter:description" content="커맨드 명령으로 원격지 /etc/ansible/hosts 에 정의된 서버노드들에 대해 명령을 보낸다.  EXAMPLE1ansible webservers -a &quot;ls -al&quot; 파일전송1$ ansible webservers -m file -a &quot;dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=direct">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -60,135 +65,64 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/08/ANSIBLE-Ad-Hoc/" class="archive-article-date">
-  <time datetime="2019-05-08T03:18:17.000Z" itemprop="datePublished">5월 8</time>
+        <section id="main"><article id="post-ANSIBLE-Ad-Hoc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/08/ANSIBLE-Ad-Hoc/" class="article-date">
+  <time datetime="2019-05-08T03:18:17.000Z" itemprop="datePublished">2019-05-08</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/08/ANSIBLE-Ad-Hoc/">ANSIBLE Ad-Hoc</a>
+    <h1 class="article-title" itemprop="name">
+      ANSIBLE Ad-Hoc
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/08/ANSIBLE-NODE-등록/" class="archive-article-date">
-  <time datetime="2019-05-08T03:01:26.000Z" itemprop="datePublished">5월 8</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/08/ANSIBLE-NODE-등록/">ANSIBLE NODE 등록 </a>
-    </h1>
-  
+        <p>커맨드 명령으로 원격지 /etc/ansible/hosts 에 정의된 서버노드들에 대해 명령을 보낸다.</p>
+<hr>
+<h3 id="EXAMPLE"><a href="#EXAMPLE" class="headerlink" title="EXAMPLE"></a>EXAMPLE</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible webservers -a <span class="string">"ls -al"</span></span><br></pre></td></tr></table></figure>
+<p>파일전송<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible webservers -m file -a <span class="string">"dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=directory"</span></span><br></pre></td></tr></table></figure></p>
+<p>yum 설치<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible webservers -m yum -a <span class="string">"name=acme state=absent"</span></span><br></pre></td></tr></table></figure></p>
+<p>GIT 명령<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible webservers -m git -a <span class="string">"repo=https://foo.example.org/repo.git dest=/srv/myapp version=HEAD"</span></span><br></pre></td></tr></table></figure></p>
+<p>서비스 관리<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible webservers -m service -a <span class="string">"name=httpd state=restarted"</span></span><br></pre></td></tr></table></figure></p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/08/GitLab-연동-및-빌드-테스트/" class="archive-article-date">
-  <time datetime="2019-05-08T02:43:15.000Z" itemprop="datePublished">5월 8</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/08/GitLab-연동-및-빌드-테스트/">GitLab 연동 및 빌드 테스트</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/29/ANSIBLE-설치-및-설정/" class="archive-article-date">
-  <time datetime="2019-04-29T08:23:56.000Z" itemprop="datePublished">4월 29</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="cjvenmhpf0001pknvdfvamkxu" class="article-share-link">공유</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/29/ANSIBLE-설치-및-설정/">ANSIBLE 설치 및 설정</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/29/젠킨스-설치-및-설정/" class="archive-article-date">
-  <time datetime="2019-04-29T08:21:03.000Z" itemprop="datePublished">4월 29</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/29/젠킨스-설치-및-설정/">젠킨스 설치 및 설정</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/29/DEVOPS/" class="archive-article-date">
-  <time datetime="2019-04-29T05:50:24.000Z" itemprop="datePublished">4월 29</time>
-</a>
-      
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/29/DEVOPS/">DEVOPS란...</a>
-    </h1>
   
+    <a href="/2019/05/08/ANSIBLE-NODE-등록/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">ANSIBLE NODE 등록 </div>
+    </a>
+  
+</nav>
 
-    </header>
-  </div>
+  
 </article>
-  
-  
-    </div></section>
-  
-
 
 </section>
         
