@@ -5,15 +5,20 @@
   
 
   
-  <title>태그: reply-to | </title>
+  <title>ANSIBLE NODE 등록  | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="https://skarlsla.github.io/tags/reply-to/index.html">
+  <meta name="description" content="Ansible은 모든 target node 작업을 ssh 기반으로 접근하여 처리한다. 타 시스템으로 접근하여 작업을 하기 위해 ID/PASS 없이 암호화된 키를 전달하여 상호 인증하는 환경을 구성해야 한다.  1. Ansible Hosts 파일에 노드 등록1234vi /etc/ansible/hosts[webservers]xxx.xxx.xxx.xxx  2.">
+<meta name="keywords" content="cd,배포">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ANSIBLE NODE 등록 ">
+<meta property="og:url" content="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/index.html">
 <meta property="og:site_name">
+<meta property="og:description" content="Ansible은 모든 target node 작업을 ssh 기반으로 접근하여 처리한다. 타 시스템으로 접근하여 작업을 하기 위해 ID/PASS 없이 암호화된 키를 전달하여 상호 인증하는 환경을 구성해야 한다.  1. Ansible Hosts 파일에 노드 등록1234vi /etc/ansible/hosts[webservers]xxx.xxx.xxx.xxx  2.">
 <meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2019-05-08T03:05:50.302Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title">
+<meta name="twitter:title" content="ANSIBLE NODE 등록 ">
+<meta name="twitter:description" content="Ansible은 모든 target node 작업을 ssh 기반으로 접근하여 처리한다. 타 시스템으로 접근하여 작업을 하기 위해 ID/PASS 없이 암호화된 키를 전달하여 상호 인증하는 환경을 구성해야 한다.  1. Ansible Hosts 파일에 노드 등록1234vi /etc/ansible/hosts[webservers]xxx.xxx.xxx.xxx  2.">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -60,40 +65,64 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/29/reply-to-옵션에-대한-분석/" class="archive-article-date">
-  <time datetime="2019-04-29T08:18:30.000Z" itemprop="datePublished">4월 29</time>
+        <section id="main"><article id="post-ANSIBLE-NODE-등록" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/08/ANSIBLE-NODE-등록/" class="article-date">
+  <time datetime="2019-05-08T03:01:26.000Z" itemprop="datePublished">2019-05-08</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/29/reply-to-옵션에-대한-분석/">reply-to 옵션에 대한 분석</a>
+    <h1 class="article-title" itemprop="name">
+      ANSIBLE NODE 등록 
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Ansible은 모든 target node 작업을 ssh 기반으로 접근하여 처리한다.</p>
+<p>타 시스템으로 접근하여 작업을 하기 위해 ID/PASS 없이 암호화된 키를 전달하여 상호 인증하는 환경을 구성해야 한다.</p>
+<hr>
+<h3 id="1-Ansible-Hosts-파일에-노드-등록"><a href="#1-Ansible-Hosts-파일에-노드-등록" class="headerlink" title="1. Ansible Hosts 파일에 노드 등록"></a>1. Ansible Hosts 파일에 노드 등록</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/ansible/hosts</span><br><span class="line"></span><br><span class="line">[webservers]</span><br><span class="line">xxx.xxx.xxx.xxx</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-SSH-Key-생성"><a href="#2-SSH-Key-생성" class="headerlink" title="2. SSH Key 생성"></a>2. SSH Key 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"nkyoon@xxx.com"</span></span><br><span class="line"><span class="built_in">cd</span> ./.ssh/</span><br><span class="line">cp id_rsa.pub authorized_keys</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="3-SSH-Key-NODE로-복사"><a href="#3-SSH-Key-NODE로-복사" class="headerlink" title="3. SSH Key NODE로 복사"></a>3. SSH Key NODE로 복사</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh root@web01 <span class="string">"mkdir ./.ssh;chmod 700 ./.ssh"</span></span><br><span class="line">scp authorized_keys root@01:~/.ssh/authorized_keys </span><br><span class="line"></span><br><span class="line">ansible webservers -m ping  <span class="comment">#테스트</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="cjven3qjq0004bcnvnzds2xzj" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
 
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/08/GitLab-연동-및-빌드-테스트/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">GitLab 연동 및 빌드 테스트</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         
