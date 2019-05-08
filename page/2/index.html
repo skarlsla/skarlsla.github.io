@@ -62,6 +62,104 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-kubernetest_rolling" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/04/kubernetest_rolling/" class="article-date">
+  <time datetime="2018-08-04T08:54:33.000Z" itemprop="datePublished">2018-08-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Kubernetes/">Kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/04/kubernetest_rolling/">무중단배포 rolling update strategy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-개요"><a href="#1-개요" class="headerlink" title="1. 개요"></a>1. 개요</h3><p>서비스 중단 없이 애플리케이션을 업데이트 하기 위해서, Kubernetes에서는 rolling update라는 기능을 지원합니다. 이 기능을 통해서 전체 Pod을 일시에 중단/업데이트 하는 것이 아니라, 한번에 n개씩 Pod을 순차적으로 업데이트할 수 있습니다. 이를 통해 서비스 중단 현상 없이 애플리케이션 버전 업데이트 및 롤백을 할 수 있습니다.</p>
+<hr>
+<h3 id="2-deployment-작성"><a href="#2-deployment-작성" class="headerlink" title="2. deployment 작성"></a>2. deployment 작성</h3><ul>
+<li>back-end-rolling-deployment.yaml<pre><code class="bash">apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+name: rolling-update-test
+spec:
+replicas: 3
+minReadySeconds: 10
+strategy:
+  <span class="built_in">type</span>: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+template:
+  metadata:
+    labels:
+      app: web-front-end
+      department: group3
+  spec:
+    containers:
+    - name: m-client-web
+      image: skarl/client:latest
+      env:
+      - name: PORT_ARGS
+        value: <span class="string">"--port=80"</span>
+      ports:
+      - containerPort: 80
+        name: web-port
+        protocol: TCP
+</code></pre>
+</li>
+</ul>
+<hr>
+<p>minReadySeconds : pod이 Ready 단계 부터 Available 단계 까지 식단 차이 시간을 설정하지 않으면 ready에서 곧바로 avaliable이 되고 순단 현상이 일어난다. 적절한 시간을 테스트하여 설정하는것이 좋다.</p>
+<p>strategy.type : “Recreate” or “RollingUpdate”를 설정가능. 기본값은 “RollingUpdate”, Recreate의 경우 Pod가 삭제된 후 재생성</p>
+<p>strategy.rollingUpdate.maxSurge : rolling update 중 정해진 Pod 수 이상으로 만들 수 있는 Pod의 최대 개수. 기본값은 25%</p>
+<p>strategy.rollingUpdate.maxUnavailable : rolling update 중 unavailable 상태인 Pod의 최대 개수를 설정. rollgin update 중 사용할 수 없는 Pod의 최대 개수. 값은 0보다 큰 정수를 통해 Pod의 절대 개수 설정이 가능하고, “25%“와 같이 percentage 표현 가능 . maxUnavailable에서 percentage 계산은 rounding down(내림) 방식이며 기본값은 25% 이다. maxSurge와 maxUnavailable 값이 동시에 0이 될 수 없다.</p>
+<hr>
+<h3 id="3-배포-테스트"><a href="#3-배포-테스트" class="headerlink" title="3. 배포 테스트"></a>3. 배포 테스트</h3><ul>
+<li>운영중인 상태</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/rolling-pre-dashboard.PNG" alt="Alt text"></p>
+<hr>
+<ul>
+<li>rolling update 중인 상태</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/rolling-ing.PNG" alt="Alt text"></p>
+<hr>
+<ul>
+<li>update 완료 상태</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/rolling-post-dashboard.PNG" alt="Alt text"></p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2018/08/04/kubernetest_rolling/" data-id="cjvemvscx000rqonvc8kpls7q" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-kubernetes_ingress_https" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/07/28/kubernetes_ingress_https/" class="article-date">
@@ -139,7 +237,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjv23lznk000assnvxelbxblc" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjvemvscq000mqonvdn3x1c13" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -188,7 +286,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjv23lznc0006ssnv8lzbeddp" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjvemvsch000eqonvgls514kc" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -425,7 +523,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjv23lznj0009ssnv83qonh0i" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjvemvses002gqonvmzu6por2" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -478,7 +576,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjv23lzo4000tssnvl74qsraq" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjvemvsd4000xqonvf6606jxf" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
@@ -533,7 +631,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjv23lznb0005ssnvmnwr2zzb" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjvemvsck000hqonvs69myw9q" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -588,7 +686,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjv23lznx000lssnv5zq1h495" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjvemvscz000tqonvgodvabll" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -663,7 +761,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjv23lzns000gssnvkytuhdgl" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjvemvscs000nqonvn5a6ugg8" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -739,7 +837,7 @@ rules:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjv23lzo9000zssnvkcij1db4" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjvemvsd6000zqonvmt7ubdjy" class="article-share-link">공유</a>
       
       
     </footer>
@@ -774,7 +872,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
     </div>
   </div>
 
@@ -784,7 +882,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 15px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/ingress/" style="font-size: 15px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 15px;">rpc</a> <a href="/tags/배포/" style="font-size: 10px;">배포</a>
+      <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 15px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 15px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 15px;">rpc</a> <a href="/tags/배포/" style="font-size: 10px;">배포</a>
     </div>
   </div>
     
@@ -793,7 +891,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">아카이브</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">5월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
     </div>
   </div>
 
@@ -804,6 +902,10 @@ rules:
     <h3 class="widget-title">최근 포스트</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/08/GitLab-연동-및-빌드-테스트/">GitLab 연동 및 빌드 테스트</a>
+          </li>
         
           <li>
             <a href="/2019/04/29/ANSIBLE-설치-및-설정/">ANSIBLE 설치 및 설정</a>
@@ -819,10 +921,6 @@ rules:
         
           <li>
             <a href="/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/">RabbitMQ가 재기동 됐을때 대응책</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/29/RPC/">RPC</a>
           </li>
         
       </ul>

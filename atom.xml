@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-04-29T08:26:04.110Z</updated>
+  <updated>2019-05-08T02:57:53.720Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GitLab 연동 및 빌드 테스트</title>
+    <link href="https://skarlsla.github.io/2019/05/08/GitLab-%EC%97%B0%EB%8F%99-%EB%B0%8F-%EB%B9%8C%EB%93%9C-%ED%85%8C%EC%8A%A4%ED%8A%B8/"/>
+    <id>https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/</id>
+    <published>2019-05-08T02:43:15.000Z</published>
+    <updated>2019-05-08T02:57:53.720Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="1-소스-코드-관리"><a href="#1-소스-코드-관리" class="headerlink" title="1. 소스 코드 관리"></a>1. 소스 코드 관리</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-2-36.png" alt="Alt text"></p><hr><h3 id="2-URL-연결시-ssl-이슈"><a href="#2-URL-연결시-ssl-이슈" class="headerlink" title="2. URL 연결시  ssl 이슈"></a>2. URL 연결시  ssl 이슈</h3><p>jenkins 관리 - 시스템설정 - 환경변수 추가</p><p>GIT_SSL_NO_VERIFY , true</p><hr><h3 id="3-빌드유발-웹훅-주소-획득"><a href="#3-빌드유발-웹훅-주소-획득" class="headerlink" title="3. 빌드유발 - 웹훅 주소 획득"></a>3. 빌드유발 - 웹훅 주소 획득</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image2019-4-16_18-3-54.png" alt="Alt text"></p><hr><h3 id="4-gitlab-프로젝트-설정-integrations"><a href="#4-gitlab-프로젝트-설정-integrations" class="headerlink" title="4. gitlab - 프로젝트 - 설정- integrations"></a>4. gitlab - 프로젝트 - 설정- integrations</h3><p>웹훅 url 입력 <a href="http://jenkins.xxx.com:9090/project/gitlab-devops-test" target="_blank" rel="noopener">http://jenkins.xxx.com:9090/project/gitlab-devops-test</a></p><p>푸쉬 이벤트시 빌드 유발</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-6-29.png" alt="Alt text"></p><hr><h3 id="5-웹훅-처리를-위한-아웃바운드-허용-ADMIN-설정"><a href="#5-웹훅-처리를-위한-아웃바운드-허용-ADMIN-설정" class="headerlink" title="5. 웹훅 처리를 위한 아웃바운드 허용 -  ADMIN- 설정"></a>5. 웹훅 처리를 위한 아웃바운드 허용 -  ADMIN- 설정</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-9-50.png" alt="Alt text"></p><hr><h3 id="6-빌드-시-작업-테스트"><a href="#6-빌드-시-작업-테스트" class="headerlink" title="6.  빌드 시 작업 테스트"></a>6.  빌드 시 작업 테스트</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-8-40.png" alt="Alt text"></p><hr><h3 id="7-푸쉬-이벤트-발생시-젠킨스-빌드"><a href="#7-푸쉬-이벤트-발생시-젠킨스-빌드" class="headerlink" title="7. 푸쉬 이벤트 발생시  젠킨스 빌드"></a>7. 푸쉬 이벤트 발생시  젠킨스 빌드</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-7-37.png" alt="Alt text"></p><p>참고: <a href="http://egloos.zum.com/mcchae/v/11246199" target="_blank" rel="noopener">http://egloos.zum.com/mcchae/v/11246199</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;1-소스-코드-관리&quot;&gt;&lt;a href=&quot;#1-소스-코드-관리&quot; class=&quot;headerlink&quot; title=&quot;1. 소스 코드 관리&quot;&gt;&lt;/a&gt;1. 소스 코드 관리&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubuse
+      
+    
+    </summary>
+    
+      <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
+    
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
+    
+      <category term="gitlab" scheme="https://skarlsla.github.io/tags/gitlab/"/>
+    
+  </entry>
   
   <entry>
     <title>ANSIBLE 설치 및 설정</title>
@@ -66,9 +94,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
-    
       <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
+    
+      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
   </entry>
   

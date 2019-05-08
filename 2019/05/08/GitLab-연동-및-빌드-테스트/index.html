@@ -5,15 +5,27 @@
   
 
   
-  <title>아카이브 | </title>
+  <title>GitLab 연동 및 빌드 테스트 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="https://skarlsla.github.io/archives/page/2/index.html">
+  <meta name="description" content="1. 소스 코드 관리  2. URL 연결시  ssl 이슈jenkins 관리 - 시스템설정 - 환경변수 추가 GIT_SSL_NO_VERIFY , true  3. 빌드유발 - 웹훅 주소 획득  4. gitlab - 프로젝트 - 설정- integrations웹훅 url 입력 http://jenkins.xxx.com:9090/project/gitlab-devop">
+<meta name="keywords" content="jenkins,gitlab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitLab 연동 및 빌드 테스트">
+<meta property="og:url" content="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/index.html">
 <meta property="og:site_name">
+<meta property="og:description" content="1. 소스 코드 관리  2. URL 연결시  ssl 이슈jenkins 관리 - 시스템설정 - 환경변수 추가 GIT_SSL_NO_VERIFY , true  3. 빌드유발 - 웹훅 주소 획득  4. gitlab - 프로젝트 - 설정- integrations웹훅 url 입력 http://jenkins.xxx.com:9090/project/gitlab-devop">
 <meta property="og:locale" content="ko">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-2-36.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image2019-4-16_18-3-54.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-6-29.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-9-50.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-8-40.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-7-37.png">
+<meta property="og:updated_time" content="2019-05-08T02:57:53.720Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title">
+<meta name="twitter:title" content="GitLab 연동 및 빌드 테스트">
+<meta name="twitter:description" content="1. 소스 코드 관리  2. URL 연결시  ssl 이슈jenkins 관리 - 시스템설정 - 환경변수 추가 GIT_SSL_NO_VERIFY , true  3. 빌드유발 - 웹훅 주소 획득  4. gitlab - 프로젝트 - 설정- integrations웹훅 url 입력 http://jenkins.xxx.com:9090/project/gitlab-devop">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-2-36.png">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -60,197 +72,75 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/08/04/kubernetest_rolling/" class="archive-article-date">
-  <time datetime="2018-08-04T08:54:33.000Z" itemprop="datePublished">8월 4</time>
+        <section id="main"><article id="post-GitLab-연동-및-빌드-테스트" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/08/GitLab-연동-및-빌드-테스트/" class="article-date">
+  <time datetime="2019-05-08T02:43:15.000Z" itemprop="datePublished">2019-05-08</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/04/kubernetest_rolling/">무중단배포 rolling update strategy</a>
+    <h1 class="article-title" itemprop="name">
+      GitLab 연동 및 빌드 테스트
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/28/kubernetes_ingress_https/" class="archive-article-date">
-  <time datetime="2018-07-28T04:10:53.000Z" itemprop="datePublished">7월 28</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/28/kubernetes_ingress_https/">nginx-ingress ssl 적용</a>
-    </h1>
-  
+        <hr>
+<h3 id="1-소스-코드-관리"><a href="#1-소스-코드-관리" class="headerlink" title="1. 소스 코드 관리"></a>1. 소스 코드 관리</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-2-36.png" alt="Alt text"></p>
+<hr>
+<h3 id="2-URL-연결시-ssl-이슈"><a href="#2-URL-연결시-ssl-이슈" class="headerlink" title="2. URL 연결시  ssl 이슈"></a>2. URL 연결시  ssl 이슈</h3><p>jenkins 관리 - 시스템설정 - 환경변수 추가</p>
+<p>GIT_SSL_NO_VERIFY , true</p>
+<hr>
+<h3 id="3-빌드유발-웹훅-주소-획득"><a href="#3-빌드유발-웹훅-주소-획득" class="headerlink" title="3. 빌드유발 - 웹훅 주소 획득"></a>3. 빌드유발 - 웹훅 주소 획득</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image2019-4-16_18-3-54.png" alt="Alt text"></p>
+<hr>
+<h3 id="4-gitlab-프로젝트-설정-integrations"><a href="#4-gitlab-프로젝트-설정-integrations" class="headerlink" title="4. gitlab - 프로젝트 - 설정- integrations"></a>4. gitlab - 프로젝트 - 설정- integrations</h3><p>웹훅 url 입력 <a href="http://jenkins.xxx.com:9090/project/gitlab-devops-test" target="_blank" rel="noopener">http://jenkins.xxx.com:9090/project/gitlab-devops-test</a></p>
+<p>푸쉬 이벤트시 빌드 유발</p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-6-29.png" alt="Alt text"></p>
+<hr>
+<h3 id="5-웹훅-처리를-위한-아웃바운드-허용-ADMIN-설정"><a href="#5-웹훅-처리를-위한-아웃바운드-허용-ADMIN-설정" class="headerlink" title="5. 웹훅 처리를 위한 아웃바운드 허용 -  ADMIN- 설정"></a>5. 웹훅 처리를 위한 아웃바운드 허용 -  ADMIN- 설정</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-9-50.png" alt="Alt text"></p>
+<hr>
+<h3 id="6-빌드-시-작업-테스트"><a href="#6-빌드-시-작업-테스트" class="headerlink" title="6.  빌드 시 작업 테스트"></a>6.  빌드 시 작업 테스트</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-8-40.png" alt="Alt text"></p>
+<hr>
+<h3 id="7-푸쉬-이벤트-발생시-젠킨스-빌드"><a href="#7-푸쉬-이벤트-발생시-젠킨스-빌드" class="headerlink" title="7. 푸쉬 이벤트 발생시  젠킨스 빌드"></a>7. 푸쉬 이벤트 발생시  젠킨스 빌드</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-7-37.png" alt="Alt text"></p>
+<p>참고: <a href="http://egloos.zum.com/mcchae/v/11246199" target="_blank" rel="noopener">http://egloos.zum.com/mcchae/v/11246199</a></p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/26/algori/" class="archive-article-date">
-  <time datetime="2018-07-26T05:39:13.000Z" itemprop="datePublished">7월 26</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/26/algori/">알고리즘 연습문제</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/25/kubernetes_ingressLB/" class="archive-article-date">
-  <time datetime="2018-07-25T06:30:13.000Z" itemprop="datePublished">7월 25</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="cjvemvsbu0001qonvx97uq4f8" class="article-share-link">공유</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/25/kubernetes_ingressLB/">nginx 컨테이너를 활용한 ingress load balancer 구성</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/25/redis_pod/" class="archive-article-date">
-  <time datetime="2018-07-25T06:26:13.000Z" itemprop="datePublished">7월 25</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/25/redis_pod/">redis simple deployment 및 service 작성</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/29/ANSIBLE-설치-및-설정/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">ANSIBLE 설치 및 설정</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/25/docker/" class="archive-article-date">
-  <time datetime="2018-07-25T05:22:13.000Z" itemprop="datePublished">7월 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/25/docker/">docker build &amp; push to docker-hub</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/24/kubernetest_dash/" class="archive-article-date">
-  <time datetime="2018-07-24T08:24:13.000Z" itemprop="datePublished">7월 24</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/24/kubernetest_dash/">kubernetes dashboard 설치</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/19/kubernetest/" class="archive-article-date">
-  <time datetime="2018-07-19T06:22:13.000Z" itemprop="datePublished">7월 19</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/19/kubernetest/">kubernetes 설치 For CentOS7</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-photo">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/19/markdonw문법/" class="archive-article-date">
-  <time datetime="2018-07-19T03:55:14.000Z" itemprop="datePublished">7월 19</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/19/markdonw문법/">마크다운 문법</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/archives/">&laquo; 이전</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-  </nav>
 
 </section>
         
