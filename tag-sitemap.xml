@@ -86,13 +86,6 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/ci/</loc>
-        <lastmod>2019-05-09T07:16:01.560Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/jenkins/</loc>
         <lastmod>2019-05-09T07:16:01.560Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -100,15 +93,22 @@
     </url>
 
     <url>
+        <loc>https://skarlsla.github.io/tags/ci/</loc>
+        <lastmod>2019-05-09T07:16:01.560Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://skarlsla.github.io/tags/%EB%B0%B0%ED%8F%AC/</loc>
-        <lastmod>2019-05-09T07:32:38.089Z</lastmod>
+        <lastmod>2019-05-09T07:34:40.528Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://skarlsla.github.io/tags/CD/</loc>
-        <lastmod>2019-05-09T07:32:38.089Z</lastmod>
+        <lastmod>2019-05-09T07:34:40.528Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
