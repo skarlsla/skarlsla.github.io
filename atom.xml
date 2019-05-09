@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-05-08T03:19:32.071Z</updated>
+  <updated>2019-05-09T07:16:01.560Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JENKINS - ANSIBLE 연동</title>
+    <link href="https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-%EC%97%B0%EB%8F%99/"/>
+    <id>https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-연동/</id>
+    <published>2019-05-08T03:25:42.000Z</published>
+    <updated>2019-05-09T07:16:01.560Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="1-플러그인-설치-ansible-plugin"><a href="#1-플러그인-설치-ansible-plugin" class="headerlink" title="1. 플러그인 설치 ansible plugin"></a>1. 플러그인 설치 ansible plugin</h3><hr><h3 id="2-Global-Tool-Config"><a href="#2-Global-Tool-Config" class="headerlink" title="2. Global Tool Config"></a>2. Global Tool Config</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-26-29.png" alt="Alt text"></p><hr><h3 id="3-Credential-추가-system-global-credentials"><a href="#3-Credential-추가-system-global-credentials" class="headerlink" title="3. Credential 추가 - system - global credentials"></a>3. Credential 추가 - system - global credentials</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-27-52.png" alt="Alt text"></p><hr><h3 id="4-빌드-추가-invoke-ansible-ad-hoc-command"><a href="#4-빌드-추가-invoke-ansible-ad-hoc-command" class="headerlink" title="4. 빌드 추가  invoke ansible ad-hoc command"></a>4. 빌드 추가  invoke ansible ad-hoc command</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-29-28.png" alt="Alt text"></p><hr><h3 id="5-credential-등록을-했음에도-에러가-난다…"><a href="#5-credential-등록을-했음에도-에러가-난다…" class="headerlink" title="5. credential 등록을 했음에도  에러가 난다…"></a>5. credential 등록을 했음에도  에러가 난다…</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-30-37.png" alt="Alt text"></p><hr><h3 id="6-jenkins-권한으로도-ssh-key를-등록해야한다"><a href="#6-jenkins-권한으로도-ssh-key를-등록해야한다" class="headerlink" title="6.  jenkins 권한으로도  ssh key를 등록해야한다."></a>6.  jenkins 권한으로도  ssh key를 등록해야한다.</h3><p>root에서는 ansible all -a “ls” 명령이 잘된다.</p><p>jenkins로 변경 후 테스트<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su -s /bin/bash jenkins</span><br><span class="line">xxx.xxx.xxx.xxx | UNREACHABLE! =&gt; &#123;</span><br><span class="line"><span class="string">"changed"</span>: <span class="literal">false</span>, </span><br><span class="line"><span class="string">"msg"</span>: <span class="string">"Failed to connect to the host via ssh: Warning: Permanently added 'xxx.xxx.xxx.xxx' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey,gssapi-keyex,gssapi-with-mic,password)."</span>, </span><br><span class="line"><span class="string">"unreachable"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>ssh 위치는  /var/lib/jenkins/.ssh</p><p>root .ssh/ 파일들을 복사해준다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ansible all -a <span class="string">"ls"</span> </span><br><span class="line"></span><br><span class="line">xxx.xxx.xxx.xxx | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">1</span><br><span class="line">cx</span><br><span class="line">node-v10.13.0</span><br><span class="line">node-v10.13.0-linux-x64</span><br><span class="line">node-v10.13.0-linux-x64.tar</span><br><span class="line">node-v10.13.0.tar.gz</span><br><span class="line">remi-release-7.5-2.el7.remi.noarch.rpm</span><br><span class="line">zabbix-agent-3.4.11-1.el7.x86_64.rpm</span><br><span class="line">zabbix-tcp-master</span><br><span class="line">Finished: SUCCESS</span><br></pre></td></tr></table></figure><hr><h3 id="7-최종-빌드-테스트"><a href="#7-최종-빌드-테스트" class="headerlink" title="7. 최종 빌드 테스트"></a>7. 최종 빌드 테스트</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-37-23.png" alt="Alt text"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;1-플러그인-설치-ansible-plugin&quot;&gt;&lt;a href=&quot;#1-플러그인-설치-ansible-plugin&quot; class=&quot;headerlink&quot; title=&quot;1. 플러그인 설치 ansible plugin&quot;&gt;&lt;/a&gt;1. 플러그인 
+      
+    
+    </summary>
+    
+      <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
+    
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
+    
+      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
+    
+  </entry>
   
   <entry>
     <title>ANSIBLE Ad-Hoc</title>
@@ -39,9 +67,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
-    
       <category term="배포" scheme="https://skarlsla.github.io/tags/%EB%B0%B0%ED%8F%AC/"/>
+    
+      <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
     
   </entry>
   
@@ -69,9 +97,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
-    
       <category term="배포" scheme="https://skarlsla.github.io/tags/%EB%B0%B0%ED%8F%AC/"/>
+    
+      <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
     
   </entry>
   
@@ -125,9 +153,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
-    
       <category term="배포" scheme="https://skarlsla.github.io/tags/%EB%B0%B0%ED%8F%AC/"/>
+    
+      <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
     
   </entry>
   
@@ -153,9 +181,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
-    
       <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
+    
+      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
   </entry>
   
@@ -312,11 +340,11 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="devops" scheme="https://skarlsla.github.io/tags/devops/"/>
+      <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
     
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
-      <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
+      <category term="devops" scheme="https://skarlsla.github.io/tags/devops/"/>
     
   </entry>
   
@@ -520,32 +548,6 @@
       
         &lt;hr&gt;
 &lt;h3 id=&quot;1-dashboard-admin-rbac-heapster-설치&quot;&gt;&lt;a href=&quot;#1-dashboard-admin-rbac-heapster-설치&quot; class=&quot;headerlink&quot; title=&quot;1. dashboard,admin-
-      
-    
-    </summary>
-    
-      <category term="Kubernetes" scheme="https://skarlsla.github.io/categories/Kubernetes/"/>
-    
-    
-      <category term="kubernetes" scheme="https://skarlsla.github.io/tags/kubernetes/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kubernetes 설치 For CentOS7</title>
-    <link href="https://skarlsla.github.io/2018/07/19/kubernetest/"/>
-    <id>https://skarlsla.github.io/2018/07/19/kubernetest/</id>
-    <published>2018-07-19T06:22:13.000Z</published>
-    <updated>2018-07-24T08:03:15.324Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h3 id="1-Docker-kubelet-kubeadm-설치-For-CentOS7"><a href="#1-Docker-kubelet-kubeadm-설치-For-CentOS7" class="headerlink" title="1. Docker, kubelet, kubeadm 설치(For CentOS7)"></a>1. Docker, kubelet, kubeadm 설치(For CentOS7)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=http://yum.kubernetes.io/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg</span><br><span class="line">       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF </span><br><span class="line"></span><br><span class="line">$ setenforce 0</span><br><span class="line">$ systemctl <span class="built_in">disable</span> firewalld &amp;&amp; systemctl stop firewalld</span><br><span class="line">$ yum install -y docker</span><br><span class="line">$ yum install -y kubelet kubeadm kubectl kubernetes-cni</span><br><span class="line">$ systemctl <span class="built_in">enable</span> docker &amp;&amp; systemctl restart docker</span><br><span class="line">$ systemctl <span class="built_in">enable</span> kubelet &amp;&amp; systemctl restart kubelet</span><br></pre></td></tr></table></figure><ul><li>master 서버 AND cluster Node서버 동일설치</li></ul><hr><h3 id="2-MASTER-서버-초기화"><a href="#2-MASTER-서버-초기화" class="headerlink" title="2. MASTER 서버 초기화"></a>2. MASTER 서버 초기화</h3><ul><li>network add-on으로 flannel을 사용할 때는 ‘–pod-network-cidr’ 옵션이 필수이다.</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ sudo kubeadm init --pod-network-cidr 10.244.0.0/16</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">생략</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">Your Kubernetes master has initialized successfully!</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run <span class="string">"kubectl apply -f [podnetwork].yaml"</span> with one of the options listed at:</span><br><span class="line">    http://kubernetes.io/docs/admin/addons/</span><br><span class="line"></span><br><span class="line">You can now join any number of machines by running the following on each node:</span><br><span class="line"></span><br><span class="line">kubeadm join --token=872aa9.d7610d83eabce1a4 &lt;master ip&gt;</span><br></pre></td></tr></table></figure><ul><li>초기화시 옵션 –kubernetes-version v1.9.2 –feature-gates CoreDNS=false</li></ul><hr><h3 id="3-Master에서-Pod-수행-For-TEST"><a href="#3-Master에서-Pod-수행-For-TEST" class="headerlink" title="3. Master에서 Pod 수행(For TEST)"></a>3. Master에서 Pod 수행(For TEST)</h3><ul><li>기본적으로 클러스터는 보안 문제로 master에서 pod를 스케줄링 하지 않는다. 하지만, 예를 들어 테스트할때 노드가 부족하거나 단일 노드에서 개발 용으로 kubernetes 클러스터를 사용할 때, master에서 pod를 스케줄링하도록 명령할 수 있다.</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl taint nodes --all node-role.kubernetes.io/master-</span><br></pre></td></tr></table></figure><hr><h3 id="4-pod-network-add-on-설치"><a href="#4-pod-network-add-on-설치" class="headerlink" title="4. pod network add-on 설치"></a>4. pod network add-on 설치</h3><ul><li>사용 가능한 network add-on 목록 중 하나를 선택한다. 클러스터 당 하나의 pod network만 설치할 수 있다. 각 network add-on 링크에 접속하면 설치 방법이 나와있다. ‘Weave Net’ 과 ‘Flannel’만이 멀티 플랫폼 환경(amd64, arm64, arhtp)을 지원한다.</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> KUBECONFIG=/etc/kubernetes/admin.conf</span><br><span class="line">sysctl net.bridge.bridge-nf-call-iptables=1</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure><hr><h3 id="5-Cluster-Node-Join"><a href="#5-Cluster-Node-Join" class="headerlink" title="5. Cluster Node Join"></a>5. Cluster Node Join</h3><ul><li>Master에서 Pod network설치가 완료되어 ‘kube-dns’가 Running 상태가 되었는지 확인한다.</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods --namespace=kube-system</span><br><span class="line">NAME                                            READY     STATUS    RESTARTS   AGE</span><br><span class="line">etcd-localhost.localdomain                      1/1       Running   0          3d</span><br><span class="line">kube-apiserver-localhost.localdomain            1/1       Running   0          3d</span><br><span class="line">kube-controller-manager-localhost.localdomain   1/1       Running   0          3d</span><br><span class="line">kube-dns-6f4fd4bdf-x4k6t                        3/3       Running   0          3d</span><br><span class="line">kube-flannel-ds-c5l2w                           1/1       Running   1          1d</span><br><span class="line">kube-flannel-ds-fxknd                           1/1       Running   2          3d</span><br><span class="line">kube-proxy-dg7xd                                1/1       Running   0          3d</span><br><span class="line">kube-proxy-pmbsb                                1/1       Running   0          1d</span><br><span class="line">kube-scheduler-localhost.localdomain            1/1       Running   0          3d</span><br></pre></td></tr></table></figure><ul><li>node 서버가 접속하여 master init에서 나온 결과를 입력한다.</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@node1]<span class="comment"># kubeadm join --token 64dd18.cb6f66d53a1b8710  [master-ip]:6443 </span></span><br><span class="line">--discovery-token-ca-cert-hash sha256:c5e8554a75dae6a7701dc12043cf6d2576842a4e360b24d38971fe0911c412ba </span><br><span class="line"></span><br><span class="line"><span class="comment">#마스터서버에서</span></span><br><span class="line">[root@master1]<span class="comment"># kubectl get nodes</span></span><br><span class="line">NAME              STATUS    ROLES     AGE       VERSION</span><br><span class="line">master1           Ready     master    3d        v1.9.6</span><br><span class="line">node1             Ready     node      1d        v1.9.6</span><br></pre></td></tr></table></figure><hr><h3 id="6-RESET-KUBERNETES-MASTER-AND-CLUSTER"><a href="#6-RESET-KUBERNETES-MASTER-AND-CLUSTER" class="headerlink" title="6. RESET KUBERNETES(MASTER AND CLUSTER)"></a>6. RESET KUBERNETES(MASTER AND CLUSTER)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kubeadm reset</span><br><span class="line">systemctl stop kubelet</span><br><span class="line">systemctl stop docker</span><br><span class="line">rm -rf /var/lib/cni/</span><br><span class="line">rm -rf /var/lib/kubelet/*</span><br><span class="line">rm -rf /etc/cni/</span><br><span class="line">ifconfig cni0 down</span><br><span class="line">ifconfig flannel.1 down</span><br><span class="line">ifconfig docker0 down</span><br><span class="line">ip link delete cni0</span><br><span class="line">ip link delete flannel.1</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h3 id=&quot;1-Docker-kubelet-kubeadm-설치-For-CentOS7&quot;&gt;&lt;a href=&quot;#1-Docker-kubelet-kubeadm-설치-For-CentOS7&quot; class=&quot;headerlink&quot; title=&quot;1. Docker
       
     
     </summary>
