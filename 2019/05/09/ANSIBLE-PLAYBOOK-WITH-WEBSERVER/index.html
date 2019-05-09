@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>ANSIBLE - PLAYBOOK WITH WEBSERVER | </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="playbook 구조  webserver.yml12345678910111213---- hosts: webservers  remote_user: root  become: no  vars:    git_user : nkyoon@mysoftwiz.com    git_password :    webapp_name: webserver    webapp_path:">
+<meta name="keywords" content="배포,CD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ANSIBLE - PLAYBOOK WITH WEBSERVER">
+<meta property="og:url" content="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="playbook 구조  webserver.yml12345678910111213---- hosts: webservers  remote_user: root  become: no  vars:    git_user : nkyoon@mysoftwiz.com    git_password :    webapp_name: webserver    webapp_path:">
+<meta property="og:locale" content="ko">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/playbook_structure.png">
+<meta property="og:updated_time" content="2019-05-09T07:32:38.089Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ANSIBLE - PLAYBOOK WITH WEBSERVER">
+<meta name="twitter:description" content="playbook 구조  webserver.yml12345678910111213---- hosts: webservers  remote_user: root  become: no  vars:    git_user : nkyoon@mysoftwiz.com    git_password :    webapp_name: webserver    webapp_path:">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/playbook_structure.png">
+  
+    <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo"></a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skarlsla.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ANSIBLE-PLAYBOOK-WITH-WEBSERVER" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" class="article-date">
+  <time datetime="2019-05-09T07:27:15.000Z" itemprop="datePublished">2019-05-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ANSIBLE - PLAYBOOK WITH WEBSERVER
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="playbook-구조"><a href="#playbook-구조" class="headerlink" title="playbook 구조"></a>playbook 구조</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/playbook_structure.png" alt="작동 싸이클"></p>
+<hr>
+<h3 id="webserver-yml"><a href="#webserver-yml" class="headerlink" title="webserver.yml"></a>webserver.yml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line">- hosts: webservers</span><br><span class="line">  remote_user: root</span><br><span class="line">  become: no</span><br><span class="line">  vars:</span><br><span class="line">    git_user : nkyoon@mysoftwiz.com</span><br><span class="line">    git_password :</span><br><span class="line">    webapp_name: webserver</span><br><span class="line">    webapp_path: /home/WebServer</span><br><span class="line">  roles:</span><br><span class="line">    - yum_packages</span><br><span class="line">    - app.source</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="yum-packages-tasks-main-yml"><a href="#yum-packages-tasks-main-yml" class="headerlink" title="yum_packages/tasks/main.yml"></a>yum_packages/tasks/main.yml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- name: nodejs repo</span><br><span class="line">  shell: <span class="string">"curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -"</span></span><br><span class="line"> </span><br><span class="line">- name: <span class="string">"Installing PKG"</span></span><br><span class="line">  yum:</span><br><span class="line">    state: present</span><br><span class="line">    name:</span><br><span class="line">      - git</span><br><span class="line">      - gcc-c++</span><br><span class="line">      - make</span><br><span class="line">      - nodejs</span><br><span class="line"> </span><br><span class="line">- name: install pm2</span><br><span class="line">  npm: name=pm2 global=<span class="literal">true</span> production=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="app-source-tasks-main-yml"><a href="#app-source-tasks-main-yml" class="headerlink" title="app.source/tasks/main.yml"></a>app.source/tasks/main.yml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">- name: pull from git</span><br><span class="line">  git:</span><br><span class="line">    repo: https://&#123;&#123; git_user | urlencode &#125;&#125;:&#123;&#123; git_password | urlencode &#125;&#125;@git.mysoftwiz.com/bittorage/WebServer.git</span><br><span class="line">    dest: <span class="string">"&#123;&#123; webapp_path &#125;&#125;"</span></span><br><span class="line">    update: yes</span><br><span class="line">    force: yes</span><br><span class="line">    version: develop</span><br><span class="line"> </span><br><span class="line"><span class="comment">## npm 의존성 모듈을 설치</span></span><br><span class="line">- name: install dependencies</span><br><span class="line">  shell: <span class="string">"cd &#123;&#123; webapp_path &#125;&#125; &amp;&amp; npm install "</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## npm build  -&gt; dist</span></span><br><span class="line">- name: npm build</span><br><span class="line">  shell: <span class="string">"cd &#123;&#123; webapp_path &#125;&#125; &amp;&amp; npm run-script build"</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## 앱의 설치 상태를 확인</span></span><br><span class="line">- name: check <span class="keyword">for</span> webapp</span><br><span class="line">  shell: <span class="string">"pm2 show &#123;&#123; webapp_name &#125;&#125;"</span></span><br><span class="line">  register: webapp_result</span><br><span class="line">  ignore_errors: <span class="literal">true</span></span><br><span class="line">  become: <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## 기존의 앱을 종료</span></span><br><span class="line">- name: stop webapp</span><br><span class="line">  shell: <span class="string">"pm2 stop &#123;&#123; webapp_name &#125;&#125;"</span></span><br><span class="line">  when: <span class="string">"webapp_status.rc == 0"</span></span><br><span class="line">  ignore_errors: <span class="literal">true</span></span><br><span class="line">  become: <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## 앱 실행</span></span><br><span class="line">- name: start webapp</span><br><span class="line">  shell: <span class="string">"cd &#123;&#123; webapp_path &#125;&#125; &amp;&amp; pm2 start pm2-config.json"</span></span><br><span class="line">  become: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="배포-테스트"><a href="#배포-테스트" class="headerlink" title="배포 테스트"></a>배포 테스트</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[root@tcid ansible]<span class="comment"># ansible-playbook webserver.yml</span></span><br><span class="line">PLAY [webservers] ******************************************************************************************************************************************************************************************</span><br><span class="line"> </span><br><span class="line">TASK [Gathering Facts] *************************************************************************************************************************************************************************************</span><br><span class="line">ok: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [yum_packages : nodejs repo] **************************************************************************************************************************************************************************</span><br><span class="line"> [WARNING]: Consider using the get_url or uri module rather than running <span class="string">'curl'</span>.  If you need to use <span class="built_in">command</span> because get_url or uri is insufficient you can add <span class="string">'warn: false'</span> to this <span class="built_in">command</span> task or <span class="built_in">set</span></span><br><span class="line"><span class="string">'command_warnings=False'</span> <span class="keyword">in</span> ansible.cfg to get rid of this message.</span><br><span class="line"> </span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [yum_packages : Installing PKG] ***********************************************************************************************************************************************************************</span><br><span class="line">ok: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [yum_packages : install pm2] **************************************************************************************************************************************************************************</span><br><span class="line">ok: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [app.source : pull from git] **************************************************************************************************************************************************************************</span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [app.source : install dependencies] *******************************************************************************************************************************************************************</span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [app.source : npm build] ******************************************************************************************************************************************************************************</span><br><span class="line"> </span><br><span class="line">TASK [app.source : check <span class="keyword">for</span> webapp] ***********************************************************************************************************************************************************************</span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [app.source : stop webapp] ****************************************************************************************************************************************************************************</span><br><span class="line">fatal: [10.178.61.201]: FAILED! =&gt; &#123;<span class="string">"msg"</span>: <span class="string">"The conditional check 'webapp_status.rc == 0' failed. The error was: error while evaluating conditional (webapp_status.rc == 0): 'webapp_status' is undefined\n\nThe error appears to have been in '/etc/ansible/roles/app.source/tasks/main.yml': line 25, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n## 기존의 앱을 종료\n- name: stop webapp\n  ^ here\n"</span>&#125;</span><br><span class="line">...ignoring</span><br><span class="line"> </span><br><span class="line">TASK [app.source : start webapp] ***************************************************************************************************************************************************************************</span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">PLAY RECAP *************************************************************************************************************************************************************************************************</span><br><span class="line">xxx.xxx.xxx.xxx            : ok=10   changed=6    unreachable=0    failed=0</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" data-id="cjvgc3tvx0005wonvicplw0id" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">ANSIBLE - PLAYBOOK 작성</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CD/" style="font-size: 12.5px;">CD</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a>
+    </div>
+  </div>
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">5월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/">ANSIBLE - PLAYBOOK WITH WEBSERVER</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/">ANSIBLE - PLAYBOOK 작성</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/08/JENKINS-ANSIBLE-연동/">JENKINS - ANSIBLE 연동</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/08/ANSIBLE-Ad-Hoc/">ANSIBLE Ad-Hoc</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/08/ANSIBLE-NODE-등록/">ANSIBLE NODE 등록 </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+    
+    
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 NamGi YOON<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -7,6 +7,22 @@
     </url>
 
     <url>
+        <loc>https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/</loc>
+        <lastmod>2019-05-09T07:32:38.089Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-%EC%9E%91%EC%84%B1/</loc>
+        <lastmod>2019-05-09T07:26:02.153Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-%EC%97%B0%EB%8F%99/</loc>
         <lastmod>2019-05-09T07:16:01.560Z</lastmod>
         <changefreq>weekly</changefreq>

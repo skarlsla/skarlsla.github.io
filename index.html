@@ -62,6 +62,106 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ANSIBLE-PLAYBOOK-WITH-WEBSERVER" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" class="article-date">
+  <time datetime="2019-05-09T07:27:15.000Z" itemprop="datePublished">2019-05-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/">ANSIBLE - PLAYBOOK WITH WEBSERVER</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="playbook-구조"><a href="#playbook-구조" class="headerlink" title="playbook 구조"></a>playbook 구조</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/playbook_structure.png" alt="작동 싸이클"></p>
+<hr>
+<h3 id="webserver-yml"><a href="#webserver-yml" class="headerlink" title="webserver.yml"></a>webserver.yml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line">- hosts: webservers</span><br><span class="line">  remote_user: root</span><br><span class="line">  become: no</span><br><span class="line">  vars:</span><br><span class="line">    git_user : nkyoon@mysoftwiz.com</span><br><span class="line">    git_password :</span><br><span class="line">    webapp_name: webserver</span><br><span class="line">    webapp_path: /home/WebServer</span><br><span class="line">  roles:</span><br><span class="line">    - yum_packages</span><br><span class="line">    - app.source</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="yum-packages-tasks-main-yml"><a href="#yum-packages-tasks-main-yml" class="headerlink" title="yum_packages/tasks/main.yml"></a>yum_packages/tasks/main.yml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- name: nodejs repo</span><br><span class="line">  shell: <span class="string">"curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -"</span></span><br><span class="line"> </span><br><span class="line">- name: <span class="string">"Installing PKG"</span></span><br><span class="line">  yum:</span><br><span class="line">    state: present</span><br><span class="line">    name:</span><br><span class="line">      - git</span><br><span class="line">      - gcc-c++</span><br><span class="line">      - make</span><br><span class="line">      - nodejs</span><br><span class="line"> </span><br><span class="line">- name: install pm2</span><br><span class="line">  npm: name=pm2 global=<span class="literal">true</span> production=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="app-source-tasks-main-yml"><a href="#app-source-tasks-main-yml" class="headerlink" title="app.source/tasks/main.yml"></a>app.source/tasks/main.yml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">- name: pull from git</span><br><span class="line">  git:</span><br><span class="line">    repo: https://&#123;&#123; git_user | urlencode &#125;&#125;:&#123;&#123; git_password | urlencode &#125;&#125;@git.mysoftwiz.com/bittorage/WebServer.git</span><br><span class="line">    dest: <span class="string">"&#123;&#123; webapp_path &#125;&#125;"</span></span><br><span class="line">    update: yes</span><br><span class="line">    force: yes</span><br><span class="line">    version: develop</span><br><span class="line"> </span><br><span class="line"><span class="comment">## npm 의존성 모듈을 설치</span></span><br><span class="line">- name: install dependencies</span><br><span class="line">  shell: <span class="string">"cd &#123;&#123; webapp_path &#125;&#125; &amp;&amp; npm install "</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## npm build  -&gt; dist</span></span><br><span class="line">- name: npm build</span><br><span class="line">  shell: <span class="string">"cd &#123;&#123; webapp_path &#125;&#125; &amp;&amp; npm run-script build"</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## 앱의 설치 상태를 확인</span></span><br><span class="line">- name: check <span class="keyword">for</span> webapp</span><br><span class="line">  shell: <span class="string">"pm2 show &#123;&#123; webapp_name &#125;&#125;"</span></span><br><span class="line">  register: webapp_result</span><br><span class="line">  ignore_errors: <span class="literal">true</span></span><br><span class="line">  become: <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## 기존의 앱을 종료</span></span><br><span class="line">- name: stop webapp</span><br><span class="line">  shell: <span class="string">"pm2 stop &#123;&#123; webapp_name &#125;&#125;"</span></span><br><span class="line">  when: <span class="string">"webapp_status.rc == 0"</span></span><br><span class="line">  ignore_errors: <span class="literal">true</span></span><br><span class="line">  become: <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## 앱 실행</span></span><br><span class="line">- name: start webapp</span><br><span class="line">  shell: <span class="string">"cd &#123;&#123; webapp_path &#125;&#125; &amp;&amp; pm2 start pm2-config.json"</span></span><br><span class="line">  become: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="배포-테스트"><a href="#배포-테스트" class="headerlink" title="배포 테스트"></a>배포 테스트</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[root@tcid ansible]<span class="comment"># ansible-playbook webserver.yml</span></span><br><span class="line">PLAY [webservers] ******************************************************************************************************************************************************************************************</span><br><span class="line"> </span><br><span class="line">TASK [Gathering Facts] *************************************************************************************************************************************************************************************</span><br><span class="line">ok: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [yum_packages : nodejs repo] **************************************************************************************************************************************************************************</span><br><span class="line"> [WARNING]: Consider using the get_url or uri module rather than running <span class="string">'curl'</span>.  If you need to use <span class="built_in">command</span> because get_url or uri is insufficient you can add <span class="string">'warn: false'</span> to this <span class="built_in">command</span> task or <span class="built_in">set</span></span><br><span class="line"><span class="string">'command_warnings=False'</span> <span class="keyword">in</span> ansible.cfg to get rid of this message.</span><br><span class="line"> </span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [yum_packages : Installing PKG] ***********************************************************************************************************************************************************************</span><br><span class="line">ok: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [yum_packages : install pm2] **************************************************************************************************************************************************************************</span><br><span class="line">ok: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [app.source : pull from git] **************************************************************************************************************************************************************************</span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [app.source : install dependencies] *******************************************************************************************************************************************************************</span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [app.source : npm build] ******************************************************************************************************************************************************************************</span><br><span class="line"> </span><br><span class="line">TASK [app.source : check <span class="keyword">for</span> webapp] ***********************************************************************************************************************************************************************</span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">TASK [app.source : stop webapp] ****************************************************************************************************************************************************************************</span><br><span class="line">fatal: [10.178.61.201]: FAILED! =&gt; &#123;<span class="string">"msg"</span>: <span class="string">"The conditional check 'webapp_status.rc == 0' failed. The error was: error while evaluating conditional (webapp_status.rc == 0): 'webapp_status' is undefined\n\nThe error appears to have been in '/etc/ansible/roles/app.source/tasks/main.yml': line 25, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n## 기존의 앱을 종료\n- name: stop webapp\n  ^ here\n"</span>&#125;</span><br><span class="line">...ignoring</span><br><span class="line"> </span><br><span class="line">TASK [app.source : start webapp] ***************************************************************************************************************************************************************************</span><br><span class="line">changed: [xxx.xxx.xxx.xxx]</span><br><span class="line"> </span><br><span class="line">PLAY RECAP *************************************************************************************************************************************************************************************************</span><br><span class="line">xxx.xxx.xxx.xxx            : ok=10   changed=6    unreachable=0    failed=0</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" data-id="cjvgc3tvx0005wonvicplw0id" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ANSIBLE-PLAYBOOK-작성" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/" class="article-date">
+  <time datetime="2019-05-09T07:23:03.000Z" itemprop="datePublished">2019-05-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/">ANSIBLE - PLAYBOOK 작성</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>playbook :<br>설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다. </p>
+<hr>
+<p>example<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers   <span class="comment"># /etc/ansible/hosts에 정의된 [webservers] 그룹</span></span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80    </span><br><span class="line">    max_clients: 200</span><br><span class="line">  remote_user: root   <span class="comment"># 작업유저</span></span><br><span class="line">  tasks:  <span class="comment"># 작업리스트</span></span><br><span class="line">  - name: ensure apache is at the latest version</span><br><span class="line">    yum:  <span class="comment"># 패키지 설치</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: latest</span><br><span class="line">  - name: write the apache config file</span><br><span class="line">    template: <span class="comment"># 파일 복사</span></span><br><span class="line">      src: /srv/httpd.j2</span><br><span class="line">      dest: /etc/httpd.conf</span><br><span class="line">    notify: <span class="comment"># handlers 노티</span></span><br><span class="line">    - restart apache</span><br><span class="line">  - name: ensure apache is running</span><br><span class="line">    service: <span class="comment">#서비스 실행</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: started</span><br><span class="line">  handlers: <span class="comment"># 노티를 listen</span></span><br><span class="line">    - name: restart apache</span><br><span class="line">      service:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br></pre></td></tr></table></figure></p>
+<p>작성된 playbook 실행<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook playbook.yml -f 10 <span class="comment"># 병렬처리 레벨 10</span></span><br></pre></td></tr></table></figure></p>
+<p>팁 명령어 옵션  –syntax-check  flag<br>에러 체크해쥼</p>
+<p>ansible-playbook playbook.yml –list-hosts # host 목록확인</p>
+<p>참고: <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html" target="_blank" rel="noopener">https://docs.ansible.com/ansible/latest/user_guide/playbooks.html</a><br>playbook 문법: <a href="https://taesany.tistory.com/139" target="_blank" rel="noopener">https://taesany.tistory.com/139</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-작성/" data-id="cjvgc3tvy0006wonvg06gb6tr" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JENKINS-ANSIBLE-연동" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/05/08/JENKINS-ANSIBLE-연동/" class="article-date">
@@ -109,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-연동/" data-id="cjvgbohst0005dcnvtaab2i8c" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-연동/" data-id="cjvgc3twm000owonvjhdvuhfd" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -158,7 +258,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="cjvgbohsj0000dcnvaouu5lf1" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="cjvgc3tvr0001wonvg2u3uwfh" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -207,7 +307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="cjvgbohsn0001dcnvh3sv4dxe" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="cjvgc3tvv0004wonvy4pbwkaq" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -267,7 +367,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="cjvgbohsu0006dcnvhcn37j0p" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="cjvgc3tw7000awonv8ivfi72m" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -316,7 +416,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="cjvgbohss0004dcnv27ljjb3q" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="cjvgc3tvn0000wonvr7v8bqax" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -361,7 +461,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="cjvgbohvz0031dcnvujvn2itg" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="cjvgc3tyv002swonv3dxnq1i6" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -413,7 +513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="cjvgbohuc001kdcnvhcl4yfk1" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="cjvgc3tys002pwonvuxowcwxh" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reply-to/">reply-to</a></li></ul>
@@ -461,140 +561,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" data-id="cjvgbohtb000hdcnv7u2g4yx2" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" data-id="cjvgc3twf000hwonvnjdqocsf" class="article-share-link">공유</a>
       
       
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-RPC" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/29/RPC/" class="article-date">
-  <time datetime="2019-04-29T08:13:45.000Z" itemprop="datePublished">2019-04-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/29/RPC/">RPC</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="원격-프로시져-호출-RPC"><a href="#원격-프로시져-호출-RPC" class="headerlink" title="원격 프로시져 호출 (RPC)"></a>원격 프로시져 호출 (RPC)</h3><p>RabbitMQ는 Request-Response로 Client와 Server를 이어주기 위해 RPC라는 개념으로 기능을 제공한다.</p>
-<p>RPC라는 거창한 이름을 사용하였지만 실제로는 Client의 request를 Server에 전달하고 , Server가 처리한 결과를 알맞은 Client 요청에 대한 응답으로 전달 할 수 있는 방법을 말한다.</p>
-<p>Message Properties 설명<br>DeliveryMode : persistent인지 transient인지 표시 (휘발성인지 비휘발성인지 구분자)</p>
-<p>ContentType : 내용물의 mime-type</p>
-<p>ReplyTo : Callback Queue의 이름</p>
-<p>CorrelationID : 요청을 구분할 수 있는 유일값</p>
-<p>처리 흐름<br>Client가 CorrelationID, ReplyTo 주어서 RabbitMQ의 특정 Request보관용 Queue에 데이터를 Push한다.</p>
-<p>Request용 Queue에 데이터를 Server에서 Consume하여 요청을 처리한다.</p>
-<p>요청처리 후 Request에서 받은 CorrelationID 와 ReplyTo를 추출하여, 요청ID를 속성으로 갖는 Response를 ReplyToQueue에 Push한다.</p>
-<p>Client는 ReplyTo Queue를 subscribe하고 있다가 Response가 오면 CorrelationID를 보고 어떤 요청에 대한 응답인지를 구분하여 처리한다.</p>
-<hr>
-<h3 id="RPC의-이점"><a href="#RPC의-이점" class="headerlink" title="RPC의 이점"></a>RPC의 이점</h3><p>RPC 구조를 응용하면 아래와 같은 상황에 이점을 얻을 수 있다.</p>
-<p>서버처리 이점<br>서버 처리속도가 느려서 성능을 증가 시키려고 할 때, RPC 서버를 하나 더 두고 같은 Request Queue를 바라보게 하면 됨 ( Round Robin 하므로 )</p>
-<p>Client 이점<br>하나의 메시지를 개별 Round Trip으로 처리를 위해 queueDeclare같은 동기처리 요청이 필요없다. (임시 Queue를 생성하여 Client마다 다른 Queue를 사용하므로)</p>
-<p>RPC 구성시 고려할 점<br>돌아가는 서버가 없을 때 Client 처리<br>요청 Timeout시 Client 처리<br>서버 Exception이나 오동작시 Client에게 이를 어떻게 전달할지<br>Invalid한 데이터가 서버로 전달 되었을 때의 처리</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/04/29/RPC/" data-id="cjvgbohti000odcnvjwejhoc0" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Persistent-Durable-Ack" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/29/Persistent-Durable-Ack/" class="article-date">
-  <time datetime="2019-04-29T08:09:10.000Z" itemprop="datePublished">2019-04-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/29/Persistent-Durable-Ack/">Persistent, Durable, Ack</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-메시지-수신-자동-확인-ack-noAck"><a href="#1-메시지-수신-자동-확인-ack-noAck" class="headerlink" title="1. 메시지 수신 자동 확인(ack , noAck)"></a>1. 메시지 수신 자동 확인(ack , noAck)</h3><p>작업을 수행하는 데 몇 초가 걸릴 수 있습니다. </p>
-<p>소비자 중 한 명이 긴 작업을 시작하고 부분적으로 만 수행되어 사망하는 경우 어떻게되는지 궁금 할 수 있습니다. </p>
-<p>현재의 코드(</p>
-<p>noAck : true<br>)를 사용하면 RabbitMQ가 고객에게 메시지를 전달하면 바로 삭제 표시가됩니다. </p>
-<p>이 경우 작업자를 죽이면 처리중인 메시지가 손실됩니다. </p>
-<p>이 특정 작업자에게 발송되었지만 아직 처리되지 않은 모든 메시지도 손실됩니다.</p>
-<p>noAck : false<br>ack를 전송하지 않고 소비자가 죽거나 (채널이 닫히거나 연결이 끊어 지거나 TCP 연결이 끊어지는 경우),</p>
-<p>RabbitMQ는 메시지가 완전히 처리되지 않았 음을 인식하고 다시 대기합니다.</p>
-<p>가끔씩 사망하더라도 메시지를 잃어 버리지 않을 것입니다.</p>
-<p>메시지 시간 초과가 없습니다. RabbitMQ는 소비자가 사망 할 때 메시지를 재전송합니다. </p>
-<p>메시지 처리가 매우 오랜 시간이 걸리는 경우에도 괜찮습니다.</p>
-<p>앞의 예에서 메시지 수신 확인이 해제되었습니다. 작업을 마친 후 에는  noAck : false    </p>
-<p>옵션 을 사용하여 설정을 해제하고 작업자에게 적절한 응답을 보내야합니다.</p>
-<p>ex) 자동 응답</p>
-<p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p>
-<p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>  }, secs * 1000);<br>}, {noAck: true});</p>
-<p>ex) 자동 미응답 &amp; ack(msg)</p>
-<p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p>
-<p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>    ch.ack(msg);<br>  }, secs * 1000);<br>}, {noAck: false});</p>
-<hr>
-<h3 id="2-메시지-내구성-durable-지속성-persistent"><a href="#2-메시지-내구성-durable-지속성-persistent" class="headerlink" title="2.  메시지 내구성(durable) , 지속성(persistent)"></a>2.  메시지 내구성(durable) , 지속성(persistent)</h3><p>우리는 소비자가 사망하더라도 작업이 손실되지 않도록하는 방법을 배웠습니다.  그러나 RabbitMQ 서버가 중지되면 우리의 작업은 여전히 손실됩니다.</p>
-<p>RabbitMQ가 종료되거나 충돌하면 사용자가 알리지 않는 한 대기열과 메시지를 잊어 버리게됩니다. 메시지가 손실되지 않도록하려면 큐와 메시지를 모두 튼튼하게 표시해야합니다.</p>
-<p>첫째, 우리는 RabbitMQ가 결코 우리 큐를 잃지 않도록해야합니다. 그렇게하기 위해서 우리는 그것을 durable 으로 선언 할 필요가있다 .</p>
-<p>ex) </p>
-<p>큐 할당시 </p>
-<p>ch.assertQueue ( ‘hello’ , { durable : true });<br>큐로 전송시 옵션</p>
-<p>ch.sendToQueue(q, new Buffer(msg), {persistent: true});</p>
-<hr>
-<h3 id="3-최종적으로-구현해야-할-옵션을-포함한-소스"><a href="#3-최종적으로-구현해야-할-옵션을-포함한-소스" class="headerlink" title="3.  최종적으로  구현해야 할 옵션을 포함한  소스"></a>3.  최종적으로  구현해야 할 옵션을 포함한  소스</h3><p>new_task.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line">    <span class="keyword">var</span> msg = process.argv.slice(<span class="number">2</span>).join(<span class="string">' '</span>) || <span class="string">"Hello World!"</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.sendToQueue(q, <span class="keyword">new</span> Buffer(msg), &#123;<span class="attr">persistent</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [x] Sent '%s'"</span>, msg);</span><br><span class="line">  &#125;);</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; conn.close(); process.exit(<span class="number">0</span>) &#125;, <span class="number">500</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>worker.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.prefetch(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [*] Waiting for messages in %s. To exit press CTRL+C"</span>, q);</span><br><span class="line">    ch.consume(q, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> secs = msg.content.toString().split(<span class="string">'.'</span>).length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">" [x] Received %s"</span>, msg.content.toString());</span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">" [x] Done"</span>);</span><br><span class="line">        ch.ack(msg);</span><br><span class="line">      &#125;, secs * <span class="number">1000</span>);</span><br><span class="line">    &#125;, &#123;<span class="attr">noAck</span>: <span class="literal">false</span>&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/" data-id="cjvgboht8000edcnv9kui91f4" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li></ul>
-
     </footer>
   </div>
   
@@ -627,7 +596,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
     </div>
   </div>
 
@@ -637,7 +606,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 20px;">cd</a> <a href="/tags/ci/" style="font-size: 16.67px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 13.33px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 16.67px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 13.33px;">rpc</a> <a href="/tags/배포/" style="font-size: 16.67px;">배포</a>
+      <a href="/tags/CD/" style="font-size: 12.5px;">CD</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a>
     </div>
   </div>
     
@@ -659,6 +628,14 @@
       <ul>
         
           <li>
+            <a href="/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/">ANSIBLE - PLAYBOOK WITH WEBSERVER</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/">ANSIBLE - PLAYBOOK 작성</a>
+          </li>
+        
+          <li>
             <a href="/2019/05/08/JENKINS-ANSIBLE-연동/">JENKINS - ANSIBLE 연동</a>
           </li>
         
@@ -668,14 +645,6 @@
         
           <li>
             <a href="/2019/05/08/ANSIBLE-NODE-등록/">ANSIBLE NODE 등록 </a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/08/GitLab-연동-및-빌드-테스트/">GitLab 연동 및 빌드 테스트</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/29/ANSIBLE-설치-및-설정/">ANSIBLE 설치 및 설정</a>
           </li>
         
       </ul>

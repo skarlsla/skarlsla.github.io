@@ -5,23 +5,20 @@
   
 
   
-  <title>HPA(오토스케일링) 활용법 | </title>
+  <title>ANSIBLE - PLAYBOOK 작성 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 개요 애플리케이션을 자동으로 Scale-out 할수 있는 Horizontal Pod Autoscaler 기능  CPU 자원설정에 따라 자동으로 pod의 숫자를 scale-up 한다.  2. deployment 작성 back-end-rolling-deployment.yamlapiVersion: apps/v1beta2 kind: Deployment me">
-<meta name="keywords" content="kubernetes">
+  <meta name="description" content="playbook :설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다.   example1234567891011121314151617181920212223242526---- hosts: webservers   # /etc/ansible/hosts에 정의된 [webservers] 그룹  vars:    http_port: 80">
+<meta name="keywords" content="배포,CD">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HPA(오토스케일링) 활용법">
-<meta property="og:url" content="https://skarlsla.github.io/2018/08/14/kubernetest_hpa/index.html">
+<meta property="og:title" content="ANSIBLE - PLAYBOOK 작성">
+<meta property="og:url" content="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-작성/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="1. 개요 애플리케이션을 자동으로 Scale-out 할수 있는 Horizontal Pod Autoscaler 기능  CPU 자원설정에 따라 자동으로 pod의 숫자를 scale-up 한다.  2. deployment 작성 back-end-rolling-deployment.yamlapiVersion: apps/v1beta2 kind: Deployment me">
+<meta property="og:description" content="playbook :설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다.   example1234567891011121314151617181920212223242526---- hosts: webservers   # /etc/ansible/hosts에 정의된 [webservers] 그룹  vars:    http_port: 80">
 <meta property="og:locale" content="ko">
-<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/hpa-w.PNG">
-<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/hpa-pods-incre.PNG">
-<meta property="og:updated_time" content="2018-10-18T02:29:03.664Z">
+<meta property="og:updated_time" content="2019-05-09T07:26:02.153Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HPA(오토스케일링) 활용법">
-<meta name="twitter:description" content="1. 개요 애플리케이션을 자동으로 Scale-out 할수 있는 Horizontal Pod Autoscaler 기능  CPU 자원설정에 따라 자동으로 pod의 숫자를 scale-up 한다.  2. deployment 작성 back-end-rolling-deployment.yamlapiVersion: apps/v1beta2 kind: Deployment me">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/hpa-w.PNG">
+<meta name="twitter:title" content="ANSIBLE - PLAYBOOK 작성">
+<meta name="twitter:description" content="playbook :설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다.   example1234567891011121314151617181920212223242526---- hosts: webservers   # /etc/ansible/hosts에 정의된 [webservers] 그룹  vars:    http_port: 80">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -68,14 +65,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-kubernetest_hpa" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ANSIBLE-PLAYBOOK-작성" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/08/14/kubernetest_hpa/" class="article-date">
-  <time datetime="2018-08-14T04:14:35.000Z" itemprop="datePublished">2018-08-14</time>
+    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/" class="article-date">
+  <time datetime="2019-05-09T07:23:03.000Z" itemprop="datePublished">2019-05-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Kubernetes/">Kubernetes</a>
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
   </div>
 
   </div>
@@ -86,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      HPA(오토스케일링) 활용법
+      ANSIBLE - PLAYBOOK 작성
     </h1>
   
 
@@ -94,118 +91,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h3 id="1-개요"><a href="#1-개요" class="headerlink" title="1. 개요"></a>1. 개요</h3><ul>
-<li>애플리케이션을 자동으로 Scale-out 할수 있는 Horizontal Pod Autoscaler 기능</li>
-</ul>
-<p>CPU 자원설정에 따라 자동으로 pod의 숫자를 scale-up 한다.</p>
+        <p>playbook :<br>설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다. </p>
 <hr>
-<h3 id="2-deployment-작성"><a href="#2-deployment-작성" class="headerlink" title="2. deployment 작성"></a>2. deployment 작성</h3><ul>
-<li>back-end-rolling-deployment.yaml<pre><code class="bash">apiVersion: apps/v1beta2
-kind: Deployment
-metadata:
-name: rolling-update-test
-labels:
-  app: web-front-end
-spec:
-replicas: 1
-minReadySeconds: 10
-strategy:
-  <span class="built_in">type</span>: RollingUpdate
-  rollingUpdate:
-    maxUnavailable: 50%
-selector:
-  matchLabels:
-    app: web-front-end
-template:
-  metadata:
-    labels:
-      app: web-front-end
-      department: group3
-  spec:
-    containers:
-    - name: m-client-rolling
-      image: skarl/client:latest
-      env:
-      - name: PORT_ARGS
-        value: <span class="string">"--port=80"</span>
-      ports:
-      - containerPort: 80
-        name: web-port
-        protocol: TCP
-      resources:
-        requests:
-          memory: <span class="string">"256Mi"</span>
-          cpu: <span class="string">"200m"</span>
-        limits:
-          memory: <span class="string">"1Gi"</span>
-          cpu: <span class="string">"500m"</span>
-</code></pre>
-</li>
-</ul>
-<hr>
-<p>Resources Requests 사용량 설정 필수<br>resources.requests.cpu 부분에 CPU 자원을 200m(milli-cores) 또는 0.2로 요청</p>
-<hr>
-<h3 id="2-hpa-작성"><a href="#2-hpa-작성" class="headerlink" title="2. hpa 작성"></a>2. hpa 작성</h3><ul>
-<li>hpa-deployment.yaml</li>
-</ul>
-<pre><code class="bash">apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: rolling-update-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1beta2
-    kind: Deployment
-    name: rolling-update-test
-  maxReplicas: 10
-  minReplicas: 1
-  targetCPUUtilizationPercentage: 10
-</code></pre>
-<p>scaleTargetRef: 대상설정<br>minReplicas: 최소pod<br>maxReplicas: 최대pod<br>targetCPUUtilizationPercentage: CPU 사용 임계치 %로설정 넘어서면 업스케일 동작</p>
-<h3 id="3-모니터링-및-테스트"><a href="#3-모니터링-및-테스트" class="headerlink" title="3. 모니터링 및 테스트"></a>3. 모니터링 및 테스트</h3><ul>
-<li>부하테스트를 통해 cpu 사용량 늘리고</li>
-</ul>
-<p>while true; do wget q -O <a href="https://rolling.test.com:30100/coin/list" target="_blank" rel="noopener">https://rolling.test.com:30100/coin/list</a>; done</p>
-<ul>
-<li>명령어로 모니터링 kubectl get hpa -w</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/hpa-w.PNG" alt="Alt text"></p>
-<ul>
-<li>대쉬보드에서 확장된 pods 확인</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/hpa-pods-incre.PNG" alt="Alt text"></p>
-<hr>
-<h3 id="4-사용중-CPU-gt-UNKnown-일때-해결방법"><a href="#4-사용중-CPU-gt-UNKnown-일때-해결방법" class="headerlink" title="4. 사용중 CPU -&gt; UNKnown 일때 해결방법"></a>4. 사용중 CPU -&gt; UNKnown 일때 해결방법</h3><ul>
-<li>메트릭 api 존재유무 확인</li>
-</ul>
-<pre><code class="bash">kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
-</code></pre>
-<ul>
-<li>메트릭 서버 설치</li>
-</ul>
-<p>git clone <a href="https://github.com/kubernetes-incubator/metrics-server.git" target="_blank" rel="noopener">https://github.com/kubernetes-incubator/metrics-server.git</a><br>cd metrics-server/<br>kubectl create -f deploy/1.8+/</p>
-<ul>
-<li>설치 후 확인</li>
-</ul>
-<p>[root@tweb01 ~] kubectl get –raw “/apis/metrics.k8s.io/v1beta1/nodes” {“kind”:”NodeMetricsList”,”apiVersion”:”metrics.k8s.io/v1beta1”,”metadata”:{“selfLink”:”/apis/metrics.k8s.io/v1beta1/nodes”},”items”:[{“metadata”:{“name”:”tweb01.freebex.com”,”selfLink”:”/apis/metrics.k8s.io/v1beta1/nodes/tweb01.freebex.com”,”creationTimestamp”:”2018-06-28T07:27:00Z”},”timestamp”:”2018-06-28T07:26:00Z”,”window”:”1m0s”,”usage”:{“cpu”:”116m”,”memory”:”2454816Ki”}},{“metadata”:{“name”:”tweb02.freebex.com”,”selfLink”:”/apis/metrics.k8s.io/v1beta1/nodes/tweb02.freebex.com”,”creationTimestamp”:”2018-06-28T07:27:00Z”},”timestamp”:”2018-06-28T07:26:00Z”,”window”:”1m0s”,”usage”:{“cpu”:”76m”,”memory”:”1818256Ki”}}]}</p>
-<ul>
-<li>kubernetes 설정파일 수정</li>
-</ul>
-<p>vi /etc/kubernetes/manifests/kube-controller-manager.yaml</p>
-<p>controller-manager 옵션에 추가</p>
-<ul>
-<li>–horizontal-pod-autoscaler-use-rest-clients=true</li>
-</ul>
-<p>그래도 unknown이 나오면 재실행 해보고 부하를 줘보고 기다려보면 나온다.</p>
+<p>example<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers   <span class="comment"># /etc/ansible/hosts에 정의된 [webservers] 그룹</span></span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80    </span><br><span class="line">    max_clients: 200</span><br><span class="line">  remote_user: root   <span class="comment"># 작업유저</span></span><br><span class="line">  tasks:  <span class="comment"># 작업리스트</span></span><br><span class="line">  - name: ensure apache is at the latest version</span><br><span class="line">    yum:  <span class="comment"># 패키지 설치</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: latest</span><br><span class="line">  - name: write the apache config file</span><br><span class="line">    template: <span class="comment"># 파일 복사</span></span><br><span class="line">      src: /srv/httpd.j2</span><br><span class="line">      dest: /etc/httpd.conf</span><br><span class="line">    notify: <span class="comment"># handlers 노티</span></span><br><span class="line">    - restart apache</span><br><span class="line">  - name: ensure apache is running</span><br><span class="line">    service: <span class="comment">#서비스 실행</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: started</span><br><span class="line">  handlers: <span class="comment"># 노티를 listen</span></span><br><span class="line">    - name: restart apache</span><br><span class="line">      service:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br></pre></td></tr></table></figure></p>
+<p>작성된 playbook 실행<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook playbook.yml -f 10 <span class="comment"># 병렬처리 레벨 10</span></span><br></pre></td></tr></table></figure></p>
+<p>팁 명령어 옵션  –syntax-check  flag<br>에러 체크해쥼</p>
+<p>ansible-playbook playbook.yml –list-hosts # host 목록확인</p>
+<p>참고: <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html" target="_blank" rel="noopener">https://docs.ansible.com/ansible/latest/user_guide/playbooks.html</a><br>playbook 문법: <a href="https://taesany.tistory.com/139" target="_blank" rel="noopener">https://taesany.tistory.com/139</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2018/08/14/kubernetest_hpa/" data-id="cjvgc3tyh002hwonvwzdj320h" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-작성/" data-id="cjvgc3tvy0006wonvg06gb6tr" class="article-share-link">공유</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
 
     </footer>
   </div>
@@ -213,19 +113,19 @@ spec:
     
 <nav id="article-nav">
   
-    <a href="/2019/04/29/DEVOPS/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">최신</strong>
       <div class="article-nav-title">
         
-          DEVOPS란...
+          ANSIBLE - PLAYBOOK WITH WEBSERVER
         
       </div>
     </a>
   
   
-    <a href="/2018/08/04/kubernetest_rolling/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/05/08/JENKINS-ANSIBLE-연동/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">무중단배포 rolling update strategy</div>
+      <div class="article-nav-title">JENKINS - ANSIBLE 연동</div>
     </a>
   
 </nav>

@@ -79,15 +79,15 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/%EB%B0%B0%ED%8F%AC/</loc>
+        <loc>https://skarlsla.github.io/tags/cd/</loc>
         <lastmod>2019-05-08T03:19:32.071Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/cd/</loc>
-        <lastmod>2019-05-08T03:19:32.071Z</lastmod>
+        <loc>https://skarlsla.github.io/tags/ci/</loc>
+        <lastmod>2019-05-09T07:16:01.560Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -100,8 +100,15 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/ci/</loc>
-        <lastmod>2019-05-09T07:16:01.560Z</lastmod>
+        <loc>https://skarlsla.github.io/tags/%EB%B0%B0%ED%8F%AC/</loc>
+        <lastmod>2019-05-09T07:32:38.089Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/CD/</loc>
+        <lastmod>2019-05-09T07:32:38.089Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
