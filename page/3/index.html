@@ -69,6 +69,115 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-kubernetes_ingress_https" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/28/kubernetes_ingress_https/" class="article-date">
+  <time datetime="2018-07-28T04:10:53.000Z" itemprop="datePublished">2018-07-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Kubernetes/">Kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/28/kubernetes_ingress_https/">nginx-ingress ssl 적용</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-secret-생성"><a href="#1-secret-생성" class="headerlink" title="1. secret 생성"></a>1. secret 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create secret tls <span class="built_in">test</span>-secret --key _test_SHA256WITHRSA.key --cert test_ssl.crt</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-ingress-rule-수정"><a href="#2-ingress-rule-수정" class="headerlink" title="2. ingress rule 수정"></a>2. ingress rule 수정</h3><ul>
+<li>default-back-end-service.yaml<pre><code class="bash">apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+name: nginx-ingress
+namespace: default
+spec:
+tls:
+- hosts:
+  - www.test.com
+  - m.test.com
+  secretName: <span class="built_in">test</span>-secret
+rules:
+- host: [svc1 도메인]
+  http:
+    paths:
+    - backend:
+        serviceName: backend-svc-1
+        servicePort: 80
+- host: [svc2 도메인]
+  http:
+    paths:
+    - backend:
+        serviceName: backend-svc-2
+        servicePort: 80
+- host: [통합 도메인]
+  http:
+    paths:
+    - path: /svc1
+      backend:
+        serviceName: backend-svc-1
+        servicePort: 80
+    - path: /svc2
+      backend:
+        serviceName: backend-svc-2
+        servicePort: 80
+    - path: /nginx_status
+      backend:
+        serviceName: nginx-ingress-nodeport
+        servicePort: 18080
+</code></pre>
+</li>
+</ul>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjxyf13d20022t8nvmf6ruddr" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-algori" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/07/26/algori/" class="article-date">
@@ -126,7 +235,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjxyesw1j000urgnvx81awdrm" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjxyf13d00020t8nv8m9r91w5" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -383,7 +492,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjxyesw1q0011rgnvw24f8q8t" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjxyf13cx001xt8nvehjph1xm" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -456,7 +565,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjxyesw4a0037rgnvx53rvr2y" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjxyf13dv002st8nv35ldhx9s" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
@@ -531,7 +640,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjxyesw1o000zrgnvfot3o4m0" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjxyf13cv001wt8nvr6g6dziu" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -606,7 +715,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjxyesw1v0015rgnvx0cjq8hi" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjxyf13d40023t8nvnvww0w3i" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -701,7 +810,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjxyesw1x0018rgnvkezxte8g" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjxyf13d70027t8nve79ivwq0" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -797,7 +906,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjxyesw410032rgnvbxcf5dxy" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjxyf13dl002it8nv3motksaf" class="article-share-link">공유</a>
       
       
     </footer>
@@ -842,7 +951,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 12.5px;">CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 12.5px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 12.5px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/타입스크립트/" style="font-size: 10px;">타입스크립트</a>
+      <a href="/tags/CD/" style="font-size: 12.5px;">CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
     </div>
   </div>
     
@@ -872,15 +981,15 @@ rules:
           </li>
         
           <li>
+            <a href="/2019/07/10/node-with-type/">[NODEJS] TypeScript with Node.js </a>
+          </li>
+        
+          <li>
             <a href="/2019/07/10/node-type/">[NODEJS] 타입스크립트(typescript) ?</a>
           </li>
         
           <li>
             <a href="/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/">ANSIBLE - PLAYBOOK WITH WEBSERVER</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/">ANSIBLE - PLAYBOOK 작성</a>
           </li>
         
       </ul>

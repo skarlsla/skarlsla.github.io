@@ -5,20 +5,20 @@
   
 
   
-  <title>ANSIBLE NODE 등록  | </title>
+  <title>[NODEJS] TypeScript with Node.js  | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Ansible은 모든 target node 작업을 ssh 기반으로 접근하여 처리한다. 타 시스템으로 접근하여 작업을 하기 위해 ID/PASS 없이 암호화된 키를 전달하여 상호 인증하는 환경을 구성해야 한다.  1. Ansible Hosts 파일에 노드 등록1234vi /etc/ansible/hosts[webservers]xxx.xxx.xxx.xxx  2.">
-<meta name="keywords" content="배포,cd">
+  <meta name="description" content="[NODEJS] TypeScript with Node.js ? 프로젝트 폴더 생성   init 1npm init -y  타입스크립트 설치 1npm install -g typescript  타입설정 초기화 1tsc — init  tsconfig.json 수정 1234567891011121314&amp;#123;  &quot;compilerOptions&quot;: &amp;#123;">
+<meta name="keywords" content="NODEJS,타입스크립트,typescript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ANSIBLE NODE 등록 ">
-<meta property="og:url" content="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/index.html">
+<meta property="og:title" content="[NODEJS] TypeScript with Node.js ">
+<meta property="og:url" content="https://skarlsla.github.io/2019/07/10/node-with-type/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="Ansible은 모든 target node 작업을 ssh 기반으로 접근하여 처리한다. 타 시스템으로 접근하여 작업을 하기 위해 ID/PASS 없이 암호화된 키를 전달하여 상호 인증하는 환경을 구성해야 한다.  1. Ansible Hosts 파일에 노드 등록1234vi /etc/ansible/hosts[webservers]xxx.xxx.xxx.xxx  2.">
+<meta property="og:description" content="[NODEJS] TypeScript with Node.js ? 프로젝트 폴더 생성   init 1npm init -y  타입스크립트 설치 1npm install -g typescript  타입설정 초기화 1tsc — init  tsconfig.json 수정 1234567891011121314&amp;#123;  &quot;compilerOptions&quot;: &amp;#123;">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2019-05-08T03:05:50.302Z">
+<meta property="og:updated_time" content="2019-07-11T08:33:43.311Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ANSIBLE NODE 등록 ">
-<meta name="twitter:description" content="Ansible은 모든 target node 작업을 ssh 기반으로 접근하여 처리한다. 타 시스템으로 접근하여 작업을 하기 위해 ID/PASS 없이 암호화된 키를 전달하여 상호 인증하는 환경을 구성해야 한다.  1. Ansible Hosts 파일에 노드 등록1234vi /etc/ansible/hosts[webservers]xxx.xxx.xxx.xxx  2.">
+<meta name="twitter:title" content="[NODEJS] TypeScript with Node.js ">
+<meta name="twitter:description" content="[NODEJS] TypeScript with Node.js ? 프로젝트 폴더 생성   init 1npm init -y  타입스크립트 설치 1npm install -g typescript  타입설정 초기화 1tsc — init  tsconfig.json 수정 1234567891011121314&amp;#123;  &quot;compilerOptions&quot;: &amp;#123;">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -72,14 +72,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-ANSIBLE-NODE-등록" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-node-with-type" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/05/08/ANSIBLE-NODE-등록/" class="article-date">
-  <time datetime="2019-05-08T03:01:26.000Z" itemprop="datePublished">2019-05-08</time>
+    <a href="/2019/07/10/node-with-type/" class="article-date">
+  <time datetime="2019-07-10T11:40:30.000Z" itemprop="datePublished">2019-07-10</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+    <a class="article-category-link" href="/categories/NODEJS/">NODEJS</a>
   </div>
 
   </div>
@@ -100,7 +100,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ANSIBLE NODE 등록 
+      [NODEJS] TypeScript with Node.js 
     </h1>
   
 
@@ -108,14 +108,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Ansible은 모든 target node 작업을 ssh 기반으로 접근하여 처리한다.</p>
-<p>타 시스템으로 접근하여 작업을 하기 위해 ID/PASS 없이 암호화된 키를 전달하여 상호 인증하는 환경을 구성해야 한다.</p>
-<hr>
-<h3 id="1-Ansible-Hosts-파일에-노드-등록"><a href="#1-Ansible-Hosts-파일에-노드-등록" class="headerlink" title="1. Ansible Hosts 파일에 노드 등록"></a>1. Ansible Hosts 파일에 노드 등록</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/ansible/hosts</span><br><span class="line"></span><br><span class="line">[webservers]</span><br><span class="line">xxx.xxx.xxx.xxx</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="2-SSH-Key-생성"><a href="#2-SSH-Key-생성" class="headerlink" title="2. SSH Key 생성"></a>2. SSH Key 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"nkyoon@xxx.com"</span></span><br><span class="line"><span class="built_in">cd</span> ./.ssh/</span><br><span class="line">cp id_rsa.pub authorized_keys</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="3-SSH-Key-NODE로-복사"><a href="#3-SSH-Key-NODE로-복사" class="headerlink" title="3. SSH Key NODE로 복사"></a>3. SSH Key NODE로 복사</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh root@web01 <span class="string">"mkdir ./.ssh;chmod 700 ./.ssh"</span></span><br><span class="line">scp authorized_keys root@01:~/.ssh/authorized_keys </span><br><span class="line"></span><br><span class="line">ansible webservers -m ping  <span class="comment">#테스트</span></span><br></pre></td></tr></table></figure>
+        <h3 id="NODEJS-TypeScript-with-Node-js"><a href="#NODEJS-TypeScript-with-Node-js" class="headerlink" title="[NODEJS] TypeScript with Node.js ?"></a>[NODEJS] TypeScript with Node.js ?</h3><ol>
+<li><p>프로젝트 폴더 생성 </p>
+</li>
+<li><p>init</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>타입스크립트 설치</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g typescript</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>타입설정 초기화</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc — init</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tsconfig.json 수정</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="comment">/* Basic Options */</span></span><br><span class="line">    <span class="string">"target"</span>: <span class="string">"es5"</span>,                          <span class="comment">/* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */</span></span><br><span class="line">    <span class="string">"module"</span>: <span class="string">"commonjs"</span>,                     <span class="comment">/* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */</span></span><br><span class="line">    <span class="string">"outDir"</span>: <span class="string">"./dist"</span>,                        <span class="comment">/* Redirect output structure to the directory. */</span></span><br><span class="line">    <span class="string">"strict"</span>: <span class="literal">true</span>,                           <span class="comment">/* Enable all strict type-checking options. */</span></span><br><span class="line">    <span class="string">"esModuleInterop"</span>: <span class="literal">true</span>                   <span class="comment">/* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */</span></span><br><span class="line">​</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"include"</span>: [</span><br><span class="line">    <span class="string">"./src/**/*"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>​</p>
+<ol start="6">
+<li><p>폴더생성 ./src ./dist</p>
+</li>
+<li><p>.src/test.ts 작성</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    private hello: <span class="built_in">String</span> = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">constructor</span>(private name: String) &#123;</span><br><span class="line">        <span class="keyword">this</span>.hello = name + <span class="string">" Hello~"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    public getHello(): <span class="built_in">String</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.hello;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> person: Person = <span class="keyword">new</span> Person(<span class="string">"namgi"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(person.getHello());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tsc 컴파일</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js 파일 실행</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./dist/test.js</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>결과물 확인<br>[##<em>Image|kage@Nqjy6/btqwyOUXEz4/9fO6Y00sqZWNDucdOqzfA0/img.png|alignLeft||</em>##]</p>
+</li>
+</ol>
+
       
     </div>
     <footer class="article-footer">
@@ -129,10 +154,10 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="cjxyf13as0005t8nvlyou79he" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/10/node-with-type/" data-id="cjxyf13ds002pt8nvyx248d12" class="article-share-link">공유</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li></ul>
 
     </footer>
   </div>
@@ -140,19 +165,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/05/08/ANSIBLE-Ad-Hoc/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/07/11/pattern/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">최신</strong>
       <div class="article-nav-title">
         
-          ANSIBLE Ad-Hoc
+          [TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton
         
       </div>
     </a>
   
   
-    <a href="/2019/05/08/GitLab-연동-및-빌드-테스트/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/07/10/node-type/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">GitLab 연동 및 빌드 테스트</div>
+      <div class="article-nav-title">[NODEJS] 타입스크립트(typescript) ?</div>
     </a>
   
 </nav>

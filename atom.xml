@@ -75,6 +75,35 @@
   </entry>
   
   <entry>
+    <title>[NODEJS] TypeScript with Node.js </title>
+    <link href="https://skarlsla.github.io/2019/07/10/node-with-type/"/>
+    <id>https://skarlsla.github.io/2019/07/10/node-with-type/</id>
+    <published>2019-07-10T11:40:30.000Z</published>
+    <updated>2019-07-11T08:33:43.311Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="NODEJS-TypeScript-with-Node-js"><a href="#NODEJS-TypeScript-with-Node-js" class="headerlink" title="[NODEJS] TypeScript with Node.js ?"></a>[NODEJS] TypeScript with Node.js ?</h3><ol><li><p>프로젝트 폴더 생성 </p></li><li><p>init</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure></li><li><p>타입스크립트 설치</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g typescript</span><br></pre></td></tr></table></figure></li><li><p>타입설정 초기화</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc — init</span><br></pre></td></tr></table></figure></li><li><p>tsconfig.json 수정</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="comment">/* Basic Options */</span></span><br><span class="line">    <span class="string">"target"</span>: <span class="string">"es5"</span>,                          <span class="comment">/* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */</span></span><br><span class="line">    <span class="string">"module"</span>: <span class="string">"commonjs"</span>,                     <span class="comment">/* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */</span></span><br><span class="line">    <span class="string">"outDir"</span>: <span class="string">"./dist"</span>,                        <span class="comment">/* Redirect output structure to the directory. */</span></span><br><span class="line">    <span class="string">"strict"</span>: <span class="literal">true</span>,                           <span class="comment">/* Enable all strict type-checking options. */</span></span><br><span class="line">    <span class="string">"esModuleInterop"</span>: <span class="literal">true</span>                   <span class="comment">/* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */</span></span><br><span class="line">​</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"include"</span>: [</span><br><span class="line">    <span class="string">"./src/**/*"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><p>​</p><ol start="6"><li><p>폴더생성 ./src ./dist</p></li><li><p>.src/test.ts 작성</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    private hello: <span class="built_in">String</span> = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">constructor</span>(private name: String) &#123;</span><br><span class="line">        <span class="keyword">this</span>.hello = name + <span class="string">" Hello~"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    public getHello(): <span class="built_in">String</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.hello;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> person: Person = <span class="keyword">new</span> Person(<span class="string">"namgi"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(person.getHello());</span><br></pre></td></tr></table></figure></li><li><p>tsc 컴파일</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc</span><br></pre></td></tr></table></figure></li><li><p>js 파일 실행</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./dist/test.js</span><br></pre></td></tr></table></figure></li><li><p>결과물 확인<br>[##<em>Image|kage@Nqjy6/btqwyOUXEz4/9fO6Y00sqZWNDucdOqzfA0/img.png|alignLeft||</em>##]</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;NODEJS-TypeScript-with-Node-js&quot;&gt;&lt;a href=&quot;#NODEJS-TypeScript-with-Node-js&quot; class=&quot;headerlink&quot; title=&quot;[NODEJS] TypeScript with Node.js
+      
+    
+    </summary>
+    
+      <category term="NODEJS" scheme="https://skarlsla.github.io/categories/NODEJS/"/>
+    
+    
+      <category term="NODEJS" scheme="https://skarlsla.github.io/tags/NODEJS/"/>
+    
+      <category term="타입스크립트" scheme="https://skarlsla.github.io/tags/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/"/>
+    
+      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[NODEJS] 타입스크립트(typescript) ?</title>
     <link href="https://skarlsla.github.io/2019/07/10/node-type/"/>
     <id>https://skarlsla.github.io/2019/07/10/node-type/</id>
@@ -182,9 +211,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
     
   </entry>
   
@@ -325,9 +354,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
     
   </entry>
   
@@ -486,9 +515,9 @@
     
       <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
     
-      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
-    
       <category term="devops" scheme="https://skarlsla.github.io/tags/devops/"/>
+    
+      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
   </entry>
   
@@ -542,32 +571,6 @@
     
     
       <category term="kubernetes" scheme="https://skarlsla.github.io/tags/kubernetes/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>nginx-ingress ssl 적용</title>
-    <link href="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/"/>
-    <id>https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/</id>
-    <published>2018-07-28T04:10:53.000Z</published>
-    <updated>2018-09-19T08:38:44.132Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h3 id="1-secret-생성"><a href="#1-secret-생성" class="headerlink" title="1. secret 생성"></a>1. secret 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create secret tls <span class="built_in">test</span>-secret --key _test_SHA256WITHRSA.key --cert test_ssl.crt</span><br></pre></td></tr></table></figure><hr><h3 id="2-ingress-rule-수정"><a href="#2-ingress-rule-수정" class="headerlink" title="2. ingress rule 수정"></a>2. ingress rule 수정</h3><ul><li>default-back-end-service.yaml<pre><code class="bash">apiVersion: extensions/v1beta1kind: Ingressmetadata:name: nginx-ingressnamespace: defaultspec:tls:- hosts:  - www.test.com  - m.test.com  secretName: <span class="built_in">test</span>-secretrules:- host: [svc1 도메인]  http:    paths:    - backend:        serviceName: backend-svc-1        servicePort: 80- host: [svc2 도메인]  http:    paths:    - backend:        serviceName: backend-svc-2        servicePort: 80- host: [통합 도메인]  http:    paths:    - path: /svc1      backend:        serviceName: backend-svc-1        servicePort: 80    - path: /svc2      backend:        serviceName: backend-svc-2        servicePort: 80    - path: /nginx_status      backend:        serviceName: nginx-ingress-nodeport        servicePort: 18080</code></pre></li></ul><hr>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h3 id=&quot;1-secret-생성&quot;&gt;&lt;a href=&quot;#1-secret-생성&quot; class=&quot;headerlink&quot; title=&quot;1. secret 생성&quot;&gt;&lt;/a&gt;1. secret 생성&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;
-      
-    
-    </summary>
-    
-      <category term="Kubernetes" scheme="https://skarlsla.github.io/categories/Kubernetes/"/>
-    
-    
-      <category term="ingress" scheme="https://skarlsla.github.io/tags/ingress/"/>
     
   </entry>
   
