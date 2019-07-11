@@ -69,6 +69,73 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-node-express-ws" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/11/node-express-ws/" class="article-date">
+  <time datetime="2019-07-11T08:30:30.000Z" itemprop="datePublished">2019-07-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/NODEJS/">NODEJS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/11/node-express-ws/">[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="EXPRESS-node-js-to-WebSocket-세션-공유"><a href="#EXPRESS-node-js-to-WebSocket-세션-공유" class="headerlink" title="EXPRESS(node.js) to WebSocket 세션 공유"></a>EXPRESS(node.js) to WebSocket 세션 공유</h3><p>Express로 웹서버 생성 후  서버 및 세션정보를 WebSocket으로 전달<br>WebSocket 서버 생성 시 verifyClient 옵션으로 세션 처리</p>
+<p><strong>server.ts</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bodyParser <span class="keyword">from</span> <span class="string">"body-parser"</span>;</span><br><span class="line"><span class="keyword">import</span> cors <span class="keyword">from</span> <span class="string">"cors"</span>;</span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">"express"</span>;</span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">"http"</span>;</span><br><span class="line"><span class="keyword">import</span> methodOverride <span class="keyword">from</span> <span class="string">"method-override"</span>;</span><br><span class="line"><span class="keyword">import</span> morgan <span class="keyword">from</span> <span class="string">"morgan"</span>;</span><br><span class="line"><span class="keyword">import</span> session <span class="keyword">from</span> <span class="string">"express-session"</span>;</span><br><span class="line"><span class="keyword">import</span> passport <span class="keyword">from</span> <span class="string">"passport"</span>;</span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">"path"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; WS &#125; <span class="keyword">from</span> <span class="string">"./app/ws"</span>;</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* private static ConnectDB(): Promise&lt;any&gt; &#123;</span></span><br><span class="line"><span class="comment">        return Connection;</span></span><br><span class="line"><span class="comment">    &#125; */</span></span><br><span class="line">    private readonly app: express.Application;</span><br><span class="line">    private readonly server: http.Server;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.app = express();</span><br><span class="line">        <span class="keyword">this</span>.server = http.createServer(<span class="keyword">this</span>.app);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"> .</span><br><span class="line"> .</span><br><span class="line"> .</span><br><span class="line"> </span><br><span class="line">    private ExpressConfiguration(): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="comment">// const RedisStore = connectRedis(session);</span></span><br><span class="line">        <span class="keyword">const</span> cookieOptions = &#123;</span><br><span class="line">            maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span>,</span><br><span class="line">            <span class="comment">// secure:true, 브라우저가 HTTPS를 통해서만 쿠키를 전송하도록 합니다.</span></span><br><span class="line">            httpOnly: <span class="literal">false</span>,</span><br><span class="line">            <span class="comment">// 쿠키가 클라이언트 JavaScript가 아닌 HTTP(S)를 통해서만 전송되도록 하며, 이를 통해 XSS(Cross-site scripting) 공격으로부터 보호할 수 있습니다.</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">const</span> sessionInfo = &#123;</span><br><span class="line">            secret: <span class="string">"sec"</span>,</span><br><span class="line">            resave: <span class="literal">true</span>,</span><br><span class="line">            saveUninitialized: <span class="literal">true</span>,</span><br><span class="line">            cookie: cookieOptions,</span><br><span class="line">            <span class="comment">// store: new RedisStore(config.REDIS_OPTS),</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">this</span>.sessionOptions = session(sessionInfo);</span><br><span class="line">        <span class="keyword">this</span>.app.use(bodyParser.urlencoded(&#123;<span class="attr">extended</span>: <span class="literal">true</span>&#125;));</span><br><span class="line">        <span class="keyword">this</span>.app.use(bodyParser.json(&#123;<span class="attr">limit</span>: <span class="string">"50mb"</span>&#125;));</span><br><span class="line">        <span class="keyword">this</span>.app.use(<span class="keyword">this</span>.sessionOptions);</span><br><span class="line">        <span class="comment">/* this.app.use(session(</span></span><br><span class="line"><span class="comment">            &#123;</span></span><br><span class="line"><span class="comment">                resave: true,</span></span><br><span class="line"><span class="comment">                saveUninitialized: true,</span></span><br><span class="line"><span class="comment">                secret: config.SECRET,</span></span><br><span class="line"><span class="comment">                store: new RedisStore(config.REDIS_OPTS),</span></span><br><span class="line"><span class="comment">            &#125;,</span></span><br><span class="line"><span class="comment">        )); */</span></span><br><span class="line">        <span class="keyword">this</span>.app.use(passport.initialize());</span><br><span class="line">        <span class="keyword">this</span>.app.use(passport.session());</span><br><span class="line">        <span class="keyword">this</span>.app.use(methodOverride());</span><br><span class="line">        <span class="comment">// const viewpath = path.join(__dirname, "../views");</span></span><br><span class="line">        <span class="comment">// serverService.debug(viewpath);</span></span><br><span class="line">        <span class="comment">// this.app.set("views", "./views");</span></span><br><span class="line">        <span class="keyword">this</span>.app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line">        <span class="keyword">this</span>.app.set(<span class="string">"view engine"</span>, <span class="string">"ejs"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.app.use((req, res, next): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"X-Requested-With, Content-Type, Authorization"</span>);</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"GET,PUT,PATCH,POST,DELETE,OPTIONS"</span>);</span><br><span class="line">            next();</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">this</span>.app.use(morgan(<span class="string">"combined"</span>));</span><br><span class="line">        <span class="keyword">this</span>.app.use(cors());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.app.use((err: any, <span class="attr">req</span>: express.Request, <span class="attr">res</span>: express.Response, <span class="attr">next</span>: express.NextFunction): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">            err.status = <span class="number">404</span>;</span><br><span class="line">            next(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private setWebSocket(): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.ws = <span class="keyword">new</span> WS(<span class="keyword">this</span>.server, <span class="keyword">this</span>.sessionOptions);</span><br><span class="line">    &#125;       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>ws.ts</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> WebSocket <span class="keyword">from</span> <span class="string">'ws'</span>;</span><br><span class="line"><span class="keyword">import</span> express, &#123; Router &#125; <span class="keyword">from</span> <span class="string">"express"</span>;</span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">"http"</span>;</span><br><span class="line"></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">WS</span> </span>&#123;</span><br><span class="line">    private wss: WebSocket.Server;</span><br><span class="line">    private server: http.Server;</span><br><span class="line">    private session: express.RequestHandler;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>(server: http.Server, session: express.RequestHandler) &#123;</span><br><span class="line">        <span class="keyword">this</span>.server = server;</span><br><span class="line">        <span class="keyword">this</span>.session = session;</span><br><span class="line">        <span class="keyword">this</span>.init(server, session);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private init(serve: http.Server, <span class="attr">session</span>: any) &#123;</span><br><span class="line">        <span class="keyword">this</span>.wss = <span class="keyword">new</span> WebSocket.Server(&#123;</span><br><span class="line">            </span><br><span class="line">            verifyClient:<span class="function">(<span class="params">info: &#123;origin: string; secure: boolean; req: any &#125;, done</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'Parsing session from request...'</span>);</span><br><span class="line">                session(info.req,( )=&gt;&#123;&#125;, ()=&gt;&#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">this</span>.isSessionPassport(info.req))&#123;</span><br><span class="line">                        done(info.req.session);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="comment">// done(false,401,'unathorized');</span></span><br><span class="line">                        done(<span class="literal">true</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="built_in">console</span>.log(info.req.session.id);</span><br><span class="line"></span><br><span class="line">                &#125;)                </span><br><span class="line">            &#125;, <span class="attr">server</span>: serve </span><br><span class="line">            , <span class="attr">path</span>: <span class="string">"/"</span></span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">/* this.pushController = new PushController(this.wss);</span></span><br><span class="line"><span class="comment">        this.pushController.startPush(); */</span></span><br><span class="line">        <span class="keyword">this</span>.connection();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private connection()&#123;</span><br><span class="line">        <span class="keyword">this</span>.wss.on(<span class="string">"connection"</span>,(ws: WebSocket) =&gt; &#123;</span><br><span class="line">            <span class="comment">// this.pushController.broadcastPush("100" , "msg");</span></span><br><span class="line">            ws.on(<span class="string">"message"</span>, (msg: string) =&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(msg);                 </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;);        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private isSessionPassport(req: express.Request)&#123;</span><br><span class="line">        <span class="keyword">if</span>(req.session.passport &amp;&amp; req.session.passport.user)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(req.session.passport.user);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"no passport"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">                </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/07/11/node-express-ws/" data-id="cjxyemh1q001rcwnv1b1pif61" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebSocket/">WebSocket</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-pattern" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/07/11/pattern/" class="article-date">
@@ -133,7 +200,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/11/pattern/" data-id="cjxyee6s8001mb4nvuedkgis1" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/pattern/" data-id="cjxyemh1m001ocwnvatpa9sgj" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pattern/">pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/singleton/">singleton</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
@@ -204,7 +271,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" data-id="cjxyee6qt0009b4nv5u5zn8m2" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" data-id="cjxyemh030009cwnv0lf9h9ye" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -273,7 +340,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-작성/" data-id="cjxyee6qi0004b4nvzp6hj0zi" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-작성/" data-id="cjxyemgzo0001cwnv5nsuwip1" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -352,7 +419,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-연동/" data-id="cjxyee6qv000ab4nv72ztw4u1" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-연동/" data-id="cjxyemh0b000ecwnv2ksca0so" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -421,7 +488,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="cjxyee6q60000b4nv4lg073qh" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="cjxyemgzk0000cwnvore7geif" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -490,7 +557,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="cjxyee6qc0001b4nvacatwlxd" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="cjxyemgzt0004cwnvqfyrkixu" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -570,7 +637,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="cjxyee6r1000eb4nvqp3mjjuf" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="cjxyemgzw0006cwnvou3wldm7" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -639,7 +706,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="cjxyee6qn0006b4nv9mfps407" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="cjxyemgzv0005cwnvbju3od5x" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -704,82 +771,10 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="cjxyee6sl001wb4nv01g7thoa" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="cjxyemh42003scwnvk33cxms7" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-reply-to-옵션에-대한-분석" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/29/reply-to-옵션에-대한-분석/" class="article-date">
-  <time datetime="2019-04-29T08:18:30.000Z" itemprop="datePublished">2019-04-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/29/reply-to-옵션에-대한-분석/">reply-to 옵션에 대한 분석</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to"><a href="#1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to" class="headerlink" title="1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to"></a>1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to</h3><p><a href="http://www.rabbitmq.com/direct-reply-to.html" target="_blank" rel="noopener">http://www.rabbitmq.com/direct-reply-to.html</a></p>
-<p>링크 발췌내용 중 사용법</p>
-<p>Use<br>To use direct reply-to, an RPC client should:</p>
-<p>Consume from the pseudo-queue amq.rabbitmq.reply-to in no-ack mode. There is no need to declare this “queue” first, although the client can do so if it wants.<br>Set the reply-to property in their request message to amq.rabbitmq.reply-to.<br>The RPC server will then see a reply-to property with a generated name. It should publish to the default exchange (“”) with the routing key set to this value (i.e. just as if it were sending to a reply queue as usual). The message will then be sent straight to the client consumer.</p>
-<p>If the RPC server is going to perform some expensive computation it might wish to check if the client has gone away. To do this the server can declare the generated reply name first on a disposable channel in order to determine whether it still exists. Note that even if you declare the “queue” with passive=false there is no way to create it; the declare will just succeed (with 0 messages ready and 1 consumer) or fail.</p>
-<p>결론적으로  클라이언트에서 consume(대기큐)를 할때  옵션으로 reply-to = amq.rabbitmq.reply-to 넣고  no-ack 모드로 실행한다.<br>그러면 따로 큐를 생성해 놓지 않더라도 amq.rabbitmq.reply-to 라는 큐가 생성되고  서버에서는 reply-to property를 통해  클라이언트에게 리턴한다. </p>
-<p>서버에서 특이점은 publish 할때 따로 exchange name 을 적지 않고 routingkey 자리에 reply-to에서 온 값을 넣으면된다.<br>서버에서 reply-to 리턴하는 queue를 찍어보면 amq.rabbitmq.reply-to.g2dkAA1yYWJiaXRAdHdlYjAyAAAvugAAAAMB.N2mDRUJksXuxZHf1leTCKg==<br>이런식으로 뒤에 임의의 값이 붙어서 나온다.  여러 서버를 띄어도 저 값은 변하지 않았다.  rabbitmq 서버에서 관리하는 것으로 보인다.     </p>
-<hr>
-<h3 id="2-reply-to를-사용하지-않으면"><a href="#2-reply-to를-사용하지-않으면" class="headerlink" title="2.  reply-to를 사용하지 않으면"></a>2.  reply-to를 사용하지 않으면</h3><p>reply-to 옵션을 쓰지않고 지정된 큐로 작업이 가능하다.<br>ack모드를 사용할수있어 데이터 유지하는 옵션을 사용할수있다.<br>하지만 옵션을 사용시 rabbitmq에서 제공하는 큐생성 및 사용시 추가적인 작업이 필요해 보인다.  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="cjxyee6sf001tb4nvggb21ykg" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reply-to/">reply-to</a></li></ul>
 
     </footer>
   </div>
@@ -803,7 +798,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">카테고리</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/NODEJS/">NODEJS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li></ul>
     </div>
   </div>
 
@@ -813,7 +808,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
     </div>
   </div>
 
@@ -823,7 +818,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 12.5px;">CD</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a>
+      <a href="/tags/CD/" style="font-size: 12.5px;">CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 10px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a>
     </div>
   </div>
     
@@ -845,6 +840,10 @@
       <ul>
         
           <li>
+            <a href="/2019/07/11/node-express-ws/">[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</a>
+          </li>
+        
+          <li>
             <a href="/2019/07/11/pattern/">[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton</a>
           </li>
         
@@ -858,10 +857,6 @@
         
           <li>
             <a href="/2019/05/08/JENKINS-ANSIBLE-연동/">JENKINS - ANSIBLE 연동</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/08/ANSIBLE-Ad-Hoc/">ANSIBLE Ad-Hoc</a>
           </li>
         
       </ul>

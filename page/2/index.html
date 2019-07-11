@@ -69,6 +69,78 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-reply-to-옵션에-대한-분석" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/29/reply-to-옵션에-대한-분석/" class="article-date">
+  <time datetime="2019-04-29T08:18:30.000Z" itemprop="datePublished">2019-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/29/reply-to-옵션에-대한-분석/">reply-to 옵션에 대한 분석</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to"><a href="#1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to" class="headerlink" title="1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to"></a>1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to</h3><p><a href="http://www.rabbitmq.com/direct-reply-to.html" target="_blank" rel="noopener">http://www.rabbitmq.com/direct-reply-to.html</a></p>
+<p>링크 발췌내용 중 사용법</p>
+<p>Use<br>To use direct reply-to, an RPC client should:</p>
+<p>Consume from the pseudo-queue amq.rabbitmq.reply-to in no-ack mode. There is no need to declare this “queue” first, although the client can do so if it wants.<br>Set the reply-to property in their request message to amq.rabbitmq.reply-to.<br>The RPC server will then see a reply-to property with a generated name. It should publish to the default exchange (“”) with the routing key set to this value (i.e. just as if it were sending to a reply queue as usual). The message will then be sent straight to the client consumer.</p>
+<p>If the RPC server is going to perform some expensive computation it might wish to check if the client has gone away. To do this the server can declare the generated reply name first on a disposable channel in order to determine whether it still exists. Note that even if you declare the “queue” with passive=false there is no way to create it; the declare will just succeed (with 0 messages ready and 1 consumer) or fail.</p>
+<p>결론적으로  클라이언트에서 consume(대기큐)를 할때  옵션으로 reply-to = amq.rabbitmq.reply-to 넣고  no-ack 모드로 실행한다.<br>그러면 따로 큐를 생성해 놓지 않더라도 amq.rabbitmq.reply-to 라는 큐가 생성되고  서버에서는 reply-to property를 통해  클라이언트에게 리턴한다. </p>
+<p>서버에서 특이점은 publish 할때 따로 exchange name 을 적지 않고 routingkey 자리에 reply-to에서 온 값을 넣으면된다.<br>서버에서 reply-to 리턴하는 queue를 찍어보면 amq.rabbitmq.reply-to.g2dkAA1yYWJiaXRAdHdlYjAyAAAvugAAAAMB.N2mDRUJksXuxZHf1leTCKg==<br>이런식으로 뒤에 임의의 값이 붙어서 나온다.  여러 서버를 띄어도 저 값은 변하지 않았다.  rabbitmq 서버에서 관리하는 것으로 보인다.     </p>
+<hr>
+<h3 id="2-reply-to를-사용하지-않으면"><a href="#2-reply-to를-사용하지-않으면" class="headerlink" title="2.  reply-to를 사용하지 않으면"></a>2.  reply-to를 사용하지 않으면</h3><p>reply-to 옵션을 쓰지않고 지정된 큐로 작업이 가능하다.<br>ack모드를 사용할수있어 데이터 유지하는 옵션을 사용할수있다.<br>하지만 옵션을 사용시 rabbitmq에서 제공하는 큐생성 및 사용시 추가적인 작업이 필요해 보인다.  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="cjxyemh1x001ycwnvow8dy0ca" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reply-to/">reply-to</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-RabbitMQ가-재기동-됐을때-대응책" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" class="article-date">
@@ -125,7 +197,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" data-id="cjxyee6rf000rb4nvi0dqn6mc" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" data-id="cjxyemh0j000lcwnvikj91vr2" class="article-share-link">공유</a>
       
       
     </footer>
@@ -201,7 +273,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/RPC/" data-id="cjxyee6rc000ob4nverdnw8u1" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RPC/" data-id="cjxyemh0q000rcwnv81rswv53" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
@@ -294,7 +366,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/" data-id="cjxyee6r4000hb4nvqd9mwklw" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/" data-id="cjxyemh0f000hcwnv2exdmhhb" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li></ul>
@@ -377,7 +449,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" data-id="cjxyee6r9000lb4nv7apg4ck8" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" data-id="cjxyemh0m000ocwnvc38oq8yw" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ack/">ack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
@@ -453,7 +525,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/DEVOPS/" data-id="cjxyee6ql0005b4nvy6dp0hju" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/DEVOPS/" data-id="cjxyemh05000acwnvcuejnp6i" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/devops/">devops</a></li></ul>
@@ -619,7 +691,7 @@ spec:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/08/14/kubernetest_hpa/" data-id="cjxyee6rz001eb4nv4gihjfe6" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/08/14/kubernetest_hpa/" data-id="cjxyemh1f001fcwnvy2u70tqg" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -737,7 +809,7 @@ template:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/08/04/kubernetest_rolling/" data-id="cjxyee6s1001hb4nvg4ev26am" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/08/04/kubernetest_rolling/" data-id="cjxyemh1i001kcwnvdo3sydo2" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -846,7 +918,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjxyee6rs0015b4nvn8gwnjqm" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjxyemh170015cwnvozlvfbsm" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -915,267 +987,10 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjxyee6rl000zb4nvvw5n7gv9" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjxyemh0t000ucwnvejb8de6z" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-kubernetes_ingressLB" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/25/kubernetes_ingressLB/" class="article-date">
-  <time datetime="2018-07-25T06:30:13.000Z" itemprop="datePublished">2018-07-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Kubernetes/">Kubernetes</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/25/kubernetes_ingressLB/">nginx 컨테이너를 활용한 ingress load balancer 구성</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-테스트용-웹-백엔드-생성"><a href="#1-테스트용-웹-백엔드-생성" class="headerlink" title="1. 테스트용 웹 백엔드 생성"></a>1. 테스트용 웹 백엔드 생성</h3><ul>
-<li>back-end-deployment.yaml<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: deploy-test-1</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: web-front-end</span><br><span class="line">        department: group1</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: m-client-web</span><br><span class="line">        image: xxx/client:latest</span><br><span class="line">        env:</span><br><span class="line">        - name: PORT_ARGS</span><br><span class="line">          value: <span class="string">"--port=80"</span></span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br><span class="line">          name: web-port</span><br><span class="line">          protocol: TCP</span><br><span class="line">---</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: deploy-test-2</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: web-front-end</span><br><span class="line">        department: group2</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: tiny-webserver-2</span><br><span class="line">        image: xxx/node-api:latest</span><br><span class="line">        env:</span><br><span class="line">        - name: PORT_ARGS</span><br><span class="line">          value: <span class="string">"--port=3501"</span></span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 3501</span><br><span class="line">          name: web-port</span><br><span class="line">          protocol: TCP</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<ul>
-<li>back-end-service.yaml<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: backend-svc-1</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: web-port</span><br><span class="line">  selector:</span><br><span class="line">    app: web-front-end</span><br><span class="line">    department: group1</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: backend-svc-2</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: web-port</span><br><span class="line">  selector:</span><br><span class="line">    app: web-front-end</span><br><span class="line">    department: group2</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<ul>
-<li>실행<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f back-end-deployment.yaml</span><br><span class="line">kubectl apply -f back-end-service.yaml</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h3 id="2-테스트용-ingress용-백엔드-생성"><a href="#2-테스트용-ingress용-백엔드-생성" class="headerlink" title="2. 테스트용 ingress용 백엔드 생성"></a>2. 테스트용 ingress용 백엔드 생성</h3><ul>
-<li><p>default-back-end-deployment.yaml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: default-http-backend</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: default-http-backend</span><br><span class="line">    spec:</span><br><span class="line">      terminationGracePeriodSeconds: 60</span><br><span class="line">      containers:</span><br><span class="line">      - name: default-http-backend</span><br><span class="line">        <span class="comment"># Any image is permissable as long as:</span></span><br><span class="line">        <span class="comment"># 1. It serves a 404 page at /</span></span><br><span class="line">        <span class="comment"># 2. It serves 200 on a /healthz endpoint</span></span><br><span class="line">        image: gcr.io/google_containers/defaultbackend:1.0</span><br><span class="line">        livenessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            path: /healthz</span><br><span class="line">            port: 8080</span><br><span class="line">            scheme: HTTP</span><br><span class="line">          initialDelaySeconds: 30</span><br><span class="line">          timeoutSeconds: 5</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br><span class="line">        resources:</span><br><span class="line">          limits:</span><br><span class="line">            cpu: 10m</span><br><span class="line">            memory: 20Mi</span><br><span class="line">          requests:</span><br><span class="line">            cpu: 10m</span><br><span class="line">            memory: 20Mi</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>default-back-end-service.yaml</p>
-</li>
-</ul>
-<pre><code class="bash">apiVersion: v1
-kind: Service
-metadata:
-  name: default-http-backend
-spec:
-  <span class="built_in">type</span>: ClusterIP
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: default-http-backend
-</code></pre>
-<hr>
-<ul>
-<li>실행<pre><code class="bash">kubectl apply -f default-back-end-deployment.yaml
-kubectl apply -f default-back-end-service.yaml
-</code></pre>
-</li>
-</ul>
-<hr>
-<h3 id="4-Nginx-Ingress-Controller-설정값-저장을-위한-Configmap-등록"><a href="#4-Nginx-Ingress-Controller-설정값-저장을-위한-Configmap-등록" class="headerlink" title="4. Nginx Ingress Controller 설정값 저장을 위한 Configmap 등록"></a>4. Nginx Ingress Controller 설정값 저장을 위한 Configmap 등록</h3><ul>
-<li>configmap.yaml<pre><code class="bash">apiVersion: v1
-kind: ConfigMap
-metadata:
-name: nginx-ingress-controller-conf
-labels:
-  app: nginx-ingress-lb
-  group: lb
-data:
-<span class="comment"># for VTS page of the Nginx load balancer</span>
-<span class="built_in">enable</span>-vts-status: <span class="string">'true'</span>
-<span class="built_in">enable</span>-sticky-sessions: <span class="string">'true'</span>
-</code></pre>
-</li>
-</ul>
-<hr>
-<h3 id="5-Nginx-Ingress-Controller-생성"><a href="#5-Nginx-Ingress-Controller-생성" class="headerlink" title="5. Nginx Ingress Controller 생성"></a>5. Nginx Ingress Controller 생성</h3><ul>
-<li>SA, ClusterRole, ClusterRoleBinding</li>
-</ul>
-<pre><code class="bash"><span class="comment"># Add: SA, ClusterRole, ClusterRoleBinding</span>
-<span class="comment"># Name Space: default</span>
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: ingress
-  namespace: default
-
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
-metadata:
-  name: system:ingress
-rules:
-- apiGroups:
-  - <span class="string">""</span>
-  resources: [<span class="string">"configmaps"</span>,<span class="string">"secrets"</span>,<span class="string">"endpoints"</span>,<span class="string">"events"</span>,<span class="string">"services"</span>]
-  verbs: [<span class="string">"list"</span>,<span class="string">"watch"</span>,<span class="string">"create"</span>,<span class="string">"update"</span>,<span class="string">"delete"</span>,<span class="string">"get"</span>]
-- apiGroups:
-  - <span class="string">""</span>
-  - <span class="string">"extensions"</span>
-  resources: [<span class="string">"services"</span>,<span class="string">"nodes"</span>,<span class="string">"ingresses"</span>,<span class="string">"pods"</span>,<span class="string">"ingresses/status"</span>]
-  verbs: [<span class="string">"list"</span>,<span class="string">"watch"</span>,<span class="string">"create"</span>,<span class="string">"update"</span>,<span class="string">"delete"</span>,<span class="string">"get"</span>]
-
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: ingress
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: system:ingress
-subjects:
-  - kind: ServiceAccount
-    name: ingress
-    <span class="comment"># Could be like 'kube-system' ...</span>
-    namespace: default
-
-</code></pre>
-<hr>
-<ul>
-<li>deployment</li>
-</ul>
-<pre><code class="bash">apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: nginx-ingress-controller
-  <span class="comment"># Could be like 'kube-system' ...</span>
-  namespace: default
-spec:
-  replicas: 2
-  revisionHistoryLimit: 3
-  template:
-    metadata:
-      labels:
-        app: nginx-ingress-lb
-    spec:
-      serviceAccountName: ingress
-      terminationGracePeriodSeconds: 60
-      containers:
-        - name: nginx-ingress-controller
-          image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.2
-          imagePullPolicy: IfNotPresent
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 18080
-              scheme: HTTP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 18080
-              scheme: HTTP
-            initialDelaySeconds: 10
-            timeoutSeconds: 5
-          args:
-            - /nginx-ingress-controller
-            - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
-            - --configmap=$(POD_NAMESPACE)/nginx-ingress-controller-conf
-          env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            - name: POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-          ports:
-            - containerPort: 443
-            - containerPort: 18080
-
-</code></pre>
-<h3 id="5-Ingress-Rule-디플로이"><a href="#5-Ingress-Rule-디플로이" class="headerlink" title="5. Ingress Rule 디플로이"></a>5. Ingress Rule 디플로이</h3><ul>
-<li>default-back-end-service.yaml<pre><code class="bash">apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-name: nginx-ingress
-namespace: default
-spec:
-rules:
-- host: [svc1 도메인]
-  http:
-    paths:
-    - backend:
-        serviceName: backend-svc-1
-        servicePort: 80
-- host: [svc2 도메인]
-  http:
-    paths:
-    - backend:
-        serviceName: backend-svc-2
-        servicePort: 80
-- host: [통합 도메인]
-  http:
-    paths:
-    - path: /svc1
-      backend:
-        serviceName: backend-svc-1
-        servicePort: 80
-    - path: /svc2
-      backend:
-        serviceName: backend-svc-2
-        servicePort: 80
-    - path: /nginx_status
-      backend:
-        serviceName: nginx-ingress-nodeport
-        servicePort: 18080
-</code></pre>
-</li>
-</ul>
-<hr>
-<h3 id="참고링크"><a href="#참고링크" class="headerlink" title="참고링크"></a>참고링크</h3><p><a href="https://tistory3.daumcdn.net/tistory/467568/skin/images/Ingress-concept-and-logical-arch-v01.png" target="_blank" rel="noopener">Ingress Load Balancer 개념도</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjxyee6rn0011b4nvwol276qg" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
 
     </footer>
   </div>
@@ -1199,7 +1014,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">카테고리</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/NODEJS/">NODEJS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li></ul>
     </div>
   </div>
 
@@ -1209,7 +1024,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li></ul>
     </div>
   </div>
 
@@ -1219,7 +1034,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 12.5px;">CD</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a>
+      <a href="/tags/CD/" style="font-size: 12.5px;">CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 10px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 10px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 15px;">jenkins</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a>
     </div>
   </div>
     
@@ -1241,6 +1056,10 @@ rules:
       <ul>
         
           <li>
+            <a href="/2019/07/11/node-express-ws/">[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</a>
+          </li>
+        
+          <li>
             <a href="/2019/07/11/pattern/">[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton</a>
           </li>
         
@@ -1254,10 +1073,6 @@ rules:
         
           <li>
             <a href="/2019/05/08/JENKINS-ANSIBLE-연동/">JENKINS - ANSIBLE 연동</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/08/ANSIBLE-Ad-Hoc/">ANSIBLE Ad-Hoc</a>
           </li>
         
       </ul>

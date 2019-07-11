@@ -86,14 +86,14 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/ci/</loc>
+        <loc>https://skarlsla.github.io/tags/jenkins/</loc>
         <lastmod>2019-05-09T07:16:01.560Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/jenkins/</loc>
+        <loc>https://skarlsla.github.io/tags/ci/</loc>
         <lastmod>2019-05-09T07:16:01.560Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -130,6 +130,27 @@
     <url>
         <loc>https://skarlsla.github.io/tags/typescript/</loc>
         <lastmod>2019-07-11T07:34:26.407Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/NODEJS/</loc>
+        <lastmod>2019-07-11T08:22:24.310Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/EXPRESS/</loc>
+        <lastmod>2019-07-11T08:22:24.310Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/WebSocket/</loc>
+        <lastmod>2019-07-11T08:22:24.310Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
