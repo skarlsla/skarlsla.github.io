@@ -84,6 +84,15 @@
 
   </div>
   <div class="article-inner">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
     
     
       <header class="article-header">
@@ -97,15 +106,6 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
       
         <hr>
 <h3 id="1-Docker-kubelet-kubeadm-설치-For-CentOS7"><a href="#1-Docker-kubelet-kubeadm-설치-For-CentOS7" class="headerlink" title="1. Docker, kubelet, kubeadm 설치(For CentOS7)"></a>1. Docker, kubelet, kubeadm 설치(For CentOS7)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=http://yum.kubernetes.io/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg</span><br><span class="line">       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF </span><br><span class="line"></span><br><span class="line">$ setenforce 0</span><br><span class="line">$ systemctl <span class="built_in">disable</span> firewalld &amp;&amp; systemctl stop firewalld</span><br><span class="line">$ yum install -y docker</span><br><span class="line">$ yum install -y kubelet kubeadm kubectl kubernetes-cni</span><br><span class="line">$ systemctl <span class="built_in">enable</span> docker &amp;&amp; systemctl restart docker</span><br><span class="line">$ systemctl <span class="built_in">enable</span> kubelet &amp;&amp; systemctl restart kubelet</span><br></pre></td></tr></table></figure>
