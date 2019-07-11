@@ -5,20 +5,15 @@
   
 
   
-  <title>ANSIBLE 설치 및 설정 | </title>
+  <title>태그: pattern | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. ANSIBLE 설치12yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpmyum -y install ansible  2. ANSIBLE 타워설치12345curl -O https://releases.ansible.com/ansible-tower/setup/an">
-<meta name="keywords" content="배포,cd">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ANSIBLE 설치 및 설정">
-<meta property="og:url" content="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title">
+<meta property="og:url" content="https://skarlsla.github.io/tags/pattern/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="1. ANSIBLE 설치12yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpmyum -y install ansible  2. ANSIBLE 타워설치12345curl -O https://releases.ansible.com/ansible-tower/setup/an">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2019-04-29T08:26:04.110Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ANSIBLE 설치 및 설정">
-<meta name="twitter:description" content="1. ANSIBLE 설치12yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpmyum -y install ansible  2. ANSIBLE 타워설치12345curl -O https://releases.ansible.com/ansible-tower/setup/an">
+<meta name="twitter:title">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -65,73 +60,40 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-ANSIBLE-설치-및-설정" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/29/ANSIBLE-설치-및-설정/" class="article-date">
-  <time datetime="2019-04-29T08:23:56.000Z" itemprop="datePublished">2019-04-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      ANSIBLE 설치 및 설정
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2019/07/11/pattern/" class="archive-article-date">
+  <time datetime="2019-07-11T07:24:30.000Z" itemprop="datePublished">7월 11</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/07/11/pattern/">[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-ANSIBLE-설치"><a href="#1-ANSIBLE-설치" class="headerlink" title="1. ANSIBLE 설치"></a>1. ANSIBLE 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">yum -y install ansible</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="2-ANSIBLE-타워설치"><a href="#2-ANSIBLE-타워설치" class="headerlink" title="2. ANSIBLE 타워설치"></a>2. ANSIBLE 타워설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz</span><br><span class="line">tar xvfz ansible-tower-setup-latest.tar.gz</span><br><span class="line"><span class="built_in">cd</span> ansible-tower-setup-3.4.3-1/</span><br><span class="line">vi inventory   <span class="comment">#설정파일</span></span><br><span class="line">./setup.sh</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="3-접속확인"><a href="#3-접속확인" class="headerlink" title="3. 접속확인"></a>3. 접속확인</h3><p>https://[serverIP]:80<br>admin / password(inventory에서 설정한 pw)</p>
-<hr>
-<h3 id="4-비밀번호-변경"><a href="#4-비밀번호-변경" class="headerlink" title="4. 비밀번호 변경"></a>4. 비밀번호 변경</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@tcid]<span class="comment"># tower-manage  changepassword admin</span></span><br><span class="line"></span><br><span class="line">Changing password <span class="keyword">for</span> user <span class="string">'admin'</span></span><br><span class="line">Password:</span><br><span class="line">Password (again):</span><br><span class="line">Password changed successfully <span class="keyword">for</span> user <span class="string">'admin'</span></span><br><span class="line">You have new mail <span class="keyword">in</span> /var/spool/mail/root</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="cjxycyy0q000aoknvs22qluwy" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2019/05/08/GitLab-연동-및-빌드-테스트/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">최신</strong>
-      <div class="article-nav-title">
-        
-          GitLab 연동 및 빌드 테스트
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/04/29/젠킨스-설치-및-설정/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">젠킨스 설치 및 설정</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         

@@ -5,20 +5,20 @@
   
 
   
-  <title>ANSIBLE 설치 및 설정 | </title>
+  <title>[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. ANSIBLE 설치12yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpmyum -y install ansible  2. ANSIBLE 타워설치12345curl -O https://releases.ansible.com/ansible-tower/setup/an">
-<meta name="keywords" content="배포,cd">
+  <meta name="description" content="Singleton PatternThe singleton pattern is a creational software design pattern. 클래스가 단 하나의 인스턴스 만 갖도록 보장한다. 이점  하나의 인스턴스만 할당함으로 메모리낭비 방지. 하나의 프로세스에서 공유자원 접근시 이점 db커넥션풀, 로그 등에 사용됨.  단점  멀티 프로세스 상황에서 인스">
+<meta name="keywords" content="singleton,pattern,typescript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ANSIBLE 설치 및 설정">
-<meta property="og:url" content="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/index.html">
+<meta property="og:title" content="[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton">
+<meta property="og:url" content="https://skarlsla.github.io/2019/07/11/pattern/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="1. ANSIBLE 설치12yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpmyum -y install ansible  2. ANSIBLE 타워설치12345curl -O https://releases.ansible.com/ansible-tower/setup/an">
+<meta property="og:description" content="Singleton PatternThe singleton pattern is a creational software design pattern. 클래스가 단 하나의 인스턴스 만 갖도록 보장한다. 이점  하나의 인스턴스만 할당함으로 메모리낭비 방지. 하나의 프로세스에서 공유자원 접근시 이점 db커넥션풀, 로그 등에 사용됨.  단점  멀티 프로세스 상황에서 인스">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2019-04-29T08:26:04.110Z">
+<meta property="og:updated_time" content="2019-07-11T07:34:26.407Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ANSIBLE 설치 및 설정">
-<meta name="twitter:description" content="1. ANSIBLE 설치12yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpmyum -y install ansible  2. ANSIBLE 타워설치12345curl -O https://releases.ansible.com/ansible-tower/setup/an">
+<meta name="twitter:title" content="[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton">
+<meta name="twitter:description" content="Singleton PatternThe singleton pattern is a creational software design pattern. 클래스가 단 하나의 인스턴스 만 갖도록 보장한다. 이점  하나의 인스턴스만 할당함으로 메모리낭비 방지. 하나의 프로세스에서 공유자원 접근시 이점 db커넥션풀, 로그 등에 사용됨.  단점  멀티 프로세스 상황에서 인스">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -65,14 +65,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-ANSIBLE-설치-및-설정" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-pattern" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/29/ANSIBLE-설치-및-설정/" class="article-date">
-  <time datetime="2019-04-29T08:23:56.000Z" itemprop="datePublished">2019-04-29</time>
+    <a href="/2019/07/11/pattern/" class="article-date">
+  <time datetime="2019-07-11T07:24:30.000Z" itemprop="datePublished">2019-07-11</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+    <a class="article-category-link" href="/categories/patterns/">patterns</a>
   </div>
 
   </div>
@@ -83,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ANSIBLE 설치 및 설정
+      [TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton
     </h1>
   
 
@@ -91,21 +91,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h3 id="1-ANSIBLE-설치"><a href="#1-ANSIBLE-설치" class="headerlink" title="1. ANSIBLE 설치"></a>1. ANSIBLE 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">yum -y install ansible</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="2-ANSIBLE-타워설치"><a href="#2-ANSIBLE-타워설치" class="headerlink" title="2. ANSIBLE 타워설치"></a>2. ANSIBLE 타워설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz</span><br><span class="line">tar xvfz ansible-tower-setup-latest.tar.gz</span><br><span class="line"><span class="built_in">cd</span> ansible-tower-setup-3.4.3-1/</span><br><span class="line">vi inventory   <span class="comment">#설정파일</span></span><br><span class="line">./setup.sh</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="3-접속확인"><a href="#3-접속확인" class="headerlink" title="3. 접속확인"></a>3. 접속확인</h3><p>https://[serverIP]:80<br>admin / password(inventory에서 설정한 pw)</p>
-<hr>
-<h3 id="4-비밀번호-변경"><a href="#4-비밀번호-변경" class="headerlink" title="4. 비밀번호 변경"></a>4. 비밀번호 변경</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@tcid]<span class="comment"># tower-manage  changepassword admin</span></span><br><span class="line"></span><br><span class="line">Changing password <span class="keyword">for</span> user <span class="string">'admin'</span></span><br><span class="line">Password:</span><br><span class="line">Password (again):</span><br><span class="line">Password changed successfully <span class="keyword">for</span> user <span class="string">'admin'</span></span><br><span class="line">You have new mail <span class="keyword">in</span> /var/spool/mail/root</span><br></pre></td></tr></table></figure>
+        <h3 id="Singleton-Pattern"><a href="#Singleton-Pattern" class="headerlink" title="Singleton Pattern"></a>Singleton Pattern</h3><p>The singleton pattern is a creational software design pattern.</p>
+<p>클래스가 단 하나의 인스턴스 만 갖도록 보장한다.</p>
+<p><strong>이점</strong></p>
+<ol>
+<li>하나의 인스턴스만 할당함으로 메모리낭비 방지.</li>
+<li>하나의 프로세스에서 공유자원 접근시 이점</li>
+<li>db커넥션풀, 로그 등에 사용됨.</li>
+</ol>
+<p><strong>단점</strong></p>
+<ol>
+<li>멀티 프로세스 상황에서 인스턴스공유 이슈 생길수있음</li>
+<li>하나의 인스턴스로 많은 작업을 하게될 경우 문제</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123; </span><br><span class="line">    private <span class="keyword">static</span> instance: Singleton; </span><br><span class="line">    private _temperature: number; </span><br><span class="line">    private <span class="keyword">constructor</span>() &#123; &#125; </span><br><span class="line">    <span class="keyword">static</span> getInstance() &#123; </span><br><span class="line">        <span class="keyword">if</span> (!Singleton.instance) &#123; </span><br><span class="line">            Singleton.instance = <span class="keyword">new</span> Singleton(); </span><br><span class="line">            Singleton.instance._temperature = <span class="number">0</span>; </span><br><span class="line">            &#125; </span><br><span class="line">        <span class="keyword">return</span> Singleton.instance; </span><br><span class="line">    &#125; </span><br><span class="line">    get temperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature; </span><br><span class="line">    &#125; </span><br><span class="line">    set temperature(score) &#123; </span><br><span class="line">        <span class="keyword">this</span>._temperature = score; </span><br><span class="line">    &#125; </span><br><span class="line">    increaseTemperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature += <span class="number">1</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    decreaseTemperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature -= <span class="number">1</span>; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">const</span> myInstance = Singleton.getInstance(); </span><br><span class="line"><span class="keyword">const</span> myInstance2 = Singleton.getInstance(); </span><br><span class="line"><span class="built_in">console</span>.log(myInstance === myInstance2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="cjxycyy0q000aoknvs22qluwy" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/pattern/" data-id="cjxycyy20001ooknvhsq6csc5" class="article-share-link">공유</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pattern/">pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/singleton/">singleton</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
 
     </footer>
   </div>
@@ -113,19 +120,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/05/08/GitLab-연동-및-빌드-테스트/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">최신</strong>
-      <div class="article-nav-title">
-        
-          GitLab 연동 및 빌드 테스트
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/04/29/젠킨스-설치-및-설정/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">젠킨스 설치 및 설정</div>
+      <div class="article-nav-title">ANSIBLE - PLAYBOOK WITH WEBSERVER</div>
     </a>
   
 </nav>

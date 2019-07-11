@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-05-09T07:35:14.528Z</updated>
+  <updated>2019-07-11T07:34:26.407Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton</title>
+    <link href="https://skarlsla.github.io/2019/07/11/pattern/"/>
+    <id>https://skarlsla.github.io/2019/07/11/pattern/</id>
+    <published>2019-07-11T07:24:30.000Z</published>
+    <updated>2019-07-11T07:34:26.407Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Singleton-Pattern"><a href="#Singleton-Pattern" class="headerlink" title="Singleton Pattern"></a>Singleton Pattern</h3><p>The singleton pattern is a creational software design pattern.</p><p>클래스가 단 하나의 인스턴스 만 갖도록 보장한다.</p><p><strong>이점</strong></p><ol><li>하나의 인스턴스만 할당함으로 메모리낭비 방지.</li><li>하나의 프로세스에서 공유자원 접근시 이점</li><li>db커넥션풀, 로그 등에 사용됨.</li></ol><p><strong>단점</strong></p><ol><li>멀티 프로세스 상황에서 인스턴스공유 이슈 생길수있음</li><li>하나의 인스턴스로 많은 작업을 하게될 경우 문제</li></ol><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123; </span><br><span class="line">    private <span class="keyword">static</span> instance: Singleton; </span><br><span class="line">    private _temperature: number; </span><br><span class="line">    private <span class="keyword">constructor</span>() &#123; &#125; </span><br><span class="line">    <span class="keyword">static</span> getInstance() &#123; </span><br><span class="line">        <span class="keyword">if</span> (!Singleton.instance) &#123; </span><br><span class="line">            Singleton.instance = <span class="keyword">new</span> Singleton(); </span><br><span class="line">            Singleton.instance._temperature = <span class="number">0</span>; </span><br><span class="line">            &#125; </span><br><span class="line">        <span class="keyword">return</span> Singleton.instance; </span><br><span class="line">    &#125; </span><br><span class="line">    get temperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature; </span><br><span class="line">    &#125; </span><br><span class="line">    set temperature(score) &#123; </span><br><span class="line">        <span class="keyword">this</span>._temperature = score; </span><br><span class="line">    &#125; </span><br><span class="line">    increaseTemperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature += <span class="number">1</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    decreaseTemperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature -= <span class="number">1</span>; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">const</span> myInstance = Singleton.getInstance(); </span><br><span class="line"><span class="keyword">const</span> myInstance2 = Singleton.getInstance(); </span><br><span class="line"><span class="built_in">console</span>.log(myInstance === myInstance2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Singleton-Pattern&quot;&gt;&lt;a href=&quot;#Singleton-Pattern&quot; class=&quot;headerlink&quot; title=&quot;Singleton Pattern&quot;&gt;&lt;/a&gt;Singleton Pattern&lt;/h3&gt;&lt;p&gt;The single
+      
+    
+    </summary>
+    
+      <category term="patterns" scheme="https://skarlsla.github.io/categories/patterns/"/>
+    
+    
+      <category term="singleton" scheme="https://skarlsla.github.io/tags/singleton/"/>
+    
+      <category term="pattern" scheme="https://skarlsla.github.io/tags/pattern/"/>
+    
+      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
+    
+  </entry>
   
   <entry>
     <title>ANSIBLE - PLAYBOOK WITH WEBSERVER</title>
@@ -95,9 +124,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
-    
       <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
+    
+      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
   </entry>
   
@@ -238,9 +267,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
-    
       <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
+    
+      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
   </entry>
   
@@ -534,32 +563,6 @@
     
     
       <category term="ingress" scheme="https://skarlsla.github.io/tags/ingress/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis simple deployment 및 service 작성</title>
-    <link href="https://skarlsla.github.io/2018/07/25/redis_pod/"/>
-    <id>https://skarlsla.github.io/2018/07/25/redis_pod/</id>
-    <published>2018-07-25T06:26:13.000Z</published>
-    <updated>2018-07-25T04:10:09.330Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h3 id="1-deployment-및-service-yaml-작성"><a href="#1-deployment-및-service-yaml-작성" class="headerlink" title="1. deployment 및 service  yaml 작성"></a>1. deployment 및 service  yaml 작성</h3><ul><li>deployment<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">redis-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">redis</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">master</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">redis</span></span><br><span class="line"><span class="attr">        resources:</span></span><br><span class="line"><span class="attr">          requests:</span></span><br><span class="line"><span class="attr">            cpu:</span> <span class="number">100</span><span class="string">m</span></span><br><span class="line"><span class="attr">            memory:</span> <span class="number">100</span><span class="string">Mi</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="attr">        - containerPort:</span> <span class="number">6379</span></span><br></pre></td></tr></table></figure></li></ul><hr><ul><li>service<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">redis-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">redis</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">    - protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">6379</span></span><br></pre></td></tr></table></figure></li></ul><hr>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h3 id=&quot;1-deployment-및-service-yaml-작성&quot;&gt;&lt;a href=&quot;#1-deployment-및-service-yaml-작성&quot; class=&quot;headerlink&quot; title=&quot;1. deployment 및 service  ya
-      
-    
-    </summary>
-    
-      <category term="Kubernetes" scheme="https://skarlsla.github.io/categories/Kubernetes/"/>
-    
-    
-      <category term="redis" scheme="https://skarlsla.github.io/tags/redis/"/>
     
   </entry>
   
