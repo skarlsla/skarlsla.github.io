@@ -5,21 +5,21 @@
   
 
   
-  <title>RPC 패턴과 pub/sub패턴에서의 ack 사용차이 | </title>
+  <title>[RABBITMQ] RPC 패턴과 pub/sub패턴에서의 ack 사용차이 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="기본적으로  noAck, durable 옵션으로 큐에서의 삭제와 ack의 사용을 조정할수있다.  1.   Publish/Subscribe로그를 쌓는 서비스를 예를 들어보면 보내는(pub)서버와 처리하는(subs)서버가 있겠다. pub에서 메세지를 보내고 큐에 쌓인다.  subs 서버는 이를 하나씩 꺼내어 처리한다. 큐에 보낸 메세지를 잃어 버리지 않기 위해">
 <meta name="keywords" content="rpc,ack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RPC 패턴과 pub&#x2F;sub패턴에서의 ack 사용차이">
+<meta property="og:title" content="[RABBITMQ] RPC 패턴과 pub&#x2F;sub패턴에서의 ack 사용차이">
 <meta property="og:url" content="https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="기본적으로  noAck, durable 옵션으로 큐에서의 삭제와 ack의 사용을 조정할수있다.  1.   Publish/Subscribe로그를 쌓는 서비스를 예를 들어보면 보내는(pub)서버와 처리하는(subs)서버가 있겠다. pub에서 메세지를 보내고 큐에 쌓인다.  subs 서버는 이를 하나씩 꺼내어 처리한다. 큐에 보낸 메세지를 잃어 버리지 않기 위해">
 <meta property="og:locale" content="ko">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_pub_sub.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_rpc.png">
-<meta property="og:updated_time" content="2019-04-29T08:07:24.944Z">
+<meta property="og:updated_time" content="2019-07-15T09:04:07.861Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RPC 패턴과 pub&#x2F;sub패턴에서의 ack 사용차이">
+<meta name="twitter:title" content="[RABBITMQ] RPC 패턴과 pub&#x2F;sub패턴에서의 ack 사용차이">
 <meta name="twitter:description" content="기본적으로  noAck, durable 옵션으로 큐에서의 삭제와 ack의 사용을 조정할수있다.  1.   Publish/Subscribe로그를 쌓는 서비스를 예를 들어보면 보내는(pub)서버와 처리하는(subs)서버가 있겠다. pub에서 메세지를 보내고 큐에 쌓인다.  subs 서버는 이를 하나씩 꺼내어 처리한다. 큐에 보낸 메세지를 잃어 버리지 않기 위해">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_pub_sub.png">
   
@@ -103,7 +103,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      RPC 패턴과 pub/sub패턴에서의 ack 사용차이
+      [RABBITMQ] RPC 패턴과 pub/sub패턴에서의 ack 사용차이
     </h1>
   
 
@@ -146,7 +146,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" data-id="cjxyiyvsb000vkwnvcb9axsjj" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" data-id="cjy45x820000hlgnvj4n9s7f7" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ack/">ack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
@@ -161,7 +161,7 @@
       <strong class="article-nav-caption">최신</strong>
       <div class="article-nav-title">
         
-          Persistent, Durable, Ack
+          [RABBITMQ] Persistent, Durable, Ack
         
       </div>
     </a>
