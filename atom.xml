@@ -239,9 +239,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
-    
       <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
+    
+      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
   </entry>
   
@@ -333,6 +333,38 @@
   </entry>
   
   <entry>
+    <title>배포 자동화(CI/CD) AutoMation Architecture</title>
+    <link href="https://skarlsla.github.io/2019/04/29/devops-auto/"/>
+    <id>https://skarlsla.github.io/2019/04/29/devops-auto/</id>
+    <published>2019-04-29T08:50:24.000Z</published>
+    <updated>2019-07-16T02:43:39.557Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="CI-CD-Automation-Architecture"><a href="#CI-CD-Automation-Architecture" class="headerlink" title="CI/CD Automation Architecture"></a>CI/CD Automation Architecture</h3><p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbiGalK%2Fbtqwx3ZB462%2FyzteEkSKW4kIghd9KVp5W1%2Fimg.jpg" alt="GITLAB-JENKINS-ANSIBLE"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;CI-CD-Automation-Architecture&quot;&gt;&lt;a href=&quot;#CI-CD-Automation-Architecture&quot; class=&quot;headerlink&quot; title=&quot;CI/CD Automation Architecture
+      
+    
+    </summary>
+    
+      <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
+    
+    
+      <category term="CD" scheme="https://skarlsla.github.io/tags/CD/"/>
+    
+      <category term="devops" scheme="https://skarlsla.github.io/tags/devops/"/>
+    
+      <category term="CI/CD" scheme="https://skarlsla.github.io/tags/CI-CD/"/>
+    
+      <category term="CI" scheme="https://skarlsla.github.io/tags/CI/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[ANSIBLE] 설치 및 설정 for centos</title>
     <link href="https://skarlsla.github.io/2019/04/29/ANSIBLE-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%84%A4%EC%A0%95/"/>
     <id>https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/</id>
@@ -382,9 +414,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
-    
       <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
+    
+      <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
   </entry>
   
@@ -543,41 +575,9 @@
     
       <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
     
-      <category term="devops" scheme="https://skarlsla.github.io/tags/devops/"/>
-    
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
-  </entry>
-  
-  <entry>
-    <title>배포 자동화(CI/CD) AutoMation</title>
-    <link href="https://skarlsla.github.io/2019/04/29/devops-auto/"/>
-    <id>https://skarlsla.github.io/2019/04/29/devops-auto/</id>
-    <published>2019-04-29T05:50:24.000Z</published>
-    <updated>2019-07-16T02:43:02.182Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h3 id="CI-CD-Automation-Architecture"><a href="#CI-CD-Automation-Architecture" class="headerlink" title="CI/CD Automation Architecture"></a>CI/CD Automation Architecture</h3><p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbiGalK%2Fbtqwx3ZB462%2FyzteEkSKW4kIghd9KVp5W1%2Fimg.jpg" alt="GITLAB-JENKINS-ANSIBLE"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h3 id=&quot;CI-CD-Automation-Architecture&quot;&gt;&lt;a href=&quot;#CI-CD-Automation-Architecture&quot; class=&quot;headerlink&quot; title=&quot;CI/CD Automation Architecture
-      
-    
-    </summary>
-    
-      <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
-    
-    
       <category term="devops" scheme="https://skarlsla.github.io/tags/devops/"/>
-    
-      <category term="CD" scheme="https://skarlsla.github.io/tags/CD/"/>
-    
-      <category term="CI/CD" scheme="https://skarlsla.github.io/tags/CI-CD/"/>
-    
-      <category term="CI" scheme="https://skarlsla.github.io/tags/CI/"/>
     
   </entry>
   
