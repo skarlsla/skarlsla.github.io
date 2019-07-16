@@ -5,19 +5,19 @@
   
 
   
-  <title>[KUBERNETES]  설치 For CentOS | </title>
+  <title>[KUBERNETES] install For CentOS | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1. Docker, kubelet, kubeadm 설치(For CentOS7)1234567891011121314151617$ cat &amp;lt;&amp;lt;EOF &amp;gt; /etc/yum.repos.d/kubernetes.repo[kubernetes]name=Kubernetesbaseurl=http://yum.kubernetes.io/repos/kubernetes">
 <meta name="keywords" content="kubernetes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[KUBERNETES]  설치 For CentOS">
+<meta property="og:title" content="[KUBERNETES] install For CentOS">
 <meta property="og:url" content="https://skarlsla.github.io/2018/07/19/kubernetest/index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="1. Docker, kubelet, kubeadm 설치(For CentOS7)1234567891011121314151617$ cat &amp;lt;&amp;lt;EOF &amp;gt; /etc/yum.repos.d/kubernetes.repo[kubernetes]name=Kubernetesbaseurl=http://yum.kubernetes.io/repos/kubernetes">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2019-07-15T09:03:03.813Z">
+<meta property="og:updated_time" content="2019-07-16T01:54:10.276Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[KUBERNETES]  설치 For CentOS">
+<meta name="twitter:title" content="[KUBERNETES] install For CentOS">
 <meta name="twitter:description" content="1. Docker, kubelet, kubeadm 설치(For CentOS7)1234567891011121314151617$ cat &amp;lt;&amp;lt;EOF &amp;gt; /etc/yum.repos.d/kubernetes.repo[kubernetes]name=Kubernetesbaseurl=http://yum.kubernetes.io/repos/kubernetes">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
@@ -100,7 +100,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [KUBERNETES]  설치 For CentOS
+      [KUBERNETES] install For CentOS
     </h1>
   
 
@@ -141,7 +141,7 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@node1]<span class="comment"># kubeadm join --token 64dd18.cb6f66d53a1b8710  [master-ip]:6443 </span></span><br><span class="line">--discovery-token-ca-cert-hash sha256:c5e8554a75dae6a7701dc12043cf6d2576842a4e360b24d38971fe0911c412ba </span><br><span class="line"></span><br><span class="line"><span class="comment">#마스터서버에서</span></span><br><span class="line">[root@master1]<span class="comment"># kubectl get nodes</span></span><br><span class="line">NAME              STATUS    ROLES     AGE       VERSION</span><br><span class="line">master1           Ready     master    3d        v1.9.6</span><br><span class="line">node1             Ready     node      1d        v1.9.6</span><br></pre></td></tr></table></figure>
 <hr>
-<h3 id="6-RESET-KUBERNETES-MASTER-AND-CLUSTER"><a href="#6-RESET-KUBERNETES-MASTER-AND-CLUSTER" class="headerlink" title="6. RESET KUBERNETES(MASTER AND CLUSTER)"></a>6. RESET KUBERNETES(MASTER AND CLUSTER)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kubeadm reset</span><br><span class="line">systemctl stop kubelet</span><br><span class="line">systemctl stop docker</span><br><span class="line">rm -rf /var/lib/cni/</span><br><span class="line">rm -rf /var/lib/kubelet/*</span><br><span class="line">rm -rf /etc/cni/</span><br><span class="line">ifconfig cni0 down</span><br><span class="line">ifconfig flannel.1 down</span><br><span class="line">ifconfig docker0 down</span><br><span class="line">ip link delete cni0</span><br><span class="line">ip link delete flannel.1</span><br></pre></td></tr></table></figure>
+<h3 id="6-초기화-RESET-KUBERNETES-MASTER-AND-CLUSTER"><a href="#6-초기화-RESET-KUBERNETES-MASTER-AND-CLUSTER" class="headerlink" title="6. 초기화 - RESET KUBERNETES(MASTER AND CLUSTER)"></a>6. 초기화 - RESET KUBERNETES(MASTER AND CLUSTER)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kubeadm reset</span><br><span class="line">systemctl stop kubelet</span><br><span class="line">systemctl stop docker</span><br><span class="line">rm -rf /var/lib/cni/</span><br><span class="line">rm -rf /var/lib/kubelet/*</span><br><span class="line">rm -rf /etc/cni/</span><br><span class="line">ifconfig cni0 down</span><br><span class="line">ifconfig flannel.1 down</span><br><span class="line">ifconfig docker0 down</span><br><span class="line">ip link delete cni0</span><br><span class="line">ip link delete flannel.1</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
@@ -155,7 +155,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjy45x82w001dlgnvirmmr8c8" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjy55yq7n0027c0nv24905cws" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>

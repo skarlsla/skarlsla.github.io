@@ -7,6 +7,22 @@
     </url>
 
     <url>
+        <loc>https://skarlsla.github.io/2018/07/19/kubernetest/</loc>
+        <lastmod>2019-07-16T01:54:10.276Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/</loc>
+        <lastmod>2019-07-15T09:21:24.521Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://skarlsla.github.io/2019/04/29/RPC/</loc>
         <lastmod>2019-07-15T09:05:13.900Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -49,14 +65,6 @@
     <url>
         <loc>https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/</loc>
         <lastmod>2019-07-15T09:03:27.427Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://skarlsla.github.io/2018/07/19/kubernetest/</loc>
-        <lastmod>2019-07-15T09:03:03.813Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -153,14 +161,6 @@
     <url>
         <loc>https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-%EB%93%B1%EB%A1%9D/</loc>
         <lastmod>2019-07-15T08:59:27.939Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/</loc>
-        <lastmod>2019-07-15T08:59:19.229Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
