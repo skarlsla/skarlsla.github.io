@@ -16,13 +16,6 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/devops/</loc>
-        <lastmod>2019-04-29T06:31:29.884Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/singleton/</loc>
         <lastmod>2019-07-11T07:34:26.407Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -79,13 +72,6 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/CD/</loc>
-        <lastmod>2019-07-15T09:00:28.836Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/gitlab/</loc>
         <lastmod>2019-07-15T09:01:13.652Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -93,14 +79,14 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/jenkins/</loc>
+        <loc>https://skarlsla.github.io/tags/ci/</loc>
         <lastmod>2019-07-15T09:01:31.031Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/ci/</loc>
+        <loc>https://skarlsla.github.io/tags/jenkins/</loc>
         <lastmod>2019-07-15T09:01:31.031Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -165,6 +151,34 @@
     <url>
         <loc>https://skarlsla.github.io/tags/kubernetes/</loc>
         <lastmod>2019-07-16T01:54:10.276Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/devops/</loc>
+        <lastmod>2019-07-16T02:43:02.182Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/CD/</loc>
+        <lastmod>2019-07-16T02:43:02.182Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/CI-CD/</loc>
+        <lastmod>2019-07-16T02:43:02.182Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/CI/</loc>
+        <lastmod>2019-07-16T02:43:02.182Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

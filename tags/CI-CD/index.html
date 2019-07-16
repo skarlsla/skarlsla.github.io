@@ -5,20 +5,15 @@
   
 
   
-  <title>[JENKINS] 젠킨스 설치 및 설정 for centos | </title>
+  <title>태그: CI/CD | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 자바설치12345678yum list java*jdk-develyum install java-1.8.0-openjdk-devel.x86_64java -versionwhich javacreadlink -f /usr/bin/javac/etc/profile 맨밑줄 추가export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-">
-<meta name="keywords" content="ci,jenkins">
-<meta property="og:type" content="article">
-<meta property="og:title" content="[JENKINS] 젠킨스 설치 및 설정 for centos">
-<meta property="og:url" content="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title">
+<meta property="og:url" content="https://skarlsla.github.io/tags/CI-CD/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="1. 자바설치12345678yum list java*jdk-develyum install java-1.8.0-openjdk-devel.x86_64java -versionwhich javacreadlink -f /usr/bin/javac/etc/profile 맨밑줄 추가export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2019-07-15T08:59:49.881Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[JENKINS] 젠킨스 설치 및 설정 for centos">
-<meta name="twitter:description" content="1. 자바설치12345678yum list java*jdk-develyum install java-1.8.0-openjdk-devel.x86_64java -versionwhich javacreadlink -f /usr/bin/javac/etc/profile 맨밑줄 추가export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-">
+<meta name="twitter:title">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -72,89 +67,40 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-젠킨스-설치-및-설정" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/29/젠킨스-설치-및-설정/" class="article-date">
-  <time datetime="2019-04-29T08:21:03.000Z" itemprop="datePublished">2019-04-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      [JENKINS] 젠킨스 설치 및 설정 for centos
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2019/04/29/devops-auto/" class="archive-article-date">
+  <time datetime="2019-04-29T05:50:24.000Z" itemprop="datePublished">4월 29</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/04/29/devops-auto/">배포 자동화(CI/CD) AutoMation</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-자바설치"><a href="#1-자바설치" class="headerlink" title="1. 자바설치"></a>1. 자바설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum list java*jdk-devel</span><br><span class="line">yum install java-1.8.0-openjdk-devel.x86_64</span><br><span class="line">java -version</span><br><span class="line"><span class="built_in">which</span> javac</span><br><span class="line">readlink -f /usr/bin/javac</span><br><span class="line"></span><br><span class="line">/etc/profile 맨밑줄 추가</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.201.b09-2.el7_6.x86_64/bin/javac</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="2-젠킨스-설치"><a href="#2-젠킨스-설치" class="headerlink" title="2. 젠킨스 설치"></a>2. 젠킨스 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo</span><br><span class="line">rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key</span><br><span class="line">yum install jenkins</span><br><span class="line"></span><br><span class="line">vi /etc/sysconfig/jenkins 포트변경 9090</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="cjy57pcff002gicnv4f3ibv0f" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2019/04/29/ANSIBLE-설치-및-설정/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">최신</strong>
-      <div class="article-nav-title">
-        
-          [ANSIBLE] 설치 및 설정 for centos
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/04/29/reply-to-옵션에-대한-분석/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">[RABBITMQ] reply-to 옵션에 대한 분석</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         

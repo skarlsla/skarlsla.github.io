@@ -5,20 +5,22 @@
   
 
   
-  <title>[JENKINS] 젠킨스 설치 및 설정 for centos | </title>
+  <title>배포 자동화(CI/CD) AutoMation | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 자바설치12345678yum list java*jdk-develyum install java-1.8.0-openjdk-devel.x86_64java -versionwhich javacreadlink -f /usr/bin/javac/etc/profile 맨밑줄 추가export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-">
-<meta name="keywords" content="ci,jenkins">
+  <meta name="description" content="CI/CD Automation Architecture">
+<meta name="keywords" content="devops,CD,CI&#x2F;CD,CI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[JENKINS] 젠킨스 설치 및 설정 for centos">
-<meta property="og:url" content="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/index.html">
+<meta property="og:title" content="배포 자동화(CI&#x2F;CD) AutoMation">
+<meta property="og:url" content="https://skarlsla.github.io/2019/04/29/devops-auto/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="1. 자바설치12345678yum list java*jdk-develyum install java-1.8.0-openjdk-devel.x86_64java -versionwhich javacreadlink -f /usr/bin/javac/etc/profile 맨밑줄 추가export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-">
+<meta property="og:description" content="CI/CD Automation Architecture">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2019-07-15T08:59:49.881Z">
+<meta property="og:image" content="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbiGalK%2Fbtqwx3ZB462%2FyzteEkSKW4kIghd9KVp5W1%2Fimg.jpg">
+<meta property="og:updated_time" content="2019-07-16T02:43:02.182Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[JENKINS] 젠킨스 설치 및 설정 for centos">
-<meta name="twitter:description" content="1. 자바설치12345678yum list java*jdk-develyum install java-1.8.0-openjdk-devel.x86_64java -versionwhich javacreadlink -f /usr/bin/javac/etc/profile 맨밑줄 추가export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-">
+<meta name="twitter:title" content="배포 자동화(CI&#x2F;CD) AutoMation">
+<meta name="twitter:description" content="CI/CD Automation Architecture">
+<meta name="twitter:image" content="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbiGalK%2Fbtqwx3ZB462%2FyzteEkSKW4kIghd9KVp5W1%2Fimg.jpg">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -72,10 +74,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-젠킨스-설치-및-설정" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-devops-auto" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/29/젠킨스-설치-및-설정/" class="article-date">
-  <time datetime="2019-04-29T08:21:03.000Z" itemprop="datePublished">2019-04-29</time>
+    <a href="/2019/04/29/devops-auto/" class="article-date">
+  <time datetime="2019-04-29T05:50:24.000Z" itemprop="datePublished">2019-04-29</time>
 </a>
     
   <div class="article-category">
@@ -100,7 +102,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [JENKINS] 젠킨스 설치 및 설정 for centos
+      배포 자동화(CI/CD) AutoMation
     </h1>
   
 
@@ -109,9 +111,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="1-자바설치"><a href="#1-자바설치" class="headerlink" title="1. 자바설치"></a>1. 자바설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum list java*jdk-devel</span><br><span class="line">yum install java-1.8.0-openjdk-devel.x86_64</span><br><span class="line">java -version</span><br><span class="line"><span class="built_in">which</span> javac</span><br><span class="line">readlink -f /usr/bin/javac</span><br><span class="line"></span><br><span class="line">/etc/profile 맨밑줄 추가</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.201.b09-2.el7_6.x86_64/bin/javac</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="2-젠킨스-설치"><a href="#2-젠킨스-설치" class="headerlink" title="2. 젠킨스 설치"></a>2. 젠킨스 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo</span><br><span class="line">rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key</span><br><span class="line">yum install jenkins</span><br><span class="line"></span><br><span class="line">vi /etc/sysconfig/jenkins 포트변경 9090</span><br></pre></td></tr></table></figure>
+<h3 id="CI-CD-Automation-Architecture"><a href="#CI-CD-Automation-Architecture" class="headerlink" title="CI/CD Automation Architecture"></a>CI/CD Automation Architecture</h3><p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbiGalK%2Fbtqwx3ZB462%2FyzteEkSKW4kIghd9KVp5W1%2Fimg.jpg" alt="GITLAB-JENKINS-ANSIBLE"></p>
+
       
     </div>
     <footer class="article-footer">
@@ -125,10 +126,10 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="cjy57pcff002gicnv4f3ibv0f" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/devops-auto/" data-id="cjy57pcdm000licnvcuby7ax7" class="article-share-link">공유</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI/">CI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/devops/">devops</a></li></ul>
 
     </footer>
   </div>
@@ -136,19 +137,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/04/29/ANSIBLE-설치-및-설정/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/04/29/DEVOPS/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">최신</strong>
       <div class="article-nav-title">
         
-          [ANSIBLE] 설치 및 설정 for centos
+          DEVOPS란...
         
       </div>
     </a>
   
   
-    <a href="/2019/04/29/reply-to-옵션에-대한-분석/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/08/14/kubernetest_hpa/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">이전</strong>
-      <div class="article-nav-title">[RABBITMQ] reply-to 옵션에 대한 분석</div>
+      <div class="article-nav-title">[KUBERNETES] HPA(오토스케일링) 활용법</div>
     </a>
   
 </nav>
