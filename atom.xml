@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-07-17T09:02:02.897Z</updated>
+  <updated>2019-07-17T09:04:33.665Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -17,13 +17,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>[WEBSERVER] JWT(JSON WEB TOKEN)? </title>
+    <link href="https://skarlsla.github.io/2019/07/17/webserver-auth2/"/>
+    <id>https://skarlsla.github.io/2019/07/17/webserver-auth2/</id>
+    <published>2019-07-17T08:43:11.000Z</published>
+    <updated>2019-07-17T09:04:33.665Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="JWT-JSON-Web-Token"><a href="#JWT-JSON-Web-Token" class="headerlink" title="JWT(JSON Web Token)?"></a>JWT(JSON Web Token)?</h3><p>JSON형식으로 웹에서 사용하는 토큰? JSON 객체로서 당사자간에 안전하게 정보를 전송할 수있는 작고<br>독립적 인 방법을 정의하는 공개 표준 ( RFC 7519 )이라고 한다.  </p><p><strong>사용?</strong><br>토큰기반인증에 사용하거나 안전한 정보교환이 필요할때 유용하다고 한다.</p><p><strong>구조?</strong><br>.을 구분자로 3가지의 문자열로 되어있다. 헤더(header).내용(payload).서명(signature)</p><p><strong>헤더:</strong><br>{<br>  “typ”: “JWT”,  // 토큰타입<br>  “alg”: “HS256” // 해싱 알고리즘정보<br>}</p><p><strong>내용:</strong><br>정보의 한 ‘조각’ 을 클레임이라고 한다.클레임은 사용자에 대한 프로퍼티나 속성을 넣는다.<br>registered, public, private claims으로 구분한다.</p><p>registered claim<br>미리 정의된 claim으로써, 토큰에 대한 정보이다. </p><p>public claim<br>공개적인 claim을 명시하는데, 충돌 방지를 위해 URI 형식으로 작성한다. </p><p>private claim<br>서버와 클라이언트가 협의한 claim을 명시한다.<br>이미 정해져 있는 이름을 가진 아래의 7개에 대한 정보를 담을 수 있다. </p><p>iss : Token 발행자(Issuer)<br>sub : Token의 제목 (Subject)<br>aud : Token 의 대상자 (Audience)<br>exp : Token의 유효한 날짜 정보(Expiration time)<br>nbf : Token 의 유효 시작 날짜 정보 (Not before)<br>iat : Token의 발행된 날짜 정보(Issued At)<br>jti : Token 의 고유 식별자(JWT ID) </p><p>Claim을 JSON 행태로 정의한다.</p><p>예시:<br>{<br>  “userId”:”skarl”,<br>  “exp”: “1485270000000”,<br>  “role”:[“admin”]<br>}<br>사용시에는 BASE64 인코딩을 통해서 문자열로 변환한다.</p><p><strong>서명:</strong><br>서명은 헤더의 인코딩값과, 정보의 인코딩값을 합친후 주어진 비밀키로 해쉬를 하여 생성한다.</p><p>서명을 만드는 수도코드 구조<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  &quot;kkkkmysecret&quot;)</span><br></pre></td></tr></table></figure></p><p>해쉬 -&gt; base64로 인코딩 후 사용</p><p>like this<br>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJza2FybCIsImV4cCI6IjE0ODUyNzAwMDAwMDAiLCJyb2xlIjpbImFkbWluIl19.jAafdBOQCoZkV-xMcJx0BCTH45AqYtf9mcdKog4ewjc</p><p><strong>example</strong><br><a href="https://jwt.io/" target="_blank" rel="noopener">https://jwt.io/</a> 공식 홈페이지에서 테스트 해볼 수 있다.</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/JWT.PNG" alt="공홈 테스트"></p><hr><p>###토큰기반 흐름<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jwt-seq.PNG" alt="시퀀스 다이어~"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;JWT-JSON-Web-Token&quot;&gt;&lt;a href=&quot;#JWT-JSON-Web-Token&quot; class=&quot;headerlink&quot; title=&quot;JWT(JSON Web Token)?&quot;&gt;&lt;/a&gt;JWT(JSON Web Token)?&lt;/h3&gt;
+      
+    
+    </summary>
+    
+      <category term="webserver" scheme="https://skarlsla.github.io/categories/webserver/"/>
+    
+    
+      <category term="oauth" scheme="https://skarlsla.github.io/tags/oauth/"/>
+    
+      <category term="jwt" scheme="https://skarlsla.github.io/tags/jwt/"/>
+    
+      <category term="인증" scheme="https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[WEBSERVER] session/cookie or token</title>
     <link href="https://skarlsla.github.io/2019/07/17/webserver-auth/"/>
     <id>https://skarlsla.github.io/2019/07/17/webserver-auth/</id>
     <published>2019-07-17T07:43:15.000Z</published>
-    <updated>2019-07-17T09:02:02.897Z</updated>
+    <updated>2019-07-17T09:04:50.120Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="인증방식"><a href="#인증방식" class="headerlink" title="인증방식"></a>인증방식</h3><p><strong>1. 서버기반</strong><br>HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상<br>접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.<br>그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다.</p><p>로그인 -&gt; 서버에서 session-id 생성 전달 -&gt; client sessionId 쿠키에 저장 후 사용 </p><p><strong>장단점</strong><br>일반적인 웹서비스에서 많이 쓰이는 인증방식이다. 쿠키자체에 주요정보가 있지 않아 안전한편<br>서버에서 세션및쿠키를 관리하기때문에 사용자가 많아지면 확장이 필요하다.<br>확장을 위해 메모리DB등을 사용해야한다.</p><hr><p><strong>2. 토큰기반</strong><br>서버에서 발행한 토큰을 이용해 인증처리를 한다.</p><p>요청시 헤더에 토큰값을 보내면 서버에서 토큰검증만 하면된다.</p><p>로그인 -&gt; 서버에서 로긴처리후 token발급 -&gt; client에서 요청시 헤더에 token</p><p><strong>장단점</strong><br>확장을 위한 메모리DB등을 사용할 필요없다.<br>쿠키로 인한 사이트간 요청위조를 방지 할수있다.<br>도메인 상관없이 토큰으로 인증<br>토큰 탈취시 보안에 취약 하지만 refresh_token과 access_token의 주기 설정으로 어느정도 방어가능</p><hr><h3 id="JWT-JSON-Web-Token"><a href="#JWT-JSON-Web-Token" class="headerlink" title="JWT(JSON Web Token)?"></a>JWT(JSON Web Token)?</h3><p>JSON형식으로 웹에서 사용하는 토큰? JSON 객체로서 당사자간에 안전하게 정보를 전송할 수있는 작고<br>독립적 인 방법을 정의하는 공개 표준 ( RFC 7519 )이라고 한다.  </p><p><strong>사용?</strong><br>토큰기반인증에 사용하거나 안전한 정보교환이 필요할때 유용하다고 한다.</p><p><strong>구조?</strong><br>.을 구분자로 3가지의 문자열로 되어있다. 헤더(header).내용(payload).서명(signature)</p><p><strong>헤더:</strong><br>{<br>  “typ”: “JWT”,  // 토큰타입<br>  “alg”: “HS256” // 해싱 알고리즘정보<br>}</p><p><strong>내용:</strong><br>정보의 한 ‘조각’ 을 클레임이라고 한다.클레임은 사용자에 대한 프로퍼티나 속성을 넣는다.<br>registered, public, private claims으로 구분한다.</p><p>registered claim<br>미리 정의된 claim으로써, 토큰에 대한 정보이다. </p><p>public claim<br>공개적인 claim을 명시하는데, 충돌 방지를 위해 URI 형식으로 작성한다. </p><p>private claim<br>서버와 클라이언트가 협의한 claim을 명시한다.<br>이미 정해져 있는 이름을 가진 아래의 7개에 대한 정보를 담을 수 있다. </p><p>iss : Token 발행자(Issuer)<br>sub : Token의 제목 (Subject)<br>aud : Token 의 대상자 (Audience)<br>exp : Token의 유효한 날짜 정보(Expiration time)<br>nbf : Token 의 유효 시작 날짜 정보 (Not before)<br>iat : Token의 발행된 날짜 정보(Issued At)<br>jti : Token 의 고유 식별자(JWT ID) </p><p>Claim을 JSON 행태로 정의한다.</p><p>예시:<br>{<br>  “userId”:”skarl”,<br>  “exp”: “1485270000000”,<br>  “role”:[“admin”]<br>}<br>사용시에는 BASE64 인코딩을 통해서 문자열로 변환한다.</p><p><strong>서명:</strong><br>서명은 헤더의 인코딩값과, 정보의 인코딩값을 합친후 주어진 비밀키로 해쉬를 하여 생성한다.</p><p>서명을 만드는 수도코드 구조<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  &quot;kkkkmysecret&quot;)</span><br></pre></td></tr></table></figure></p><p>해쉬 -&gt; base64로 인코딩 후 사용</p><p>like this<br>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJza2FybCIsImV4cCI6IjE0ODUyNzAwMDAwMDAiLCJyb2xlIjpbImFkbWluIl19.jAafdBOQCoZkV-xMcJx0BCTH45AqYtf9mcdKog4ewjc</p><p><strong>example</strong><br><a href="https://jwt.io/" target="_blank" rel="noopener">https://jwt.io/</a> 공식 홈페이지에서 테스트 해볼 수 있다.</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/JWT.PNG" alt="공홈 테스트"></p><hr><p>###토큰기반 흐름<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jwt-seq.PNG" alt="시퀀스 다이어~"></p>]]></content>
+    <content type="html"><![CDATA[<h3 id="인증방식"><a href="#인증방식" class="headerlink" title="인증방식"></a>인증방식</h3><p><strong>1. 서버기반</strong><br>HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상<br>접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.<br>그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다.</p><p>로그인 -&gt; 서버에서 session-id 생성 전달 -&gt; client sessionId 쿠키에 저장 후 사용 </p><p><strong>장단점</strong><br>일반적인 웹서비스에서 많이 쓰이는 인증방식이다. 쿠키자체에 주요정보가 있지 않아 안전한편<br>서버에서 세션및쿠키를 관리하기때문에 사용자가 많아지면 확장이 필요하다.<br>확장을 위해 메모리DB등을 사용해야한다.</p><hr><p><strong>2. 토큰기반</strong><br>서버에서 발행한 토큰을 이용해 인증처리를 한다.</p><p>요청시 헤더에 토큰값을 보내면 서버에서 토큰검증만 하면된다.</p><p>로그인 -&gt; 서버에서 로긴처리후 token발급 -&gt; client에서 요청시 헤더에 token</p><p><strong>장단점</strong><br>확장을 위한 메모리DB등을 사용할 필요없다.<br>쿠키로 인한 사이트간 요청위조를 방지 할수있다.<br>도메인 상관없이 토큰으로 인증<br>토큰 탈취시 보안에 취약 하지만 refresh_token과 access_token의 주기 설정으로 어느정도 방어가능</p><hr>]]></content>
     
     <summary type="html">
     
@@ -39,11 +69,11 @@
     
       <category term="oauth" scheme="https://skarlsla.github.io/tags/oauth/"/>
     
-      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
-    
       <category term="jwt" scheme="https://skarlsla.github.io/tags/jwt/"/>
     
       <category term="인증" scheme="https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/"/>
+    
+      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
     
   </entry>
   
@@ -270,9 +300,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
     
   </entry>
   
@@ -445,9 +475,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
     
   </entry>
   
@@ -550,35 +580,6 @@
     
     
       <category term="rabbitmq" scheme="https://skarlsla.github.io/tags/rabbitmq/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[RABBITMQ] RPC 패턴과 pub/sub패턴에서의 ack 사용차이</title>
-    <link href="https://skarlsla.github.io/2019/04/29/RPC-%ED%8C%A8%ED%84%B4%EA%B3%BC-pub-sub%ED%8C%A8%ED%84%B4%EC%97%90%EC%84%9C%EC%9D%98-ack-%EC%82%AC%EC%9A%A9%EC%B0%A8%EC%9D%B4/"/>
-    <id>https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/</id>
-    <published>2019-04-29T08:03:40.000Z</published>
-    <updated>2019-07-15T09:04:07.861Z</updated>
-    
-    <content type="html"><![CDATA[<p>기본적으로  noAck, durable 옵션으로 큐에서의 삭제와 ack의 사용을 조정할수있다.</p><hr><h3 id="1-Publish-Subscribe"><a href="#1-Publish-Subscribe" class="headerlink" title="1.   Publish/Subscribe"></a>1.   Publish/Subscribe</h3><p>로그를 쌓는 서비스를 예를 들어보면</p><p>보내는(pub)서버와 처리하는(subs)서버가 있겠다.</p><p>pub에서 메세지를 보내고 큐에 쌓인다.  subs 서버는 이를 하나씩 꺼내어 처리한다.</p><p>큐에 보낸 메세지를 잃어 버리지 않기 위해서는 durable 옵션으로 큐를 생성하고  </p><p>큐에 전송시 persistent 옵션을 주면된다. </p><p>그러면 rabbitmq가 죽더라고 큐에 들어간 내용들은 재기동시 다시 살아난다.</p><p>하지만 subs서버가 큐에서 꺼낸 메세지를 작업중 죽는다면 메세지는 소실된다.</p><p>이를 위해 consume함수 옵션(noAck)을 사용한다. 기본적으로 noAck를 하면 자동으로 ack가 실행되고</p><p>큐에서 사라진다. 하지만 noAck 옵션을 false로 선언하면 subs서버에서 작업을 처리한후 ack를 보내야한다.</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_pub_sub.png" alt="pub/sub"></p><hr><h3 id="2-RPC-req-res"><a href="#2-RPC-req-res" class="headerlink" title="2.   RPC(req/res)"></a>2.   RPC(req/res)</h3><p>The RPC client must consume in no-ack mode. </p><p>This is because there is no queue for the reply message to be returned to</p><p>if the client disconnects or rejects the reply message.</p><p>RPC 클라이언트는 반드시 consume을 사용할 때 no-ack 모드를 사용해야한다.</p><p>클라이언트에서 연결이 끊기거나 reject 에러가 나면 서버에서 전달할 방법이 없기 때문이다.</p><p>reply queue는 요청시 생성되고 결과받고 사라지는 임시큐이다.</p><p>메세지가 유실되면 안되는 서비스의 처리는 별도로 처리하는 것이 맞겠다.</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_rpc.png" alt="rpc"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;기본적으로  noAck, durable 옵션으로 큐에서의 삭제와 ack의 사용을 조정할수있다.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&quot;1-Publish-Subscribe&quot;&gt;&lt;a href=&quot;#1-Publish-Subscribe&quot; class=&quot;headerli
-      
-    
-    </summary>
-    
-      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
-    
-    
-      <category term="rpc" scheme="https://skarlsla.github.io/tags/rpc/"/>
-    
-      <category term="ack" scheme="https://skarlsla.github.io/tags/ack/"/>
     
   </entry>
   

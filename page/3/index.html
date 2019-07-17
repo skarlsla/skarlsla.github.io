@@ -69,6 +69,89 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-RPC-패턴과-pub-sub패턴에서의-ack-사용차이" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" class="article-date">
+  <time datetime="2019-04-29T08:03:40.000Z" itemprop="datePublished">2019-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/">[RABBITMQ] RPC 패턴과 pub/sub패턴에서의 ack 사용차이</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>기본적으로  noAck, durable 옵션으로 큐에서의 삭제와 ack의 사용을 조정할수있다.</p>
+<hr>
+<h3 id="1-Publish-Subscribe"><a href="#1-Publish-Subscribe" class="headerlink" title="1.   Publish/Subscribe"></a>1.   Publish/Subscribe</h3><p>로그를 쌓는 서비스를 예를 들어보면</p>
+<p>보내는(pub)서버와 처리하는(subs)서버가 있겠다.</p>
+<p>pub에서 메세지를 보내고 큐에 쌓인다.  subs 서버는 이를 하나씩 꺼내어 처리한다.</p>
+<p>큐에 보낸 메세지를 잃어 버리지 않기 위해서는 durable 옵션으로 큐를 생성하고  </p>
+<p>큐에 전송시 persistent 옵션을 주면된다. </p>
+<p>그러면 rabbitmq가 죽더라고 큐에 들어간 내용들은 재기동시 다시 살아난다.</p>
+<p>하지만 subs서버가 큐에서 꺼낸 메세지를 작업중 죽는다면 메세지는 소실된다.</p>
+<p>이를 위해 consume함수 옵션(noAck)을 사용한다. 기본적으로 noAck를 하면 자동으로 ack가 실행되고</p>
+<p>큐에서 사라진다. 하지만 noAck 옵션을 false로 선언하면 subs서버에서 작업을 처리한후 ack를 보내야한다.</p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_pub_sub.png" alt="pub/sub"></p>
+<hr>
+<h3 id="2-RPC-req-res"><a href="#2-RPC-req-res" class="headerlink" title="2.   RPC(req/res)"></a>2.   RPC(req/res)</h3><p>The RPC client must consume in no-ack mode. </p>
+<p>This is because there is no queue for the reply message to be returned to</p>
+<p>if the client disconnects or rejects the reply message.</p>
+<p>RPC 클라이언트는 반드시 consume을 사용할 때 no-ack 모드를 사용해야한다.</p>
+<p>클라이언트에서 연결이 끊기거나 reject 에러가 나면 서버에서 전달할 방법이 없기 때문이다.</p>
+<p>reply queue는 요청시 생성되고 결과받고 사라지는 임시큐이다.</p>
+<p>메세지가 유실되면 안되는 서비스의 처리는 별도로 처리하는 것이 맞겠다.</p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/ack_client_rpc.png" alt="rpc"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" data-id="cjy70s4k5000hx0nvc86s7mtw" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ack/">ack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-DEVOPS" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/29/DEVOPS/" class="article-date">
@@ -133,7 +216,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/DEVOPS/" data-id="cjy70onxz000az0nvb75xakg8" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/DEVOPS/" data-id="cjy70s4ju0009x0nvfeqkt1e7" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/devops/">devops</a></li></ul>
@@ -299,7 +382,7 @@ spec:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/08/14/kubernetest_hpa/" data-id="cjy70onzd001nz0nv0j7191dw" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/08/14/kubernetest_hpa/" data-id="cjy70s4l9001ox0nvuehy6tgg" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -417,7 +500,7 @@ template:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/08/04/kubernetest_rolling/" data-id="cjy70onzg001qz0nv897r626q" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/08/04/kubernetest_rolling/" data-id="cjy70s4lc001tx0nv44xzoe9g" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -526,7 +609,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjy70onz10018z0nv1fba8y6d" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjy70s4l1001dx0nvad829wxn" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -595,7 +678,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjy70onyl000uz0nvuu215t3c" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjy70s4ko0011x0nvprxvrmgk" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -852,7 +935,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjy70onz8001gz0nv1ju934jg" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjy70s4kw0018x0nvw0kcwba7" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -925,7 +1008,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjy70oo04002az0nv083tzpwm" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjy70s4lt0028x0nvg95i3i1r" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
@@ -1000,7 +1083,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjy70onyy0015z0nv03z9uogx" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjy70s4km000zx0nvx7437pcj" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -1075,102 +1158,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjy70onzb001lz0nvbztx7phv" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-kubernetest" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/19/kubernetest/" class="article-date">
-  <time datetime="2018-07-19T06:22:13.000Z" itemprop="datePublished">2018-07-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Kubernetes/">Kubernetes</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/19/kubernetest/">[KUBERNETES] install For CentOS</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-Docker-kubelet-kubeadm-설치-For-CentOS7"><a href="#1-Docker-kubelet-kubeadm-설치-For-CentOS7" class="headerlink" title="1. Docker, kubelet, kubeadm 설치(For CentOS7)"></a>1. Docker, kubelet, kubeadm 설치(For CentOS7)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=http://yum.kubernetes.io/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg</span><br><span class="line">       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF </span><br><span class="line"></span><br><span class="line">$ setenforce 0</span><br><span class="line">$ systemctl <span class="built_in">disable</span> firewalld &amp;&amp; systemctl stop firewalld</span><br><span class="line">$ yum install -y docker</span><br><span class="line">$ yum install -y kubelet kubeadm kubectl kubernetes-cni</span><br><span class="line">$ systemctl <span class="built_in">enable</span> docker &amp;&amp; systemctl restart docker</span><br><span class="line">$ systemctl <span class="built_in">enable</span> kubelet &amp;&amp; systemctl restart kubelet</span><br></pre></td></tr></table></figure>
-<ul>
-<li>master 서버 AND cluster Node서버 동일설치</li>
-</ul>
-<hr>
-<h3 id="2-MASTER-서버-초기화"><a href="#2-MASTER-서버-초기화" class="headerlink" title="2. MASTER 서버 초기화"></a>2. MASTER 서버 초기화</h3><ul>
-<li>network add-on으로 flannel을 사용할 때는 ‘–pod-network-cidr’ 옵션이 필수이다.</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ sudo kubeadm init --pod-network-cidr 10.244.0.0/16</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">생략</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">Your Kubernetes master has initialized successfully!</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run <span class="string">"kubectl apply -f [podnetwork].yaml"</span> with one of the options listed at:</span><br><span class="line">    http://kubernetes.io/docs/admin/addons/</span><br><span class="line"></span><br><span class="line">You can now join any number of machines by running the following on each node:</span><br><span class="line"></span><br><span class="line">kubeadm join --token=872aa9.d7610d83eabce1a4 &lt;master ip&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>초기화시 옵션 –kubernetes-version v1.9.2 –feature-gates CoreDNS=false</li>
-</ul>
-<hr>
-<h3 id="3-Master에서-Pod-수행-For-TEST"><a href="#3-Master에서-Pod-수행-For-TEST" class="headerlink" title="3. Master에서 Pod 수행(For TEST)"></a>3. Master에서 Pod 수행(For TEST)</h3><ul>
-<li>기본적으로 클러스터는 보안 문제로 master에서 pod를 스케줄링 하지 않는다. 하지만, 예를 들어 테스트할때 노드가 부족하거나 단일 노드에서 개발 용으로 kubernetes 클러스터를 사용할 때, master에서 pod를 스케줄링하도록 명령할 수 있다.</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl taint nodes --all node-role.kubernetes.io/master-</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="4-pod-network-add-on-설치"><a href="#4-pod-network-add-on-설치" class="headerlink" title="4. pod network add-on 설치"></a>4. pod network add-on 설치</h3><ul>
-<li>사용 가능한 network add-on 목록 중 하나를 선택한다. 클러스터 당 하나의 pod network만 설치할 수 있다. 각 network add-on 링크에 접속하면 설치 방법이 나와있다. ‘Weave Net’ 과 ‘Flannel’만이 멀티 플랫폼 환경(amd64, arm64, arhtp)을 지원한다.</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> KUBECONFIG=/etc/kubernetes/admin.conf</span><br><span class="line">sysctl net.bridge.bridge-nf-call-iptables=1</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="5-Cluster-Node-Join"><a href="#5-Cluster-Node-Join" class="headerlink" title="5. Cluster Node Join"></a>5. Cluster Node Join</h3><ul>
-<li>Master에서 Pod network설치가 완료되어 ‘kube-dns’가 Running 상태가 되었는지 확인한다.</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods --namespace=kube-system</span><br><span class="line">NAME                                            READY     STATUS    RESTARTS   AGE</span><br><span class="line">etcd-localhost.localdomain                      1/1       Running   0          3d</span><br><span class="line">kube-apiserver-localhost.localdomain            1/1       Running   0          3d</span><br><span class="line">kube-controller-manager-localhost.localdomain   1/1       Running   0          3d</span><br><span class="line">kube-dns-6f4fd4bdf-x4k6t                        3/3       Running   0          3d</span><br><span class="line">kube-flannel-ds-c5l2w                           1/1       Running   1          1d</span><br><span class="line">kube-flannel-ds-fxknd                           1/1       Running   2          3d</span><br><span class="line">kube-proxy-dg7xd                                1/1       Running   0          3d</span><br><span class="line">kube-proxy-pmbsb                                1/1       Running   0          1d</span><br><span class="line">kube-scheduler-localhost.localdomain            1/1       Running   0          3d</span><br></pre></td></tr></table></figure>
-<ul>
-<li>node 서버가 접속하여 master init에서 나온 결과를 입력한다.</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@node1]<span class="comment"># kubeadm join --token 64dd18.cb6f66d53a1b8710  [master-ip]:6443 </span></span><br><span class="line">--discovery-token-ca-cert-hash sha256:c5e8554a75dae6a7701dc12043cf6d2576842a4e360b24d38971fe0911c412ba </span><br><span class="line"></span><br><span class="line"><span class="comment">#마스터서버에서</span></span><br><span class="line">[root@master1]<span class="comment"># kubectl get nodes</span></span><br><span class="line">NAME              STATUS    ROLES     AGE       VERSION</span><br><span class="line">master1           Ready     master    3d        v1.9.6</span><br><span class="line">node1             Ready     node      1d        v1.9.6</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="6-초기화-RESET-KUBERNETES-MASTER-AND-CLUSTER"><a href="#6-초기화-RESET-KUBERNETES-MASTER-AND-CLUSTER" class="headerlink" title="6. 초기화 - RESET KUBERNETES(MASTER AND CLUSTER)"></a>6. 초기화 - RESET KUBERNETES(MASTER AND CLUSTER)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kubeadm reset</span><br><span class="line">systemctl stop kubelet</span><br><span class="line">systemctl stop docker</span><br><span class="line">rm -rf /var/lib/cni/</span><br><span class="line">rm -rf /var/lib/kubelet/*</span><br><span class="line">rm -rf /etc/cni/</span><br><span class="line">ifconfig cni0 down</span><br><span class="line">ifconfig flannel.1 down</span><br><span class="line">ifconfig docker0 down</span><br><span class="line">ip link delete cni0</span><br><span class="line">ip link delete flannel.1</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjy70onz5001dz0nvunsxtxcj" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjy70s4l6001lx0nvtj9ipw13" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -1217,7 +1205,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 10px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 10px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 10px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
+      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 12.5px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
     </div>
   </div>
     
@@ -1239,6 +1227,10 @@ rules:
       <ul>
         
           <li>
+            <a href="/2019/07/17/webserver-auth2/">[WEBSERVER] JWT(JSON WEB TOKEN)? </a>
+          </li>
+        
+          <li>
             <a href="/2019/07/17/webserver-auth/">[WEBSERVER] session/cookie or token</a>
           </li>
         
@@ -1252,10 +1244,6 @@ rules:
         
           <li>
             <a href="/2019/07/11/pattern/">[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/10/node-with-type/">[NODEJS] TypeScript with Node.js </a>
           </li>
         
       </ul>
