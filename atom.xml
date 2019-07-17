@@ -51,9 +51,9 @@
     <link href="https://skarlsla.github.io/2019/07/17/webserver-auth/"/>
     <id>https://skarlsla.github.io/2019/07/17/webserver-auth/</id>
     <published>2019-07-17T07:43:15.000Z</published>
-    <updated>2019-07-17T09:07:09.429Z</updated>
+    <updated>2019-07-17T09:16:29.176Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="인증방식"><a href="#인증방식" class="headerlink" title="인증방식"></a>인증방식</h3><p><strong>1. 서버기반</strong><br>HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상<br>접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.<br>그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다.</p><p>로그인 -&gt; 서버에서 session-id 생성 전달 -&gt; client sessionId 쿠키에 저장 후 사용 </p><p><strong>장단점</strong><br>일반적인 웹서비스에서 많이 쓰이는 인증방식이다. 쿠키자체에 주요정보가 있지 않아 안전한편<br>서버에서 세션및쿠키를 관리하기때문에 사용자가 많아지면 확장이 필요하다.<br>확장을 위해 메모리DB등을 사용해야한다.</p><hr><p>###세션기반 흐름<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/session-seq.PNG" alt="시퀀스 다이어~"></p><hr><p><strong>2. 토큰기반</strong><br>서버에서 발행한 토큰을 이용해 인증처리를 한다.</p><p>요청시 헤더에 토큰값을 보내면 서버에서 토큰검증만 하면된다.</p><p>로그인 -&gt; 서버에서 로긴처리후 token발급 -&gt; client에서 요청시 헤더에 token</p><p><strong>장단점</strong><br>확장을 위한 메모리DB등을 사용할 필요없다.<br>쿠키로 인한 사이트간 요청위조를 방지 할수있다.<br>도메인 상관없이 토큰으로 인증<br>토큰 탈취시 보안에 취약 하지만 refresh_token과 access_token의 주기 설정으로 어느정도 방어가능</p><hr><p>###토큰기반 흐름<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jwt-seq.PNG" alt="시퀀스 다이어~"></p>]]></content>
+    <content type="html"><![CDATA[<h3 id="인증방식"><a href="#인증방식" class="headerlink" title="인증방식"></a>인증방식</h3><p><strong>1. 서버기반</strong><br>HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상<br>접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.<br>그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다.</p><p>로그인 -&gt; 서버에서 session-id 생성 전달 -&gt; client sessionId 쿠키에 저장 후 사용 </p><p><strong>장단점</strong><br>일반적인 웹서비스에서 많이 쓰이는 인증방식이다. 쿠키자체에 주요정보가 있지 않아 안전한편<br>서버에서 세션및쿠키를 관리하기때문에 사용자가 많아지면 확장이 필요하다.<br>확장을 위해 메모리DB등을 사용해야한다.</p><hr><p>###세션기반 흐름###<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/session-seq.PNG" alt="시퀀스 다이어~"></p><hr><p><strong>2. 토큰기반</strong><br>서버에서 발행한 토큰을 이용해 인증처리를 한다.</p><p>요청시 헤더에 토큰값을 보내면 서버에서 토큰검증만 하면된다.</p><p>로그인 -&gt; 서버에서 로긴처리후 token발급 -&gt; client에서 요청시 헤더에 token</p><p><strong>장단점</strong><br>확장을 위한 메모리DB등을 사용할 필요없다.<br>쿠키로 인한 사이트간 요청위조를 방지 할수있다.<br>도메인 상관없이 토큰으로 인증<br>토큰 탈취시 보안에 취약 하지만 refresh_token과 access_token의 주기 설정으로 어느정도 방어가능</p><hr><p>###토큰기반 흐름###<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jwt-seq.PNG" alt="시퀀스 다이어~"></p>]]></content>
     
     <summary type="html">
     
@@ -69,11 +69,11 @@
     
       <category term="oauth" scheme="https://skarlsla.github.io/tags/oauth/"/>
     
-      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
-    
       <category term="jwt" scheme="https://skarlsla.github.io/tags/jwt/"/>
     
       <category term="인증" scheme="https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/"/>
+    
+      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
     
   </entry>
   
