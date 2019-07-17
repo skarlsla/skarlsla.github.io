@@ -8,17 +8,20 @@
   <title>[WEBSERVER] session/cookie or token | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="인증방식1. 서버기반HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다. 로그인 -&amp;gt; 서버에서 session-id 생성">
-<meta name="keywords" content="oauth,jwt,인증,session">
+<meta name="keywords" content="oauth,session,jwt,인증">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[WEBSERVER] session&#x2F;cookie or token">
 <meta property="og:url" content="https://skarlsla.github.io/2019/07/17/webserver-auth/index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="인증방식1. 서버기반HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다. 로그인 -&amp;gt; 서버에서 session-id 생성">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2019-07-17T09:04:50.120Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/session-seq.PNG">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jwt-seq.PNG">
+<meta property="og:updated_time" content="2019-07-17T09:07:09.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[WEBSERVER] session&#x2F;cookie or token">
 <meta name="twitter:description" content="인증방식1. 서버기반HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다. 로그인 -&amp;gt; 서버에서 session-id 생성">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/session-seq.PNG">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -112,11 +115,14 @@
 <p>로그인 -&gt; 서버에서 session-id 생성 전달 -&gt; client sessionId 쿠키에 저장 후 사용 </p>
 <p><strong>장단점</strong><br>일반적인 웹서비스에서 많이 쓰이는 인증방식이다. 쿠키자체에 주요정보가 있지 않아 안전한편<br>서버에서 세션및쿠키를 관리하기때문에 사용자가 많아지면 확장이 필요하다.<br>확장을 위해 메모리DB등을 사용해야한다.</p>
 <hr>
+<p>###세션기반 흐름<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/session-seq.PNG" alt="시퀀스 다이어~"></p>
+<hr>
 <p><strong>2. 토큰기반</strong><br>서버에서 발행한 토큰을 이용해 인증처리를 한다.</p>
 <p>요청시 헤더에 토큰값을 보내면 서버에서 토큰검증만 하면된다.</p>
 <p>로그인 -&gt; 서버에서 로긴처리후 token발급 -&gt; client에서 요청시 헤더에 token</p>
 <p><strong>장단점</strong><br>확장을 위한 메모리DB등을 사용할 필요없다.<br>쿠키로 인한 사이트간 요청위조를 방지 할수있다.<br>도메인 상관없이 토큰으로 인증<br>토큰 탈취시 보안에 취약 하지만 refresh_token과 access_token의 주기 설정으로 어느정도 방어가능</p>
 <hr>
+<p>###토큰기반 흐름<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jwt-seq.PNG" alt="시퀀스 다이어~"></p>
 
       
     </div>
@@ -131,7 +137,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjy70s4m8002lx0nvb9cgxdt3" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjy70vffp002f1cnv08urvno0" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/인증/">인증</a></li></ul>
