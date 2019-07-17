@@ -17,7 +17,7 @@
 <meta property="og:locale" content="ko">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/JWT.PNG">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jwt-seq.PNG">
-<meta property="og:updated_time" content="2019-07-17T08:54:58.387Z">
+<meta property="og:updated_time" content="2019-07-17T09:00:18.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[WEBSERVER] session&#x2F;cookie or token">
 <meta name="twitter:description" content="인증방식 서버기반HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다.  로그인 -&amp;gt; 서버에서 session-id 생성 전">
@@ -128,9 +128,13 @@
 <p><strong>사용?</strong><br>토큰기반인증에 사용하거나 안전한 정보교환이 필요할때 유용하다고 한다.</p>
 <p><strong>구조?</strong><br>.을 구분자로 3가지의 문자열로 되어있다. 헤더(header).내용(payload).서명(signature)</p>
 <p><strong>헤더:</strong><br>{<br>  “typ”: “JWT”,  // 토큰타입<br>  “alg”: “HS256” // 해싱 알고리즘정보<br>}</p>
-<p><strong>내용:</strong><br>정보의 한 ‘조각’ 을 클레임이라고 한다.클레임은 사용자에 대한 프로퍼티나 속성을 넣는다.<br>JWT에서는 Claim을 JSON 행태로 정의한다.</p>
-<p>JSON을 토큰으로 사용하는 것이 Claim 기반의 토큰 방식이라고 한다.</p>
-<p>{<br>  “userId”:”skarl”,<br>  “exp”: “1485270000000”,<br>  “role”:[“admin”]<br>}<br>사용시에는 BASE64 인코딩을 통해서 문자열로 변환한다.</p>
+<p><strong>내용:</strong><br>정보의 한 ‘조각’ 을 클레임이라고 한다.클레임은 사용자에 대한 프로퍼티나 속성을 넣는다.<br>registered, public, private claims으로 구분한다.</p>
+<p>registered claim<br>미리 정의된 claim으로써, 토큰에 대한 정보이다. </p>
+<p>public claim<br>공개적인 claim을 명시하는데, 충돌 방지를 위해 URI 형식으로 작성한다. </p>
+<p>private claim<br>서버와 클라이언트가 협의한 claim을 명시한다.<br>이미 정해져 있는 이름을 가진 아래의 7개에 대한 정보를 담을 수 있다. </p>
+<p>iss : Token 발행자(Issuer)<br>sub : Token의 제목 (Subject)<br>aud : Token 의 대상자 (Audience)<br>exp : Token의 유효한 날짜 정보(Expiration time)<br>nbf : Token 의 유효 시작 날짜 정보 (Not before)<br>iat : Token의 발행된 날짜 정보(Issued At)<br>jti : Token 의 고유 식별자(JWT ID) </p>
+<p>Claim을 JSON 행태로 정의한다.</p>
+<p>예시:<br>{<br>  “userId”:”skarl”,<br>  “exp”: “1485270000000”,<br>  “role”:[“admin”]<br>}<br>사용시에는 BASE64 인코딩을 통해서 문자열로 변환한다.</p>
 <p><strong>서명:</strong><br>서명은 헤더의 인코딩값과, 정보의 인코딩값을 합친후 주어진 비밀키로 해쉬를 하여 생성한다.</p>
 <p>서명을 만드는 수도코드 구조<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  &quot;kkkkmysecret&quot;)</span><br></pre></td></tr></table></figure></p>
 <p>해쉬 -&gt; base64로 인코딩 후 사용</p>
@@ -152,7 +156,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjy70fgqo002izwnvizmjtbt0" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjy70mbdl004pbsnvy2qxtreo" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/인증/">인증</a></li></ul>
