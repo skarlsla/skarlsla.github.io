@@ -184,29 +184,43 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/oauth/</loc>
-        <lastmod>2019-07-17T09:35:45.264Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/session/</loc>
-        <lastmod>2019-07-17T09:35:45.264Z</lastmod>
+        <lastmod>2019-07-18T01:24:48.854Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://skarlsla.github.io/tags/jwt/</loc>
-        <lastmod>2019-07-17T09:35:45.264Z</lastmod>
+        <lastmod>2019-07-18T01:24:48.854Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/</loc>
-        <lastmod>2019-07-17T09:35:45.264Z</lastmod>
+        <lastmod>2019-07-18T01:24:48.854Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/oauth/</loc>
+        <lastmod>2019-07-18T02:19:43.298Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/sns/</loc>
+        <lastmod>2019-07-18T02:19:43.298Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/%EA%B0%84%ED%8E%B8%EB%A1%9C%EA%B7%B8%EC%9D%B8/</loc>
+        <lastmod>2019-07-18T02:19:43.298Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

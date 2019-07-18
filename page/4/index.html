@@ -69,6 +69,81 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-kubernetest_dash" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/24/kubernetest_dash/" class="article-date">
+  <time datetime="2018-07-24T08:24:13.000Z" itemprop="datePublished">2018-07-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Kubernetes/">Kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/24/kubernetest_dash/">[KUBERNETES] dashboard 설치</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-dashboard-admin-rbac-heapster-설치"><a href="#1-dashboard-admin-rbac-heapster-설치" class="headerlink" title="1. dashboard,admin-rbac, heapster 설치"></a>1. dashboard,admin-rbac, heapster 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DragOnMe/k8s-1.8-dashboard-heapster-mod.git</span><br><span class="line"><span class="built_in">cd</span> k8s-1.8.1-dashboard/</span><br><span class="line">kubectl apply -f kubernetes-dashboard.yaml</span><br><span class="line">kubectl apply -f kubernetes-dashboard-admin-rbac.yaml</span><br><span class="line"><span class="built_in">cd</span> ../</span><br><span class="line">kubectl apply -f k8s-heapster/</span><br><span class="line"></span><br><span class="line">[root@localhost k8s-1.8.1-dashboard]<span class="comment"># kubectl get pods -nkube-system -w</span></span><br><span class="line">NAME                                            READY     STATUS    RESTARTS   AGE</span><br><span class="line">heapster-dfd674df9-k6vr7                        1/1       Running   0          3d</span><br><span class="line">kubernetes-dashboard-5bd6f767c7-2h6wv           1/1       Running   0          2d</span><br><span class="line">monitoring-grafana-76848b566c-cts9n             1/1       Running   0          3d</span><br><span class="line">monitoring-influxdb-6c4b84d695-d8j4t            1/1       Running   0          3d</span><br></pre></td></tr></table></figure>
+<p>kubernetes-dashboard.yaml 수정</p>
+<ol>
+<li>image 변경 (1.8.1 -&gt; 1.8.3)</li>
+<li>service nodeport 설정<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: kubernetes-dashboard</span><br><span class="line">        image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3</span><br><span class="line">//==========================================================</span><br><span class="line"></span><br><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">  name: kubernetes-dashboard</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  <span class="comment"># Added NodePort</span></span><br><span class="line">  <span class="built_in">type</span>: NodePort</span><br><span class="line">  ports:</span><br><span class="line">    - port: 443</span><br><span class="line">      targetPort: 8443</span><br><span class="line">      <span class="comment"># Added nodePort: 30000</span></span><br><span class="line">      nodePort: 30000</span><br><span class="line">  selector:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h3 id="2-dashboard-접근-token-조회"><a href="#2-dashboard-접근-token-조회" class="headerlink" title="2. dashboard 접근 token 조회"></a>2. dashboard 접근 token 조회</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost]<span class="comment"># kubectl -n kube-system get secret | grep kubernetes-dashboard-admin</span></span><br><span class="line">kubernetes-dashboard-admin-token-mcx5k           kubernetes.io/service-account-token </span><br><span class="line">[root@localhost]<span class="comment"># kubectl describe -nkube-system secret kubernetes-dashboard-admin-token-mcx5k</span></span><br><span class="line">Name:         kubernetes-dashboard-admin-token-mcx5k</span><br><span class="line">Namespace:    kube-system</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubernetes.io/service-account.name=kubernetes-dashboard-admin</span><br><span class="line">              kubernetes.io/service-account.uid=1d1aa7aa-30c1-11e8-a365-002590a7058c</span><br><span class="line"></span><br><span class="line">Type:  kubernetes.io/service-account-token</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">ca.crt:     1025 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsInR....중략...</span><br><span class="line">FhyrXH_2ZZlAkYvm0oCT5VZMYCnKQ77NZEdyFXvZpsrXTA4BwfKyPFaFxUPKA</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="3-서버local이-아닌-브라우저에서-접근하기위해-nginx수정"><a href="#3-서버local이-아닌-브라우저에서-접근하기위해-nginx수정" class="headerlink" title="3. 서버local이 아닌 브라우저에서 접근하기위해 nginx수정"></a>3. 서버local이 아닌 브라우저에서 접근하기위해 nginx수정</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen 443;</span><br><span class="line">        server_name &lt;접근호스트&gt;;</span><br><span class="line">        ssl on;</span><br><span class="line">        ssl_certificate /etc/kubernetes/pki/ca.crt;</span><br><span class="line">        ssl_certificate_key  /etc/kubernetes/pki/ca.key;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass https://&lt;master-ip&gt;:30000;</span><br><span class="line">                proxy_http_version 1.1;</span><br><span class="line">                proxy_set_header Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">                proxy_set_header Connection <span class="string">'upgrade'</span>;</span><br><span class="line">                proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">                proxy_cache_bypass <span class="variable">$http_upgrade</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjy81r2ac002kdcnvot55z6h4" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-kubernetest" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/07/19/kubernetest/" class="article-date">
@@ -152,7 +227,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjy71vwe9001i14nvc1a4xnof" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/kubernetest/" data-id="cjy81r29x0029dcnvx1jxguxp" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -248,7 +323,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjy71vwek001u14nvcvkqewku" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjy81r2b9003kdcnvnwx8dysx" class="article-share-link">공유</a>
       
       
     </footer>
@@ -283,7 +358,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sns/">sns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/간편로그인/">간편로그인</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li></ul>
     </div>
   </div>
 
@@ -293,7 +368,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 12.5px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
+      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sns/" style="font-size: 10px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 10px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
     </div>
   </div>
     
@@ -315,6 +390,10 @@
       <ul>
         
           <li>
+            <a href="/2019/07/18/webserver-auth3/">[WEBSERVER] sns login (oauth2)</a>
+          </li>
+        
+          <li>
             <a href="/2019/07/17/webserver-auth2/">[WEBSERVER] JWT(JSON WEB TOKEN)? </a>
           </li>
         
@@ -328,10 +407,6 @@
         
           <li>
             <a href="/2019/07/11/node-express-ws/">[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/11/pattern/">[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton</a>
           </li>
         
       </ul>

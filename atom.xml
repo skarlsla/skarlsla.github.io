@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-07-17T09:06:46.825Z</updated>
+  <updated>2019-07-18T02:19:43.298Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[WEBSERVER] sns login (oauth2)</title>
+    <link href="https://skarlsla.github.io/2019/07/18/webserver-auth3/"/>
+    <id>https://skarlsla.github.io/2019/07/18/webserver-auth3/</id>
+    <published>2019-07-18T02:43:15.000Z</published>
+    <updated>2019-07-18T02:19:43.298Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="SNS-LOGIN"><a href="#SNS-LOGIN" class="headerlink" title="SNS LOGIN"></a>SNS LOGIN</h3><p><strong>간편로그인</strong><br>요새 왠만한 웹 또는 앱서비스에 간편로그인은 기본으로 장착된다. </p><p>SNS 로그인을 이용하기전에 기반 기술을 정리해본다.</p><h3 id="OAuth2-0"><a href="#OAuth2-0" class="headerlink" title="OAuth2.0"></a>OAuth2.0</h3><p>OAuth는 3rd party(외부서비스) 인증 과 허가를 위한 표준 프로토콜이다.<br>IT기업에서 OPEN API를 제공할때 oauth를 사용하여 서비스한다.<br>대표적으로 페이스북,구글,네이버,다음카카오 등이 있겠다.<br>공통적으로 각 회사 개발자지원센터에서 가입 후 앱 혹은 웹을 만들어서 개발키를 부여받게되고<br>개발키를 사용하여 각 회사가 정의한 API사용법에 따라 인증 후 AccessToken을 발급받아 API 들을 사용 할 수있게된다.</p><hr><p><strong>권한 흐름</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/oauth.png" alt="oauth2.0"></p><ol><li>Resouce Owner(API제공업체) 인증코드 요청</li><li>요청성공시 인증코드(Authrization Grant) 전달</li><li>인증코드로 Authorization Server에 토큰요청(AccessToken)</li><li>유효한 인증코드일때 토큰전달</li><li>토큰으로 리소스 요청</li><li>토큰이 유효한 경우 리소스 전달</li></ol><hr><p><strong>특징</strong></p><ol><li>Oauth1.0에서는 앱에서의 사용이 어려웠다.</li><li>1.0의 복잡한 구현과 흐름을 간소화 하였다.</li><li>별도의 암호처리 없이 HTTPS를 이용한다.</li><li>HMAC를 사용하지 않는다.</li><li>AccessToken 유효시간을 지정할수있다.</li></ol><hr><h3 id="SNS-로그인"><a href="#SNS-로그인" class="headerlink" title="SNS 로그인?"></a>SNS 로그인?</h3><p>SNS로그인은  Oauth2.0의 흐름에 서버인증을 추가하면 된다.</p><p><strong>로그인 Flow</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/snslogin.PNG" alt="sns login"></p><ol><li>사용자가 간편로그인을 요청</li><li>해당 sns 로그인 페이지 리다이렉트</li><li>등록된 url로 코드전달</li><li>전달된 권한코드 검증 </li><li>검증성공시 토큰 및 프로파일 제공</li><li>해당 정보로 회원정보 인증처리</li><li>세션 또는 토큰기반으로 인증처리</li><li>로그인 성공</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;SNS-LOGIN&quot;&gt;&lt;a href=&quot;#SNS-LOGIN&quot; class=&quot;headerlink&quot; title=&quot;SNS LOGIN&quot;&gt;&lt;/a&gt;SNS LOGIN&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;간편로그인&lt;/strong&gt;&lt;br&gt;요새 왠만한 웹 또는 앱서비스
+      
+    
+    </summary>
+    
+      <category term="webserver" scheme="https://skarlsla.github.io/categories/webserver/"/>
+    
+    
+      <category term="oauth" scheme="https://skarlsla.github.io/tags/oauth/"/>
+    
+      <category term="sns" scheme="https://skarlsla.github.io/tags/sns/"/>
+    
+      <category term="간편로그인" scheme="https://skarlsla.github.io/tags/%EA%B0%84%ED%8E%B8%EB%A1%9C%EA%B7%B8%EC%9D%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>[WEBSERVER] JWT(JSON WEB TOKEN)? </title>
@@ -51,7 +80,7 @@
     <link href="https://skarlsla.github.io/2019/07/17/webserver-auth/"/>
     <id>https://skarlsla.github.io/2019/07/17/webserver-auth/</id>
     <published>2019-07-17T07:43:15.000Z</published>
-    <updated>2019-07-17T09:35:45.264Z</updated>
+    <updated>2019-07-18T01:24:48.854Z</updated>
     
     <content type="html"><![CDATA[<h3 id="인증방식"><a href="#인증방식" class="headerlink" title="인증방식"></a>인증방식</h3><p><strong>1. 서버기반</strong><br>HTTP프로토콜을 기반으로하는 통신에서 client가 요청시 한번 response후에는 특별한 처리를 하지 않는이상<br>접속을 끊는다.  만약 최초 로그인을 했다고 하더라고 그후에 요청시 client의 정보는 없다는 것이다.<br>그래서 서버에서 세션을 만들어주고 쿠키를 사용하여 문제를 해결한다.</p><p>로그인 -&gt; 서버에서 session-id 생성 전달 -&gt; client sessionId 쿠키에 저장 후 사용 </p><p><strong>장단점</strong><br>일반적인 웹서비스에서 많이 쓰이는 인증방식이다. 쿠키자체에 주요정보가 있지 않아 안전한편<br>서버에서 세션및쿠키를 관리하기때문에 사용자가 많아지면 확장이 필요하다.<br>확장을 위해 메모리DB등을 사용해야한다.</p><hr><h3 id="세션기반-흐름"><a href="#세션기반-흐름" class="headerlink" title="세션기반 흐름"></a>세션기반 흐름</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/session-seq.PNG" alt="시퀀스 다이어~"></p><hr><p><strong>2. 토큰기반</strong><br>서버에서 발행한 토큰을 이용해 인증처리를 한다.</p><p>요청시 헤더에 토큰값을 보내면 서버에서 토큰검증만 하면된다.</p><p>로그인 -&gt; 서버에서 로긴처리후 token발급 -&gt; client에서 요청시 헤더에 token</p><p><strong>장단점</strong><br>확장을 위한 메모리DB등을 사용할 필요없다.<br>쿠키로 인한 사이트간 요청위조를 방지 할수있다.<br>도메인 상관없이 토큰으로 인증<br>토큰 탈취시 보안에 취약 하지만 refresh_token과 access_token의 주기 설정으로 어느정도 방어가능</p><hr><h3 id="토큰기반-흐름"><a href="#토큰기반-흐름" class="headerlink" title="토큰기반 흐름"></a>토큰기반 흐름</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jwt-seq.PNG" alt="시퀀스 다이어~"></p>]]></content>
     
@@ -554,32 +583,6 @@
     
     
       <category term="rpc" scheme="https://skarlsla.github.io/tags/rpc/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[RABBITMQ] Persistent, Durable, Ack</title>
-    <link href="https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/"/>
-    <id>https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/</id>
-    <published>2019-04-29T08:09:10.000Z</published>
-    <updated>2019-07-15T09:03:27.427Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h3 id="1-메시지-수신-자동-확인-ack-noAck"><a href="#1-메시지-수신-자동-확인-ack-noAck" class="headerlink" title="1. 메시지 수신 자동 확인(ack , noAck)"></a>1. 메시지 수신 자동 확인(ack , noAck)</h3><p>작업을 수행하는 데 몇 초가 걸릴 수 있습니다. </p><p>소비자 중 한 명이 긴 작업을 시작하고 부분적으로 만 수행되어 사망하는 경우 어떻게되는지 궁금 할 수 있습니다. </p><p>현재의 코드(</p><p>noAck : true<br>)를 사용하면 RabbitMQ가 고객에게 메시지를 전달하면 바로 삭제 표시가됩니다. </p><p>이 경우 작업자를 죽이면 처리중인 메시지가 손실됩니다. </p><p>이 특정 작업자에게 발송되었지만 아직 처리되지 않은 모든 메시지도 손실됩니다.</p><p>noAck : false<br>ack를 전송하지 않고 소비자가 죽거나 (채널이 닫히거나 연결이 끊어 지거나 TCP 연결이 끊어지는 경우),</p><p>RabbitMQ는 메시지가 완전히 처리되지 않았 음을 인식하고 다시 대기합니다.</p><p>가끔씩 사망하더라도 메시지를 잃어 버리지 않을 것입니다.</p><p>메시지 시간 초과가 없습니다. RabbitMQ는 소비자가 사망 할 때 메시지를 재전송합니다. </p><p>메시지 처리가 매우 오랜 시간이 걸리는 경우에도 괜찮습니다.</p><p>앞의 예에서 메시지 수신 확인이 해제되었습니다. 작업을 마친 후 에는  noAck : false    </p><p>옵션 을 사용하여 설정을 해제하고 작업자에게 적절한 응답을 보내야합니다.</p><p>ex) 자동 응답</p><p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p><p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>  }, secs * 1000);<br>}, {noAck: true});</p><p>ex) 자동 미응답 &amp; ack(msg)</p><p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p><p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>    ch.ack(msg);<br>  }, secs * 1000);<br>}, {noAck: false});</p><hr><h3 id="2-메시지-내구성-durable-지속성-persistent"><a href="#2-메시지-내구성-durable-지속성-persistent" class="headerlink" title="2.  메시지 내구성(durable) , 지속성(persistent)"></a>2.  메시지 내구성(durable) , 지속성(persistent)</h3><p>우리는 소비자가 사망하더라도 작업이 손실되지 않도록하는 방법을 배웠습니다.  그러나 RabbitMQ 서버가 중지되면 우리의 작업은 여전히 손실됩니다.</p><p>RabbitMQ가 종료되거나 충돌하면 사용자가 알리지 않는 한 대기열과 메시지를 잊어 버리게됩니다. 메시지가 손실되지 않도록하려면 큐와 메시지를 모두 튼튼하게 표시해야합니다.</p><p>첫째, 우리는 RabbitMQ가 결코 우리 큐를 잃지 않도록해야합니다. 그렇게하기 위해서 우리는 그것을 durable 으로 선언 할 필요가있다 .</p><p>ex) </p><p>큐 할당시 </p><p>ch.assertQueue ( ‘hello’ , { durable : true });<br>큐로 전송시 옵션</p><p>ch.sendToQueue(q, new Buffer(msg), {persistent: true});</p><hr><h3 id="3-최종적으로-구현해야-할-옵션을-포함한-소스"><a href="#3-최종적으로-구현해야-할-옵션을-포함한-소스" class="headerlink" title="3.  최종적으로  구현해야 할 옵션을 포함한  소스"></a>3.  최종적으로  구현해야 할 옵션을 포함한  소스</h3><p>new_task.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line">    <span class="keyword">var</span> msg = process.argv.slice(<span class="number">2</span>).join(<span class="string">' '</span>) || <span class="string">"Hello World!"</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.sendToQueue(q, <span class="keyword">new</span> Buffer(msg), &#123;<span class="attr">persistent</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [x] Sent '%s'"</span>, msg);</span><br><span class="line">  &#125;);</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; conn.close(); process.exit(<span class="number">0</span>) &#125;, <span class="number">500</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><p>worker.js</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.prefetch(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [*] Waiting for messages in %s. To exit press CTRL+C"</span>, q);</span><br><span class="line">    ch.consume(q, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> secs = msg.content.toString().split(<span class="string">'.'</span>).length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">" [x] Received %s"</span>, msg.content.toString());</span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">" [x] Done"</span>);</span><br><span class="line">        ch.ack(msg);</span><br><span class="line">      &#125;, secs * <span class="number">1000</span>);</span><br><span class="line">    &#125;, &#123;<span class="attr">noAck</span>: <span class="literal">false</span>&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h3 id=&quot;1-메시지-수신-자동-확인-ack-noAck&quot;&gt;&lt;a href=&quot;#1-메시지-수신-자동-확인-ack-noAck&quot; class=&quot;headerlink&quot; title=&quot;1. 메시지 수신 자동 확인(ack , noAck)&quot;&gt;&lt;/a&gt;1. 메시
-      
-    
-    </summary>
-    
-      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
-    
-    
-      <category term="rabbitmq" scheme="https://skarlsla.github.io/tags/rabbitmq/"/>
     
   </entry>
   

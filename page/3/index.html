@@ -69,6 +69,99 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Persistent-Durable-Ack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/29/Persistent-Durable-Ack/" class="article-date">
+  <time datetime="2019-04-29T08:09:10.000Z" itemprop="datePublished">2019-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/29/Persistent-Durable-Ack/">[RABBITMQ] Persistent, Durable, Ack</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-메시지-수신-자동-확인-ack-noAck"><a href="#1-메시지-수신-자동-확인-ack-noAck" class="headerlink" title="1. 메시지 수신 자동 확인(ack , noAck)"></a>1. 메시지 수신 자동 확인(ack , noAck)</h3><p>작업을 수행하는 데 몇 초가 걸릴 수 있습니다. </p>
+<p>소비자 중 한 명이 긴 작업을 시작하고 부분적으로 만 수행되어 사망하는 경우 어떻게되는지 궁금 할 수 있습니다. </p>
+<p>현재의 코드(</p>
+<p>noAck : true<br>)를 사용하면 RabbitMQ가 고객에게 메시지를 전달하면 바로 삭제 표시가됩니다. </p>
+<p>이 경우 작업자를 죽이면 처리중인 메시지가 손실됩니다. </p>
+<p>이 특정 작업자에게 발송되었지만 아직 처리되지 않은 모든 메시지도 손실됩니다.</p>
+<p>noAck : false<br>ack를 전송하지 않고 소비자가 죽거나 (채널이 닫히거나 연결이 끊어 지거나 TCP 연결이 끊어지는 경우),</p>
+<p>RabbitMQ는 메시지가 완전히 처리되지 않았 음을 인식하고 다시 대기합니다.</p>
+<p>가끔씩 사망하더라도 메시지를 잃어 버리지 않을 것입니다.</p>
+<p>메시지 시간 초과가 없습니다. RabbitMQ는 소비자가 사망 할 때 메시지를 재전송합니다. </p>
+<p>메시지 처리가 매우 오랜 시간이 걸리는 경우에도 괜찮습니다.</p>
+<p>앞의 예에서 메시지 수신 확인이 해제되었습니다. 작업을 마친 후 에는  noAck : false    </p>
+<p>옵션 을 사용하여 설정을 해제하고 작업자에게 적절한 응답을 보내야합니다.</p>
+<p>ex) 자동 응답</p>
+<p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p>
+<p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>  }, secs * 1000);<br>}, {noAck: true});</p>
+<p>ex) 자동 미응답 &amp; ack(msg)</p>
+<p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p>
+<p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>    ch.ack(msg);<br>  }, secs * 1000);<br>}, {noAck: false});</p>
+<hr>
+<h3 id="2-메시지-내구성-durable-지속성-persistent"><a href="#2-메시지-내구성-durable-지속성-persistent" class="headerlink" title="2.  메시지 내구성(durable) , 지속성(persistent)"></a>2.  메시지 내구성(durable) , 지속성(persistent)</h3><p>우리는 소비자가 사망하더라도 작업이 손실되지 않도록하는 방법을 배웠습니다.  그러나 RabbitMQ 서버가 중지되면 우리의 작업은 여전히 손실됩니다.</p>
+<p>RabbitMQ가 종료되거나 충돌하면 사용자가 알리지 않는 한 대기열과 메시지를 잊어 버리게됩니다. 메시지가 손실되지 않도록하려면 큐와 메시지를 모두 튼튼하게 표시해야합니다.</p>
+<p>첫째, 우리는 RabbitMQ가 결코 우리 큐를 잃지 않도록해야합니다. 그렇게하기 위해서 우리는 그것을 durable 으로 선언 할 필요가있다 .</p>
+<p>ex) </p>
+<p>큐 할당시 </p>
+<p>ch.assertQueue ( ‘hello’ , { durable : true });<br>큐로 전송시 옵션</p>
+<p>ch.sendToQueue(q, new Buffer(msg), {persistent: true});</p>
+<hr>
+<h3 id="3-최종적으로-구현해야-할-옵션을-포함한-소스"><a href="#3-최종적으로-구현해야-할-옵션을-포함한-소스" class="headerlink" title="3.  최종적으로  구현해야 할 옵션을 포함한  소스"></a>3.  최종적으로  구현해야 할 옵션을 포함한  소스</h3><p>new_task.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line">    <span class="keyword">var</span> msg = process.argv.slice(<span class="number">2</span>).join(<span class="string">' '</span>) || <span class="string">"Hello World!"</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.sendToQueue(q, <span class="keyword">new</span> Buffer(msg), &#123;<span class="attr">persistent</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [x] Sent '%s'"</span>, msg);</span><br><span class="line">  &#125;);</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; conn.close(); process.exit(<span class="number">0</span>) &#125;, <span class="number">500</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>worker.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.prefetch(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [*] Waiting for messages in %s. To exit press CTRL+C"</span>, q);</span><br><span class="line">    ch.consume(q, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> secs = msg.content.toString().split(<span class="string">'.'</span>).length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">" [x] Received %s"</span>, msg.content.toString());</span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">" [x] Done"</span>);</span><br><span class="line">        ch.ack(msg);</span><br><span class="line">      &#125;, secs * <span class="number">1000</span>);</span><br><span class="line">    &#125;, &#123;<span class="attr">noAck</span>: <span class="literal">false</span>&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/" data-id="cjy81r27n000hdcnv04aiic21" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-RPC-패턴과-pub-sub패턴에서의-ack-사용차이" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" class="article-date">
@@ -140,7 +233,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" data-id="cjy71vwd8000h14nvk1c7p2za" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RPC-패턴과-pub-sub패턴에서의-ack-사용차이/" data-id="cjy81r27u000odcnvym0v6up3" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ack/">ack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
@@ -216,7 +309,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/DEVOPS/" data-id="cjy71vwcq000614nvypx4dgzx" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/DEVOPS/" data-id="cjy81r27b0009dcnv3yked01c" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/devops/">devops</a></li></ul>
@@ -382,7 +475,7 @@ spec:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/08/14/kubernetest_hpa/" data-id="cjy71vwee001p14nvurm1hvuo" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/08/14/kubernetest_hpa/" data-id="cjy81r2a7002gdcnvw71zaduj" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -500,7 +593,7 @@ template:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/08/04/kubernetest_rolling/" data-id="cjy71vweg001s14nviqrxdvgr" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/08/04/kubernetest_rolling/" data-id="cjy81r2a0002adcnve2dr5kro" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
@@ -609,7 +702,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjy71vwe5001f14nvf5z9dgfv" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/28/kubernetes_ingress_https/" data-id="cjy81r29n0022dcnvzznqhkzo" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -678,7 +771,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjy71vwdj000t14nvm85gsxwt" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/26/algori/" data-id="cjy81r2a3002edcnvgdmx96zk" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -935,7 +1028,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjy71vwe1001a14nvjjfm412w" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/kubernetes_ingressLB/" data-id="cjy81r29i001ydcnvpcycgc5q" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li></ul>
@@ -1008,7 +1101,7 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjy71vwf3002b14nvt16bimn8" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/redis_pod/" data-id="cjy81r2an002zdcnvw6ibn6gh" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
@@ -1083,85 +1176,10 @@ rules:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjy71vwds001314nve27joyn7" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2018/07/25/docker/" data-id="cjy81r29s0024dcnvgeu5b2ee" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-kubernetest_dash" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/24/kubernetest_dash/" class="article-date">
-  <time datetime="2018-07-24T08:24:13.000Z" itemprop="datePublished">2018-07-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Kubernetes/">Kubernetes</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/24/kubernetest_dash/">[KUBERNETES] dashboard 설치</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-dashboard-admin-rbac-heapster-설치"><a href="#1-dashboard-admin-rbac-heapster-설치" class="headerlink" title="1. dashboard,admin-rbac, heapster 설치"></a>1. dashboard,admin-rbac, heapster 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DragOnMe/k8s-1.8-dashboard-heapster-mod.git</span><br><span class="line"><span class="built_in">cd</span> k8s-1.8.1-dashboard/</span><br><span class="line">kubectl apply -f kubernetes-dashboard.yaml</span><br><span class="line">kubectl apply -f kubernetes-dashboard-admin-rbac.yaml</span><br><span class="line"><span class="built_in">cd</span> ../</span><br><span class="line">kubectl apply -f k8s-heapster/</span><br><span class="line"></span><br><span class="line">[root@localhost k8s-1.8.1-dashboard]<span class="comment"># kubectl get pods -nkube-system -w</span></span><br><span class="line">NAME                                            READY     STATUS    RESTARTS   AGE</span><br><span class="line">heapster-dfd674df9-k6vr7                        1/1       Running   0          3d</span><br><span class="line">kubernetes-dashboard-5bd6f767c7-2h6wv           1/1       Running   0          2d</span><br><span class="line">monitoring-grafana-76848b566c-cts9n             1/1       Running   0          3d</span><br><span class="line">monitoring-influxdb-6c4b84d695-d8j4t            1/1       Running   0          3d</span><br></pre></td></tr></table></figure>
-<p>kubernetes-dashboard.yaml 수정</p>
-<ol>
-<li>image 변경 (1.8.1 -&gt; 1.8.3)</li>
-<li>service nodeport 설정<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: kubernetes-dashboard</span><br><span class="line">        image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3</span><br><span class="line">//==========================================================</span><br><span class="line"></span><br><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">  name: kubernetes-dashboard</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  <span class="comment"># Added NodePort</span></span><br><span class="line">  <span class="built_in">type</span>: NodePort</span><br><span class="line">  ports:</span><br><span class="line">    - port: 443</span><br><span class="line">      targetPort: 8443</span><br><span class="line">      <span class="comment"># Added nodePort: 30000</span></span><br><span class="line">      nodePort: 30000</span><br><span class="line">  selector:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<hr>
-<h3 id="2-dashboard-접근-token-조회"><a href="#2-dashboard-접근-token-조회" class="headerlink" title="2. dashboard 접근 token 조회"></a>2. dashboard 접근 token 조회</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost]<span class="comment"># kubectl -n kube-system get secret | grep kubernetes-dashboard-admin</span></span><br><span class="line">kubernetes-dashboard-admin-token-mcx5k           kubernetes.io/service-account-token </span><br><span class="line">[root@localhost]<span class="comment"># kubectl describe -nkube-system secret kubernetes-dashboard-admin-token-mcx5k</span></span><br><span class="line">Name:         kubernetes-dashboard-admin-token-mcx5k</span><br><span class="line">Namespace:    kube-system</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubernetes.io/service-account.name=kubernetes-dashboard-admin</span><br><span class="line">              kubernetes.io/service-account.uid=1d1aa7aa-30c1-11e8-a365-002590a7058c</span><br><span class="line"></span><br><span class="line">Type:  kubernetes.io/service-account-token</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">ca.crt:     1025 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsInR....중략...</span><br><span class="line">FhyrXH_2ZZlAkYvm0oCT5VZMYCnKQ77NZEdyFXvZpsrXTA4BwfKyPFaFxUPKA</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="3-서버local이-아닌-브라우저에서-접근하기위해-nginx수정"><a href="#3-서버local이-아닌-브라우저에서-접근하기위해-nginx수정" class="headerlink" title="3. 서버local이 아닌 브라우저에서 접근하기위해 nginx수정"></a>3. 서버local이 아닌 브라우저에서 접근하기위해 nginx수정</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen 443;</span><br><span class="line">        server_name &lt;접근호스트&gt;;</span><br><span class="line">        ssl on;</span><br><span class="line">        ssl_certificate /etc/kubernetes/pki/ca.crt;</span><br><span class="line">        ssl_certificate_key  /etc/kubernetes/pki/ca.key;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass https://&lt;master-ip&gt;:30000;</span><br><span class="line">                proxy_http_version 1.1;</span><br><span class="line">                proxy_set_header Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">                proxy_set_header Connection <span class="string">'upgrade'</span>;</span><br><span class="line">                proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">                proxy_cache_bypass <span class="variable">$http_upgrade</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2018/07/24/kubernetest_dash/" data-id="cjy71vwec001n14nvgbvs48pc" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
 
     </footer>
   </div>
@@ -1195,7 +1213,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sns/">sns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/간편로그인/">간편로그인</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li></ul>
     </div>
   </div>
 
@@ -1205,7 +1223,7 @@ rules:
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 12.5px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
+      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sns/" style="font-size: 10px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 10px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
     </div>
   </div>
     
@@ -1227,6 +1245,10 @@ rules:
       <ul>
         
           <li>
+            <a href="/2019/07/18/webserver-auth3/">[WEBSERVER] sns login (oauth2)</a>
+          </li>
+        
+          <li>
             <a href="/2019/07/17/webserver-auth2/">[WEBSERVER] JWT(JSON WEB TOKEN)? </a>
           </li>
         
@@ -1240,10 +1262,6 @@ rules:
         
           <li>
             <a href="/2019/07/11/node-express-ws/">[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/11/pattern/">[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton</a>
           </li>
         
       </ul>
