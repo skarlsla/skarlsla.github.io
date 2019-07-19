@@ -7,13 +7,13 @@
   
   <title>[SNS LOGIN] sns(kakao) login with javascript | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao login https://d">
+  <meta name="description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증에 따라 인증코드로 SNS로 조회 후 로그인(세션/토큰) 처리까지 처리했다면javascript SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao">
 <meta name="keywords" content="sns,간편로그인">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[SNS LOGIN] sns(kakao) login with javascript">
 <meta property="og:url" content="https://skarlsla.github.io/2019/07/19/webserver-auth4/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao login https://d">
+<meta property="og:description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증에 따라 인증코드로 SNS로 조회 후 로그인(세션/토큰) 처리까지 처리했다면javascript SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao">
 <meta property="og:locale" content="ko">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/app_creI.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/user.jpg">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_agree.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_login.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_return.jpg">
-<meta property="og:updated_time" content="2019-07-19T06:43:03.152Z">
+<meta property="og:updated_time" content="2019-07-19T06:44:45.085Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[SNS LOGIN] sns(kakao) login with javascript">
-<meta name="twitter:description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao login https://d">
+<meta name="twitter:description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증에 따라 인증코드로 SNS로 조회 후 로그인(세션/토큰) 처리까지 처리했다면javascript SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/app_creI.jpg">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
@@ -116,7 +116,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="간편로그인"><a href="#간편로그인" class="headerlink" title="간편로그인"></a>간편로그인</h3><p>카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다.</p>
-<p>restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면<br>나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.</p>
+<p>restapi는 앱서버에서 OAuth2.0인증에 따라 인증코드로 SNS로 조회 후 로그인(세션/토큰) 처리까지 처리했다면<br>javascript SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.</p>
 <hr>
 <h3 id="javascript-로-kakao-login"><a href="#javascript-로-kakao-login" class="headerlink" title="javascript 로 kakao login"></a>javascript 로 kakao login</h3><ol>
 <li><p><a href="https://developers.kakao.com" target="_blank" rel="noopener">https://developers.kakao.com</a> 회원가입 &amp; 로그인</p>
@@ -160,7 +160,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjy9qlib0003xmwnv8zdrp15m" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjy9qnp5b0040hsnvcsv89sgp" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
