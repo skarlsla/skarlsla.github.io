@@ -79,14 +79,14 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/jenkins/</loc>
+        <loc>https://skarlsla.github.io/tags/ci/</loc>
         <lastmod>2019-07-15T09:01:31.031Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/ci/</loc>
+        <loc>https://skarlsla.github.io/tags/jenkins/</loc>
         <lastmod>2019-07-15T09:01:31.031Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -213,14 +213,14 @@
 
     <url>
         <loc>https://skarlsla.github.io/tags/sns/</loc>
-        <lastmod>2019-07-19T06:42:00.920Z</lastmod>
+        <lastmod>2019-07-19T06:43:03.152Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://skarlsla.github.io/tags/%EA%B0%84%ED%8E%B8%EB%A1%9C%EA%B7%B8%EC%9D%B8/</loc>
-        <lastmod>2019-07-19T06:42:00.920Z</lastmod>
+        <lastmod>2019-07-19T06:43:03.152Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
