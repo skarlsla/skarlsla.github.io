@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-07-18T02:30:12.434Z</updated>
+  <updated>2019-07-19T06:40:20.230Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[SNS LOGIN] sns(kakao) login with javascript</title>
+    <link href="https://skarlsla.github.io/2019/07/19/webserver-auth4/"/>
+    <id>https://skarlsla.github.io/2019/07/19/webserver-auth4/</id>
+    <published>2019-07-19T05:43:15.000Z</published>
+    <updated>2019-07-19T06:40:20.230Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="간편로그인"><a href="#간편로그인" class="headerlink" title="간편로그인"></a>간편로그인</h3><p>카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다.</p><p>restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면<br>나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.</p><hr><h3 id="javascript-로-kakao-login"><a href="#javascript-로-kakao-login" class="headerlink" title="javascript 로 kakao login"></a>javascript 로 kakao login</h3><ol><li><p><a href="https://developers.kakao.com" target="_blank" rel="noopener">https://developers.kakao.com</a> 회원가입 &amp; 로그인</p></li><li><p>앱만들기 &amp; 플랫폼 사이트 추가<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/app_crel.jpg" alt="사이트 추가"></p></li><li><p>사용자관리 &amp; 등록<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/user.jpg" alt="사용자관리"></p></li><li><p>개인정보 동의<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/agree.jpg" alt="사용자관리"></p></li><li><p>javascript 코드 with html</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"utf-8"</span> /&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=edge"</span> /&gt;</span><br><span class="line">    &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"</span> /&gt;</span><br><span class="line">    &lt;title&gt;Login Demo - Kakao JavaScript SDK&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;script src="/</span><span class="regexp">/developers.kakao.com/</span>sdk/js/kakao.min.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;a id="</span>kakao-login-btn<span class="string">"&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="string">    &lt;a href="</span>http:<span class="comment">//developers.kakao.com/logout"&gt;&lt;/a&gt;</span></span><br><span class="line">    &lt;script type=<span class="string">'text/javascript'</span>&gt;</span><br><span class="line">        <span class="comment">//&lt;![CDATA[</span></span><br><span class="line">        <span class="comment">// 사용할 앱의 JavaScript 키를 설정해 주세요.</span></span><br><span class="line">        Kakao.init(<span class="string">'javascript key 입력'</span>);</span><br><span class="line">        <span class="comment">// 카카오 로그인 버튼을 생성합니다.</span></span><br><span class="line">        Kakao.Auth.createLoginButton(&#123;</span><br><span class="line">            container: <span class="string">'#kakao-login-btn'</span>,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span> (<span class="params">authObj</span>) </span>&#123;</span><br><span class="line">                alert(<span class="built_in">JSON</span>.stringify(authObj));</span><br><span class="line">            &#125;,</span><br><span class="line">            fail: <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                alert(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      <span class="comment">//]]&gt;</span></span><br><span class="line">    &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure></li><li><p>node 환경은 생략</p></li><li><p>node.js로 간편하게 실행하기(npm은 express,body-parser,cookie-parser,multer 설치)<br>‘’’server.js<br>var express = require(‘express’);<br>var app = express();</p></li></ol><p>app.get(‘/‘, function (req, res) {<br>   res.sendfile(‘./index.html’);<br>})</p><p>var server = app.listen(8000, function () {<br>   var host = server.address().address<br>   var port = server.address().port</p><p>   console.log(“Example app listening at http://%s:%s”, host, port)<br>})<br>‘’’</p><ol start="7"><li><p>실행 node server.js<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_agree.jpg" alt="사용자관리"></p></li><li><p>로그인창<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_login.png" alt="로그인"></p></li><li><p>결과내용<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_return.jpg" alt="결과내용"></p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;간편로그인&quot;&gt;&lt;a href=&quot;#간편로그인&quot; class=&quot;headerlink&quot; title=&quot;간편로그인&quot;&gt;&lt;/a&gt;간편로그인&lt;/h3&gt;&lt;p&gt;카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다.&lt;/p&gt;
+&lt;p
+      
+    
+    </summary>
+    
+      <category term="webserver" scheme="https://skarlsla.github.io/categories/webserver/"/>
+    
+    
+      <category term="sns" scheme="https://skarlsla.github.io/tags/sns/"/>
+    
+      <category term="간편로그인" scheme="https://skarlsla.github.io/tags/%EA%B0%84%ED%8E%B8%EB%A1%9C%EA%B7%B8%EC%9D%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>[WEBSERVER] sns login (oauth2)</title>
@@ -98,11 +126,11 @@
     
       <category term="oauth" scheme="https://skarlsla.github.io/tags/oauth/"/>
     
-      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
-    
       <category term="jwt" scheme="https://skarlsla.github.io/tags/jwt/"/>
     
       <category term="인증" scheme="https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/"/>
+    
+      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
     
   </entry>
   
@@ -329,9 +357,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
     
   </entry>
   
@@ -504,9 +532,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
     
   </entry>
   
@@ -557,32 +585,6 @@
     
       <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>[RABBITMQ] RPC(Remote Procedure Call) </title>
-    <link href="https://skarlsla.github.io/2019/04/29/RPC/"/>
-    <id>https://skarlsla.github.io/2019/04/29/RPC/</id>
-    <published>2019-04-29T08:13:45.000Z</published>
-    <updated>2019-07-15T09:05:13.900Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h3 id="원격-프로시져-호출-RPC"><a href="#원격-프로시져-호출-RPC" class="headerlink" title="원격 프로시져 호출 (RPC)"></a>원격 프로시져 호출 (RPC)</h3><p>RabbitMQ는 Request-Response로 Client와 Server를 이어주기 위해 RPC라는 개념으로 기능을 제공한다.</p><p>RPC라는 거창한 이름을 사용하였지만 실제로는 Client의 request를 Server에 전달하고 , Server가 처리한 결과를 알맞은 Client 요청에 대한 응답으로 전달 할 수 있는 방법을 말한다.</p><p>Message Properties 설명<br>DeliveryMode : persistent인지 transient인지 표시 (휘발성인지 비휘발성인지 구분자)</p><p>ContentType : 내용물의 mime-type</p><p>ReplyTo : Callback Queue의 이름</p><p>CorrelationID : 요청을 구분할 수 있는 유일값</p><p>처리 흐름<br>Client가 CorrelationID, ReplyTo 주어서 RabbitMQ의 특정 Request보관용 Queue에 데이터를 Push한다.</p><p>Request용 Queue에 데이터를 Server에서 Consume하여 요청을 처리한다.</p><p>요청처리 후 Request에서 받은 CorrelationID 와 ReplyTo를 추출하여, 요청ID를 속성으로 갖는 Response를 ReplyToQueue에 Push한다.</p><p>Client는 ReplyTo Queue를 subscribe하고 있다가 Response가 오면 CorrelationID를 보고 어떤 요청에 대한 응답인지를 구분하여 처리한다.</p><hr><h3 id="RPC의-이점"><a href="#RPC의-이점" class="headerlink" title="RPC의 이점"></a>RPC의 이점</h3><p>RPC 구조를 응용하면 아래와 같은 상황에 이점을 얻을 수 있다.</p><p>서버처리 이점<br>서버 처리속도가 느려서 성능을 증가 시키려고 할 때, RPC 서버를 하나 더 두고 같은 Request Queue를 바라보게 하면 됨 ( Round Robin 하므로 )</p><p>Client 이점<br>하나의 메시지를 개별 Round Trip으로 처리를 위해 queueDeclare같은 동기처리 요청이 필요없다. (임시 Queue를 생성하여 Client마다 다른 Queue를 사용하므로)</p><p>RPC 구성시 고려할 점<br>돌아가는 서버가 없을 때 Client 처리<br>요청 Timeout시 Client 처리<br>서버 Exception이나 오동작시 Client에게 이를 어떻게 전달할지<br>Invalid한 데이터가 서버로 전달 되었을 때의 처리</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h3 id=&quot;원격-프로시져-호출-RPC&quot;&gt;&lt;a href=&quot;#원격-프로시져-호출-RPC&quot; class=&quot;headerlink&quot; title=&quot;원격 프로시져 호출 (RPC)&quot;&gt;&lt;/a&gt;원격 프로시져 호출 (RPC)&lt;/h3&gt;&lt;p&gt;RabbitMQ는 Req
-      
-    
-    </summary>
-    
-      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
-    
-    
-      <category term="rpc" scheme="https://skarlsla.github.io/tags/rpc/"/>
     
   </entry>
   

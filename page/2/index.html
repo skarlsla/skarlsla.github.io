@@ -69,6 +69,75 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ANSIBLE-PLAYBOOK-작성" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/" class="article-date">
+  <time datetime="2019-05-09T07:23:03.000Z" itemprop="datePublished">2019-05-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/">[ANSIBLE] - PLAYBOOK 작성</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>playbook :<br>설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다. </p>
+<hr>
+<p>example<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers   <span class="comment"># /etc/ansible/hosts에 정의된 [webservers] 그룹</span></span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80    </span><br><span class="line">    max_clients: 200</span><br><span class="line">  remote_user: root   <span class="comment"># 작업유저</span></span><br><span class="line">  tasks:  <span class="comment"># 작업리스트</span></span><br><span class="line">  - name: ensure apache is at the latest version</span><br><span class="line">    yum:  <span class="comment"># 패키지 설치</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: latest</span><br><span class="line">  - name: write the apache config file</span><br><span class="line">    template: <span class="comment"># 파일 복사</span></span><br><span class="line">      src: /srv/httpd.j2</span><br><span class="line">      dest: /etc/httpd.conf</span><br><span class="line">    notify: <span class="comment"># handlers 노티</span></span><br><span class="line">    - restart apache</span><br><span class="line">  - name: ensure apache is running</span><br><span class="line">    service: <span class="comment">#서비스 실행</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: started</span><br><span class="line">  handlers: <span class="comment"># 노티를 listen</span></span><br><span class="line">    - name: restart apache</span><br><span class="line">      service:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br></pre></td></tr></table></figure></p>
+<p>작성된 playbook 실행<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook playbook.yml -f 10 <span class="comment"># 병렬처리 레벨 10</span></span><br></pre></td></tr></table></figure></p>
+<p>팁 명령어 옵션  –syntax-check  flag<br>에러 체크해쥼</p>
+<p>ansible-playbook playbook.yml –list-hosts # host 목록확인</p>
+<p>참고: <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html" target="_blank" rel="noopener">https://docs.ansible.com/ansible/latest/user_guide/playbooks.html</a><br>playbook 문법: <a href="https://taesany.tistory.com/139" target="_blank" rel="noopener">https://taesany.tistory.com/139</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-작성/" data-id="cjy9qh7t40005convbzcmcqm5" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JENKINS-ANSIBLE-연동" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/05/08/JENKINS-ANSIBLE-연동/" class="article-date">
@@ -136,7 +205,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-연동/" data-id="cjy82402c000ekcnvdn5a2ion" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-연동/" data-id="cjy9qh7tt000mconvzsxtzc6v" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -205,7 +274,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="cjy82401r0001kcnvvkkldzr6" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="cjy9qh7sr0000convbaokuqic" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -274,7 +343,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="cjy82401v0004kcnv90hmtsje" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="cjy9qh7t10004conv6l0cikoh" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -354,7 +423,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="cjy82401y0006kcnvvhn9z6za" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="cjy9qh7td0009convjjvd2kuu" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -418,7 +487,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/devops-auto/" data-id="cjy8240300013kcnv3kjl9zo2" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/devops-auto/" data-id="cjy9qh7ub0011conv9fm8any1" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI/">CI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/devops/">devops</a></li></ul>
@@ -487,7 +556,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="cjy82401x0005kcnv6t6hw3ny" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="cjy9qh7tf000aconvz3h6ubng" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -552,7 +621,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="cjy82406y004tkcnvt45afg9y" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="cjy9qh7w8002rconvn0yzg5gk" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -624,7 +693,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="cjy824047002akcnv526aawki" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="cjy9qh7z7005lconvi0pagk18" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reply-to/">reply-to</a></li></ul>
@@ -692,87 +761,9 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" data-id="cjy82402n000pkcnvyr9p68p1" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" data-id="cjy9qh7u2000tconv3p7vbutr" class="article-share-link">공유</a>
       
       
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-RPC" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/29/RPC/" class="article-date">
-  <time datetime="2019-04-29T08:13:45.000Z" itemprop="datePublished">2019-04-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/29/RPC/">[RABBITMQ] RPC(Remote Procedure Call) </a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="원격-프로시져-호출-RPC"><a href="#원격-프로시져-호출-RPC" class="headerlink" title="원격 프로시져 호출 (RPC)"></a>원격 프로시져 호출 (RPC)</h3><p>RabbitMQ는 Request-Response로 Client와 Server를 이어주기 위해 RPC라는 개념으로 기능을 제공한다.</p>
-<p>RPC라는 거창한 이름을 사용하였지만 실제로는 Client의 request를 Server에 전달하고 , Server가 처리한 결과를 알맞은 Client 요청에 대한 응답으로 전달 할 수 있는 방법을 말한다.</p>
-<p>Message Properties 설명<br>DeliveryMode : persistent인지 transient인지 표시 (휘발성인지 비휘발성인지 구분자)</p>
-<p>ContentType : 내용물의 mime-type</p>
-<p>ReplyTo : Callback Queue의 이름</p>
-<p>CorrelationID : 요청을 구분할 수 있는 유일값</p>
-<p>처리 흐름<br>Client가 CorrelationID, ReplyTo 주어서 RabbitMQ의 특정 Request보관용 Queue에 데이터를 Push한다.</p>
-<p>Request용 Queue에 데이터를 Server에서 Consume하여 요청을 처리한다.</p>
-<p>요청처리 후 Request에서 받은 CorrelationID 와 ReplyTo를 추출하여, 요청ID를 속성으로 갖는 Response를 ReplyToQueue에 Push한다.</p>
-<p>Client는 ReplyTo Queue를 subscribe하고 있다가 Response가 오면 CorrelationID를 보고 어떤 요청에 대한 응답인지를 구분하여 처리한다.</p>
-<hr>
-<h3 id="RPC의-이점"><a href="#RPC의-이점" class="headerlink" title="RPC의 이점"></a>RPC의 이점</h3><p>RPC 구조를 응용하면 아래와 같은 상황에 이점을 얻을 수 있다.</p>
-<p>서버처리 이점<br>서버 처리속도가 느려서 성능을 증가 시키려고 할 때, RPC 서버를 하나 더 두고 같은 Request Queue를 바라보게 하면 됨 ( Round Robin 하므로 )</p>
-<p>Client 이점<br>하나의 메시지를 개별 Round Trip으로 처리를 위해 queueDeclare같은 동기처리 요청이 필요없다. (임시 Queue를 생성하여 Client마다 다른 Queue를 사용하므로)</p>
-<p>RPC 구성시 고려할 점<br>돌아가는 서버가 없을 때 Client 처리<br>요청 Timeout시 Client 처리<br>서버 Exception이나 오동작시 Client에게 이를 어떻게 전달할지<br>Invalid한 데이터가 서버로 전달 되었을 때의 처리</p>
-
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2019/04/29/RPC/" data-id="cjy82402k000lkcnvrmy8ny2m" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
-
     </footer>
   </div>
   
@@ -815,7 +806,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sns/" style="font-size: 10px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 10px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
+      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sns/" style="font-size: 12.5px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 12.5px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
     </div>
   </div>
     
@@ -837,6 +828,10 @@
       <ul>
         
           <li>
+            <a href="/2019/07/19/webserver-auth4/">[SNS LOGIN] sns(kakao) login with javascript</a>
+          </li>
+        
+          <li>
             <a href="/2019/07/18/webserver-auth3/">[WEBSERVER] sns login (oauth2)</a>
           </li>
         
@@ -850,10 +845,6 @@
         
           <li>
             <a href="/2019/07/11/jenkins-pipeline/">[JENKINS] pipeline 작성 </a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/11/node-express-ws/">[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</a>
           </li>
         
       </ul>

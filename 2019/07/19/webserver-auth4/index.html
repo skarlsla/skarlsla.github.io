@@ -5,19 +5,27 @@
   
 
   
-  <title>마크다운 문법 | </title>
+  <title>[SNS LOGIN] sns(kakao) login with javascript | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;lt;헤더&amp;gt;H1 = #H2 = ##…H6 = ###### 강조이건 이탈릭체(기울이기)입니다. 이것도 이탈릭체(기울이기)입니다. 이건 볼드체(굵은 체)입니다. 이것도 볼드체(굵은 체)입니다. 이건 취소선입니다 둘을 같이 써 볼까요? &amp;lt;블록 인용&amp;gt; 이렇게   이렇게  이렇게    구분선 가로선 리스트 표현방법 플러스   별– 하이픈  숫자리스">
+  <meta name="description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao login https://d">
+<meta name="keywords" content="sns,간편로그인">
 <meta property="og:type" content="article">
-<meta property="og:title" content="마크다운 문법">
-<meta property="og:url" content="https://skarlsla.github.io/2018/07/19/markdonw문법/index.html">
+<meta property="og:title" content="[SNS LOGIN] sns(kakao) login with javascript">
+<meta property="og:url" content="https://skarlsla.github.io/2019/07/19/webserver-auth4/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="&amp;lt;헤더&amp;gt;H1 = #H2 = ##…H6 = ###### 강조이건 이탈릭체(기울이기)입니다. 이것도 이탈릭체(기울이기)입니다. 이건 볼드체(굵은 체)입니다. 이것도 볼드체(굵은 체)입니다. 이건 취소선입니다 둘을 같이 써 볼까요? &amp;lt;블록 인용&amp;gt; 이렇게   이렇게  이렇게    구분선 가로선 리스트 표현방법 플러스   별– 하이픈  숫자리스">
+<meta property="og:description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao login https://d">
 <meta property="og:locale" content="ko">
-<meta property="og:updated_time" content="2018-07-19T06:22:46.860Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/app_crel.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/user.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/agree.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_agree.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_login.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_return.jpg">
+<meta property="og:updated_time" content="2019-07-19T06:40:20.230Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="마크다운 문법">
-<meta name="twitter:description" content="&amp;lt;헤더&amp;gt;H1 = #H2 = ##…H6 = ###### 강조이건 이탈릭체(기울이기)입니다. 이것도 이탈릭체(기울이기)입니다. 이건 볼드체(굵은 체)입니다. 이것도 볼드체(굵은 체)입니다. 이건 취소선입니다 둘을 같이 써 볼까요? &amp;lt;블록 인용&amp;gt; 이렇게   이렇게  이렇게    구분선 가로선 리스트 표현방법 플러스   별– 하이픈  숫자리스">
+<meta name="twitter:title" content="[SNS LOGIN] sns(kakao) login with javascript">
+<meta name="twitter:description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao login https://d">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/app_crel.jpg">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -71,12 +79,16 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="photo-markdonw문법" class="article article-type-photo" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-webserver-auth4" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/07/19/markdonw문법/" class="article-date">
-  <time datetime="2018-07-19T03:55:14.000Z" itemprop="datePublished">2018-07-19</time>
+    <a href="/2019/07/19/webserver-auth4/" class="article-date">
+  <time datetime="2019-07-19T05:43:15.000Z" itemprop="datePublished">2019-07-19</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/webserver/">webserver</a>
+  </div>
+
   </div>
   <div class="article-inner">
       <ins class="adsbygoogle"
@@ -95,7 +107,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      마크다운 문법
+      [SNS LOGIN] sns(kakao) login with javascript
     </h1>
   
 
@@ -103,44 +115,37 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="lt-헤더-gt"><a href="#lt-헤더-gt" class="headerlink" title="&lt;헤더&gt;"></a>&lt;헤더&gt;</h3><p>H1 = #<br>H2 = ##<br>…<br>H6 = ######</p>
-<h3 id="강조"><a href="#강조" class="headerlink" title="강조"></a>강조</h3><p><em>이건 이탈릭체(기울이기)입니다.</em></p>
-<p><em>이것도 이탈릭체(기울이기)입니다.</em></p>
-<p><strong>이건 볼드체(굵은 체)입니다.</strong></p>
-<p><strong>이것도 볼드체(굵은 체)입니다.</strong></p>
-<p><del>이건 취소선입니다</del></p>
-<p><em><em>둘</em>을 같이 써 볼까요?</em></p>
-<h3 id="lt-블록-인용-gt"><a href="#lt-블록-인용-gt" class="headerlink" title="&lt;블록 인용&gt;"></a>&lt;블록 인용&gt;</h3><blockquote>
-<p>이렇게 </p>
-<blockquote>
-<p>이렇게</p>
-<blockquote>
-<p>이렇게</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h3 id="구분선"><a href="#구분선" class="headerlink" title="구분선"></a>구분선</h3><hr>
-<p>가로선</p>
-<h3 id="리스트-표현방법"><a href="#리스트-표현방법" class="headerlink" title="리스트 표현방법"></a>리스트 표현방법</h3><ul>
-<li>플러스</li>
-</ul>
-<ul>
-<li>별<br>– 하이픈</li>
-</ul>
-<h3 id="숫자리스트"><a href="#숫자리스트" class="headerlink" title="숫자리스트"></a>숫자리스트</h3><ol>
-<li>숫자1</li>
-<li>숫자2</li>
+        <h3 id="간편로그인"><a href="#간편로그인" class="headerlink" title="간편로그인"></a>간편로그인</h3><p>카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다.</p>
+<p>restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면<br>나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.</p>
+<hr>
+<h3 id="javascript-로-kakao-login"><a href="#javascript-로-kakao-login" class="headerlink" title="javascript 로 kakao login"></a>javascript 로 kakao login</h3><ol>
+<li><p><a href="https://developers.kakao.com" target="_blank" rel="noopener">https://developers.kakao.com</a> 회원가입 &amp; 로그인</p>
+</li>
+<li><p>앱만들기 &amp; 플랫폼 사이트 추가<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/app_crel.jpg" alt="사이트 추가"></p>
+</li>
+<li><p>사용자관리 &amp; 등록<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/user.jpg" alt="사용자관리"></p>
+</li>
+<li><p>개인정보 동의<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/agree.jpg" alt="사용자관리"></p>
+</li>
+<li><p>javascript 코드 with html</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"utf-8"</span> /&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=edge"</span> /&gt;</span><br><span class="line">    &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"</span> /&gt;</span><br><span class="line">    &lt;title&gt;Login Demo - Kakao JavaScript SDK&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;script src="/</span><span class="regexp">/developers.kakao.com/</span>sdk/js/kakao.min.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;a id="</span>kakao-login-btn<span class="string">"&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="string">    &lt;a href="</span>http:<span class="comment">//developers.kakao.com/logout"&gt;&lt;/a&gt;</span></span><br><span class="line">    &lt;script type=<span class="string">'text/javascript'</span>&gt;</span><br><span class="line">        <span class="comment">//&lt;![CDATA[</span></span><br><span class="line">        <span class="comment">// 사용할 앱의 JavaScript 키를 설정해 주세요.</span></span><br><span class="line">        Kakao.init(<span class="string">'javascript key 입력'</span>);</span><br><span class="line">        <span class="comment">// 카카오 로그인 버튼을 생성합니다.</span></span><br><span class="line">        Kakao.Auth.createLoginButton(&#123;</span><br><span class="line">            container: <span class="string">'#kakao-login-btn'</span>,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span> (<span class="params">authObj</span>) </span>&#123;</span><br><span class="line">                alert(<span class="built_in">JSON</span>.stringify(authObj));</span><br><span class="line">            &#125;,</span><br><span class="line">            fail: <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                alert(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      <span class="comment">//]]&gt;</span></span><br><span class="line">    &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>node 환경은 생략</p>
+</li>
+<li><p>node.js로 간편하게 실행하기(npm은 express,body-parser,cookie-parser,multer 설치)<br>‘’’server.js<br>var express = require(‘express’);<br>var app = express();</p>
+</li>
 </ol>
-<h3 id="링크"><a href="#링크" class="headerlink" title="링크"></a>링크</h3><p><a href="teragoon.wordpress.com">블로그</a></p>
-<h3 id="코드"><a href="#코드" class="headerlink" title="코드"></a>코드</h3><p>무조건 빈줄을 하나 넣어줘 준 다음 공백 4개(”    “) 로 시작하면 됩니다.</p>
-<p>또는 “<code>로 시작해서 “</code> 으로 끝내면 됩니다.</p>
-<p>코드 안에서는 자동으로 escap 처리를 해줍니다.(&lt;, &gt; 등등)</p>
-<p>리스트안에서 코드는 “` 로 해줘야 합니다.</p>
-<p>“<code>var i = 0
-“</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="string">''</span><span class="string">'javascript 코드를 적어주세요. 이렇게 하면 파이썬 문법에 맞게 코드를 예쁘게 보여줍니다.'</span><span class="string">''</span></span><br><span class="line"><span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<p>app.get(‘/‘, function (req, res) {<br>   res.sendfile(‘./index.html’);<br>})</p>
+<p>var server = app.listen(8000, function () {<br>   var host = server.address().address<br>   var port = server.address().port</p>
+<p>   console.log(“Example app listening at http://%s:%s”, host, port)<br>})<br>‘’’</p>
+<ol start="7">
+<li><p>실행 node server.js<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_agree.jpg" alt="사용자관리"></p>
+</li>
+<li><p>로그인창<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_login.png" alt="로그인"></p>
+</li>
+<li><p>결과내용<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_return.jpg" alt="결과내용"></p>
+</li>
+</ol>
 
       
     </div>
@@ -155,24 +160,22 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2018/07/19/markdonw문법/" data-id="cjy9qh7v3001rconv509rxaw6" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjy9qh7w3002lconv4cnc0b2h" class="article-share-link">공유</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2018/07/19/kubernetest/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">최신</strong>
-      <div class="article-nav-title">
-        
-          [KUBERNETES] install For CentOS
-        
-      </div>
-    </a>
   
+    <a href="/2019/07/18/webserver-auth3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">[WEBSERVER] sns login (oauth2)</div>
+    </a>
   
 </nav>
 

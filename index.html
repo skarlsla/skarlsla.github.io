@@ -69,6 +69,99 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-webserver-auth4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/19/webserver-auth4/" class="article-date">
+  <time datetime="2019-07-19T05:43:15.000Z" itemprop="datePublished">2019-07-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/webserver/">webserver</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/19/webserver-auth4/">[SNS LOGIN] sns(kakao) login with javascript</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="간편로그인"><a href="#간편로그인" class="headerlink" title="간편로그인"></a>간편로그인</h3><p>카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다.</p>
+<p>restapi는 앱서버에서 OAuth2.0인증 흐림에따라 로그인(세션/토큰) 처리까지 처리했다면<br>나머지 클라이언트SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.</p>
+<hr>
+<h3 id="javascript-로-kakao-login"><a href="#javascript-로-kakao-login" class="headerlink" title="javascript 로 kakao login"></a>javascript 로 kakao login</h3><ol>
+<li><p><a href="https://developers.kakao.com" target="_blank" rel="noopener">https://developers.kakao.com</a> 회원가입 &amp; 로그인</p>
+</li>
+<li><p>앱만들기 &amp; 플랫폼 사이트 추가<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/app_crel.jpg" alt="사이트 추가"></p>
+</li>
+<li><p>사용자관리 &amp; 등록<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/user.jpg" alt="사용자관리"></p>
+</li>
+<li><p>개인정보 동의<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/agree.jpg" alt="사용자관리"></p>
+</li>
+<li><p>javascript 코드 with html</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"utf-8"</span> /&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=edge"</span> /&gt;</span><br><span class="line">    &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"</span> /&gt;</span><br><span class="line">    &lt;title&gt;Login Demo - Kakao JavaScript SDK&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;script src="/</span><span class="regexp">/developers.kakao.com/</span>sdk/js/kakao.min.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;a id="</span>kakao-login-btn<span class="string">"&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="string">    &lt;a href="</span>http:<span class="comment">//developers.kakao.com/logout"&gt;&lt;/a&gt;</span></span><br><span class="line">    &lt;script type=<span class="string">'text/javascript'</span>&gt;</span><br><span class="line">        <span class="comment">//&lt;![CDATA[</span></span><br><span class="line">        <span class="comment">// 사용할 앱의 JavaScript 키를 설정해 주세요.</span></span><br><span class="line">        Kakao.init(<span class="string">'javascript key 입력'</span>);</span><br><span class="line">        <span class="comment">// 카카오 로그인 버튼을 생성합니다.</span></span><br><span class="line">        Kakao.Auth.createLoginButton(&#123;</span><br><span class="line">            container: <span class="string">'#kakao-login-btn'</span>,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span> (<span class="params">authObj</span>) </span>&#123;</span><br><span class="line">                alert(<span class="built_in">JSON</span>.stringify(authObj));</span><br><span class="line">            &#125;,</span><br><span class="line">            fail: <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                alert(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      <span class="comment">//]]&gt;</span></span><br><span class="line">    &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>node 환경은 생략</p>
+</li>
+<li><p>node.js로 간편하게 실행하기(npm은 express,body-parser,cookie-parser,multer 설치)<br>‘’’server.js<br>var express = require(‘express’);<br>var app = express();</p>
+</li>
+</ol>
+<p>app.get(‘/‘, function (req, res) {<br>   res.sendfile(‘./index.html’);<br>})</p>
+<p>var server = app.listen(8000, function () {<br>   var host = server.address().address<br>   var port = server.address().port</p>
+<p>   console.log(“Example app listening at http://%s:%s”, host, port)<br>})<br>‘’’</p>
+<ol start="7">
+<li><p>실행 node server.js<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_agree.jpg" alt="사용자관리"></p>
+</li>
+<li><p>로그인창<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_login.png" alt="로그인"></p>
+</li>
+<li><p>결과내용<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_return.jpg" alt="결과내용"></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjy9qh7w3002lconv4cnc0b2h" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-webserver-auth3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/07/18/webserver-auth3/" class="article-date">
@@ -154,7 +247,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/18/webserver-auth3/" data-id="cjy82406w004skcnv58hjdizy" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/18/webserver-auth3/" data-id="cjy9qh7vt002econvy4xb4jro" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
@@ -235,7 +328,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth2/" data-id="cjy82406q004pkcnvkfuq65mr" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth2/" data-id="cjy9qh7vk0024conv8o763hw9" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/인증/">인증</a></li></ul>
@@ -309,7 +402,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjy82406o004okcnvwhn4wje9" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjy9qh7w6002pconv269uc23j" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/인증/">인증</a></li></ul>
@@ -376,7 +469,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/11/jenkins-pipeline/" data-id="cjy8240360017kcnvicpf88jy" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/jenkins-pipeline/" data-id="cjy9qh7u7000xconvnndaujbt" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pipeline/">pipeline</a></li></ul>
@@ -443,7 +536,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/11/node-express-ws/" data-id="cjy82403r001zkcnvw4umb612" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/node-express-ws/" data-id="cjy9qh7v8001tconvtqnln3hp" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebSocket/">WebSocket</a></li></ul>
@@ -519,7 +612,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/11/pattern/" data-id="cjy8240440027kcnvgyzs7x0s" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/pattern/" data-id="cjy9qh7vw002iconvftu2f9z2" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pattern/">pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/singleton/">singleton</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
@@ -613,7 +706,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/10/node-with-type/" data-id="cjy82403x0024kcnvcs9udjj3" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/10/node-with-type/" data-id="cjy9qh7vn0028conv6efuy452" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li></ul>
@@ -685,7 +778,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/10/node-type/" data-id="cjy82403u0021kcnvkxi5aw3m" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/10/node-type/" data-id="cjy9qh7vf0020convdphn5zpc" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li></ul>
@@ -756,76 +849,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" data-id="cjy82401m0000kcnvvniy53ez" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ANSIBLE-PLAYBOOK-작성" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/" class="article-date">
-  <time datetime="2019-05-09T07:23:03.000Z" itemprop="datePublished">2019-05-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/09/ANSIBLE-PLAYBOOK-작성/">[ANSIBLE] - PLAYBOOK 작성</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>playbook :<br>설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다. </p>
-<hr>
-<p>example<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers   <span class="comment"># /etc/ansible/hosts에 정의된 [webservers] 그룹</span></span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80    </span><br><span class="line">    max_clients: 200</span><br><span class="line">  remote_user: root   <span class="comment"># 작업유저</span></span><br><span class="line">  tasks:  <span class="comment"># 작업리스트</span></span><br><span class="line">  - name: ensure apache is at the latest version</span><br><span class="line">    yum:  <span class="comment"># 패키지 설치</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: latest</span><br><span class="line">  - name: write the apache config file</span><br><span class="line">    template: <span class="comment"># 파일 복사</span></span><br><span class="line">      src: /srv/httpd.j2</span><br><span class="line">      dest: /etc/httpd.conf</span><br><span class="line">    notify: <span class="comment"># handlers 노티</span></span><br><span class="line">    - restart apache</span><br><span class="line">  - name: ensure apache is running</span><br><span class="line">    service: <span class="comment">#서비스 실행</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: started</span><br><span class="line">  handlers: <span class="comment"># 노티를 listen</span></span><br><span class="line">    - name: restart apache</span><br><span class="line">      service:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br></pre></td></tr></table></figure></p>
-<p>작성된 playbook 실행<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook playbook.yml -f 10 <span class="comment"># 병렬처리 레벨 10</span></span><br></pre></td></tr></table></figure></p>
-<p>팁 명령어 옵션  –syntax-check  flag<br>에러 체크해쥼</p>
-<p>ansible-playbook playbook.yml –list-hosts # host 목록확인</p>
-<p>참고: <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html" target="_blank" rel="noopener">https://docs.ansible.com/ansible/latest/user_guide/playbooks.html</a><br>playbook 문법: <a href="https://taesany.tistory.com/139" target="_blank" rel="noopener">https://taesany.tistory.com/139</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-작성/" data-id="cjy824027000akcnvp8ite6sb" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-WITH-WEBSERVER/" data-id="cjy9qh7sw0001convrtedqfmn" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -872,7 +896,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sns/" style="font-size: 10px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 10px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
+      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sns/" style="font-size: 12.5px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 12.5px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a>
     </div>
   </div>
     
@@ -894,6 +918,10 @@
       <ul>
         
           <li>
+            <a href="/2019/07/19/webserver-auth4/">[SNS LOGIN] sns(kakao) login with javascript</a>
+          </li>
+        
+          <li>
             <a href="/2019/07/18/webserver-auth3/">[WEBSERVER] sns login (oauth2)</a>
           </li>
         
@@ -907,10 +935,6 @@
         
           <li>
             <a href="/2019/07/11/jenkins-pipeline/">[JENKINS] pipeline 작성 </a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/11/node-express-ws/">[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</a>
           </li>
         
       </ul>
