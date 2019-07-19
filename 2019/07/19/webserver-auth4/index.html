@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_agree.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_login.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/kakao_return.jpg">
-<meta property="og:updated_time" content="2019-07-19T06:46:18.679Z">
+<meta property="og:updated_time" content="2019-07-19T06:46:57.190Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[SNS LOGIN] sns(kakao) login with javascript">
 <meta name="twitter:description" content="간편로그인카카오에서 간편로그인으로 ios,android,javascript,restapi를 제공한다. restapi는 앱서버에서 OAuth2.0인증에 따라 인증코드로 SNS로 조회 후 로그인(세션/토큰) 처리까지 처리했다면javascript SDK를 사용하면 클라이언트에서 바로 SNS로그인 결과를 받아서 처리를 할수있다.  javascript 로 kakao">
@@ -132,12 +132,11 @@
 </li>
 <li><p>node 환경은 생략</p>
 </li>
-<li><p>node.js로 간편하게 실행하기(npm은 express,body-parser,cookie-parser,multer 설치)<br>‘’’javascript<br>var express = require(‘express’);<br>var app = express();</p>
+<li><p>node.js로 간편하게 실행하기(npm은 express,body-parser,cookie-parser,multer 설치)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">   res.sendfile(<span class="string">'./index.html'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = app.listen(<span class="number">8000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="keyword">var</span> host = server.address().address</span><br><span class="line">   <span class="keyword">var</span> port = server.address().port</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">"Example app listening at http://%s:%s"</span>, host, port)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>app.get(‘/‘, function (req, res) {<br>   res.sendfile(‘./index.html’);<br>})</p>
-<p>var server = app.listen(8000, function () {<br>   var host = server.address().address<br>   var port = server.address().port</p>
-<p>   console.log(“Example app listening at http://%s:%s”, host, port)<br>})<br>‘’’<br>server.js</p>
+<p>server.js</p>
 <ol start="7">
 <li><p>실행 node server.js</p>
 </li>
@@ -162,7 +161,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjy9qppdz002pu8nv0b54007q" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjy9qqj1e005ii0nvc85001ke" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
