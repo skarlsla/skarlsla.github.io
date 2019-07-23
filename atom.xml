@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-07-23T06:41:58.670Z</updated>
+  <updated>2019-07-23T09:27:36.412Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[해외 EMAIL] AWS SES vs SendGrid vs Mailgun</title>
+    <link href="https://skarlsla.github.io/2019/07/23/service-email/"/>
+    <id>https://skarlsla.github.io/2019/07/23/service-email/</id>
+    <published>2019-07-23T08:43:15.000Z</published>
+    <updated>2019-07-23T09:27:36.412Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="AWS-SES-vs-SendGrid-vs-Mailgun"><a href="#AWS-SES-vs-SendGrid-vs-Mailgun" class="headerlink" title="AWS SES vs SendGrid vs Mailgun"></a>AWS SES vs SendGrid vs Mailgun</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/aws-logo.png" alt="AWS"><br><strong>Amazon SES</strong> : Amazon SES ( <a href="https://aws.amazon.com/" target="_blank" rel="noopener">Amazon Simple Email Service</a> )는 신뢰할 수 있고 확장 가능한 인프라 구현으로 구축 된 비용 효율적인 전자 메일 마케팅 도구 중 하나입니다.<br>Amazon.com에서 자체 고객 기반의 서버로 개발했습니다.  Amazon SES는 거래 전자 메일, 마케팅 전자 메일 또는 기타 유형의 최고 품질의 콘텐츠를 구독자에게 보내도록 설계되었습니다.<br>그 외에도 아마존 SES는 사용자가 사용하는 것에 대해서만 비용을 지불함으로써 이익을 얻으므로 최소 의무를 요구하지 않습니다.  <a href="https://easysendy.com/integrations/amazon-ses/" target="_blank" rel="noopener">Amazon ses</a> 와의 통합을 확인하십시오 .</p><h3 id="VS"><a href="#VS" class="headerlink" title="VS"></a>VS</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/SendGrid-logo.jpg" alt="sendgrid"><br><strong>SendGrid</strong> : 2009 년에 설립 된 <a href="https://sendgrid.com/" target="_blank" rel="noopener">SendGrid</a> 는 거래 전자 메일 전송 분야의 전문가입니다. 클라우드 기반 전자 메일 서비스와 관련하여 혼란을 겪었던 기간에 개발 및 도입되었습니다.<br>따라서 SendGrid는 성장하는 회사가 전자 메일을 보내는 것이 고통스럽고 엉망이 된 시간에 구독자 목록에 전자 메일을 보내는 것을 도왔습니다.<br>오늘날이 회사는 전 세계 최고의 노치 회사 중 일부를 대신하여 대량 메일을 발송할 책임이 있습니다.  SendGrid의 신뢰할 수있는 플랫폼, 도구 및 프로 서비스 팀은 개발자 확인 및 마케팅 담당자가 구매 확인,<br>암호 재설정 지침 또는 캠페인 육성 여부에 상관없이 모든 전자 메일을 디자인, 분류, 테스트 및 성공적으로 전달할 수 있게합니다. </p><h3 id="VS-1"><a href="#VS-1" class="headerlink" title="VS"></a>VS</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/mailgun.png" alt="mailgun"><br>Mailgun은 Rackspace에서 제공하는 전자 메일 자동화 서비스입니다. 귀하의 웹 사이트 및 응용 프로그램을 통해 전송 된 전자 메일을 전송, 수신 및 추적하기위한 완벽한 클라우드 기반 전자 메일 서비스를 제공합니다. Mailgun 기능은 직관적 인 RESTful API를 통해 사용하거나 SMTP와 같은 기존 이메일 프로토콜을 사용하여 사용할 수 있습니다. Rackspace Cloud 고객은 Mailgun의 기본 계획을 통해 매달 50,000 개의 이메일을 무료로 보낼 수 있다. 2013 년 7 월부터 Rackspace는 관리 작업을 통해 클라우드 서버용 Windows 및 Linux 이미지를 미리 구성하여 SMTP를 사용하여 Mailgun을 통해 이메일을 전송합니다.</p><h3 id="Features-특색-차이점"><a href="#Features-특색-차이점" class="headerlink" title="Features(특색 차이점)"></a>Features(특색 차이점)</h3><p>Mailgun, SendGrid 및 SES는 모두 공통된 기능을 제공한다.</p><p>세 가지 서비스 모두를 사용하면 유효성 검사 및 DMARC 준수에 대한 모범 사례를 사용하여 트랜잭션 전자 메일을 보내도록 도메인을 설정할 수 있다.</p><p>그러나 각 서비스에는 다른 서비스와 차별화되는 몇 가지 사항이 있다.</p><p><strong>Amazon SES</strong><br>Amazon SES의 주요 이점 중 하나는 AWS 플랫폼의 다른 서비스와 통합된다는 것입니다. EC2에서 호스팅하는 사이트에서 원활하게 사용하고,</p><p>SNS (Simple Notification Service)로 사용자 정의 알림을 구성하고, Amazon Cloudwatch로 사용자 정의보고를 설정할 수 있다.</p><p>또한 응용 프로그램 (또는 WordPress 사이트)을 테스트하여 메일을 올바르게 보내고 바운스 / 불만 알림 수신을 테스트하는 데 사용할 수 있는 편리한 사서함 시뮬레이터 가 있다.</p><p>SES가 부족한 영역 중 하나는 대시 보드입니다. Cloudwatch에서 사용자 정의 보고서를 구성하거나 WP Offload SES를 사용하여 보고서를 보거나 통계를 보내지 않는 한 정보 탐색이 다소 어려울 수 있다.</p><p><strong>Mailgun</strong><br>MailGun은 전자 메일을 보내는 것 외에도 전자 메일 유효성 검사 서비스도 제공한다. 이렇게 하면 메일을 보내고있는 이메일 주소가 실제로 존재하는지 확인하고 반송 및 허위 이메일을 줄일 수있다.</p><p>이 기능의 진정한 힘은 실시간 유효성 검사를 위해 연락 양식에 통합되었을 때 실현된다. 따라서 양식을 제출하는 사용자는 잘못된 전자 메일 주소를 입력했거나 간단히 오타를 만든 경우 신속하게 알린다.</p><p><strong>SendGrid</strong><br>SendGrid는 트랜잭션 전자 메일의 모든 일반적인 기능을 갖추고 있지만 전체 전자 메일 마케팅 서비스의 추가 이점도 있다. </p><p>즉, 거래 전자 메일 서비스를 관리하고 동일한 대시 보드에서 마케팅 캠페인을 보낼 수 있다.</p><p><strong>### Pricing(가격)</strong><br>Amazon SES<br>Amazon은 전송 된 전자 메일 당 10 센트를 요하는 pay-as-you-go 방식을 사용한다. 고려해야 할 별도의 계층이 없기 때문에 이메일 볼륨을 기준으로 가격을 쉽게 예측할 수 있다.</p><p>한 달에 24.95 달러에 전용 IP 주소를 추가 할 수 있다. 이는이 비교에서 세 서비스 중 가장 저렴하다.</p><p>그리고 웹 사이트가 Amazon EC2에서 호스팅되는 경우 월간 처음 62,000 개의 이메일이 완전히 무료라는 점을 분명히 말할 가치가 있다. </p><p>따라서 호스팅 및 트랜잭션 전자 메일 서비스에 대해 하나의 로그인 만하는 것이 아니라 돈을 절약 할 수 있다.</p><p>비교를 위해 EC2를 사용하지 않을 경우 지불 할 것으로 기대할 수있는 몇 가지 예가 있다.</p><p>20,000 개의 이메일 - $ 2.00 / 월<br>200,000 개의 이메일 - $ 20.00 / 월<br>전용 IP - $ 24.95 / 월</p><p><strong>mailgun</strong><br>Mailgun에는 pay-as-you-go 계획과 계층 형 가격 책정이 있다. 지불 방식대로 요금제는 10,000 개의 이메일을 무료로 받고 1,000 개의 이메일 당 $ 0.50의 요금을 부과한다.</p><p>계층 형 가격 정책은 월 79 달러부터 시작하며 전용 IP 주소와 100,000 개의 전자 메일이 포함된다.</p><p>계층화 된 계획이 없다면 Mailgun의 전용 IP 주소는 Amazon SES보다 두 배 이상, 전용 IP 당 $ 59가 소요된다. 이 비교는 또한 귀하가 미국 지역을 사용하고 있다고 가정</p><p>유럽의 지역은 요금제 및 요금제에 따라 추가 요금을 부과 할 수 있다.</p><p>그리고이 기사의 앞부분에서 언급 한 이메일 검증 API는 추가 비용이 들지만,이 비교를 위해 이를 제외하고 있다.</p><p>20,000 개의 이메일 - 월 $ 5.00<br>200,000 개의 이메일 - 매월 $ 95 (당신이가는대로 지불)<br>200,000 개의 이메일 - 월 $ 139.00 (계층화 된 가격 + IP 주소 포함)<br>전용 IP - 월 $ 59.00</p><p><strong>SendGrid</strong><br>SendGrid는 처음 30 일 동안 40,000 개의 이메일을 제공하는 무료 계획부터 몇 가지 계획을 사용할 수 있다. 그 후 무료 플랜은 하루에 100 개의 이메일로 제한되어 있다.</p><p>하루에 100 개가 넘는 경우 유료 요금제 중 하나를 사용해야한다. 월간 14.95 달러에서 최대 4 만 개의 이메일을 사용할 수 있다. </p><p>한 달에 30 달러의 전용 IP 주소를 추가 할 수 있으며, 이메일 마케팅 도구를 사용하려는 경우 추가 요금이 부과.</p><p>20,000 개의 이메일 - $ 14.95 / 월<br>200,000 개의 이메일 - $ 104.95 / 월<br>전용 IP - $ 30.00 / 월</p><h3 id="Final-Opinion-결론"><a href="#Final-Opinion-결론" class="headerlink" title="Final Opinion(결론)"></a>Final Opinion(결론)</h3><p>Mailgun은 많은 이메일을 보내지 않는 소규모 사이트에 월간 10,000 편의 무료 이메일을 제공 할 수있는 최선의 선택 일 수 있다. </p><p>SES는 많은 이메일을 보내거나 이미 다른 AWS 서비스 (특히 Amazon EC2)를 사용하고있는 개발자 나 사이트 소유자에게 더 의미가 있다. </p><p>또한 가장 저렴하게 이메일 서비스를 이용 할 수 있다.</p><p>SendGrid는 가격이나 서비스면에서 전반적으로 우수하고  이메일 마케팅 소프트웨어를 사용하려는 경우 훌륭한 옵션이다.</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;AWS-SES-vs-SendGrid-vs-Mailgun&quot;&gt;&lt;a href=&quot;#AWS-SES-vs-SendGrid-vs-Mailgun&quot; class=&quot;headerlink&quot; title=&quot;AWS SES vs SendGrid vs Mailgun&quot;&gt;
+      
+    
+    </summary>
+    
+      <category term="service" scheme="https://skarlsla.github.io/categories/service/"/>
+    
+    
+      <category term="email api" scheme="https://skarlsla.github.io/tags/email-api/"/>
+    
+      <category term="해외 email" scheme="https://skarlsla.github.io/tags/%ED%95%B4%EC%99%B8-email/"/>
+    
+  </entry>
   
   <entry>
     <title>[해외 SMS] twilio vs nexmo</title>
@@ -564,32 +591,6 @@
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
     
       <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[RABBITMQ] reply-to 옵션에 대한 분석</title>
-    <link href="https://skarlsla.github.io/2019/04/29/reply-to-%EC%98%B5%EC%85%98%EC%97%90-%EB%8C%80%ED%95%9C-%EB%B6%84%EC%84%9D/"/>
-    <id>https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/</id>
-    <published>2019-04-29T08:18:30.000Z</published>
-    <updated>2019-07-15T09:04:01.965Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h3 id="1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to"><a href="#1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to" class="headerlink" title="1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to"></a>1. rabbitmq(amqp프로토콜) 에서 지원하는 reply-to</h3><p><a href="http://www.rabbitmq.com/direct-reply-to.html" target="_blank" rel="noopener">http://www.rabbitmq.com/direct-reply-to.html</a></p><p>링크 발췌내용 중 사용법</p><p>Use<br>To use direct reply-to, an RPC client should:</p><p>Consume from the pseudo-queue amq.rabbitmq.reply-to in no-ack mode. There is no need to declare this “queue” first, although the client can do so if it wants.<br>Set the reply-to property in their request message to amq.rabbitmq.reply-to.<br>The RPC server will then see a reply-to property with a generated name. It should publish to the default exchange (“”) with the routing key set to this value (i.e. just as if it were sending to a reply queue as usual). The message will then be sent straight to the client consumer.</p><p>If the RPC server is going to perform some expensive computation it might wish to check if the client has gone away. To do this the server can declare the generated reply name first on a disposable channel in order to determine whether it still exists. Note that even if you declare the “queue” with passive=false there is no way to create it; the declare will just succeed (with 0 messages ready and 1 consumer) or fail.</p><p>결론적으로  클라이언트에서 consume(대기큐)를 할때  옵션으로 reply-to = amq.rabbitmq.reply-to 넣고  no-ack 모드로 실행한다.<br>그러면 따로 큐를 생성해 놓지 않더라도 amq.rabbitmq.reply-to 라는 큐가 생성되고  서버에서는 reply-to property를 통해  클라이언트에게 리턴한다. </p><p>서버에서 특이점은 publish 할때 따로 exchange name 을 적지 않고 routingkey 자리에 reply-to에서 온 값을 넣으면된다.<br>서버에서 reply-to 리턴하는 queue를 찍어보면 amq.rabbitmq.reply-to.g2dkAA1yYWJiaXRAdHdlYjAyAAAvugAAAAMB.N2mDRUJksXuxZHf1leTCKg==<br>이런식으로 뒤에 임의의 값이 붙어서 나온다.  여러 서버를 띄어도 저 값은 변하지 않았다.  rabbitmq 서버에서 관리하는 것으로 보인다.     </p><hr><h3 id="2-reply-to를-사용하지-않으면"><a href="#2-reply-to를-사용하지-않으면" class="headerlink" title="2.  reply-to를 사용하지 않으면"></a>2.  reply-to를 사용하지 않으면</h3><p>reply-to 옵션을 쓰지않고 지정된 큐로 작업이 가능하다.<br>ack모드를 사용할수있어 데이터 유지하는 옵션을 사용할수있다.<br>하지만 옵션을 사용시 rabbitmq에서 제공하는 큐생성 및 사용시 추가적인 작업이 필요해 보인다.  </p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h3 id=&quot;1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to&quot;&gt;&lt;a href=&quot;#1-rabbitmq-amqp프로토콜-에서-지원하는-reply-to&quot; class=&quot;headerlink&quot; title=&quot;1. rabbitmq(amq
-      
-    
-    </summary>
-    
-      <category term="RabbitMq" scheme="https://skarlsla.github.io/categories/RabbitMq/"/>
-    
-    
-      <category term="reply-to" scheme="https://skarlsla.github.io/tags/reply-to/"/>
     
   </entry>
   
