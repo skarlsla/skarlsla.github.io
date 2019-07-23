@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-07-23T06:23:00.994Z</updated>
+  <updated>2019-07-23T06:41:58.670Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>[SMS] twilio vs nexmo</title>
+    <title>[해외 SMS] twilio vs nexmo</title>
     <link href="https://skarlsla.github.io/2019/07/23/service-message/"/>
     <id>https://skarlsla.github.io/2019/07/23/service-message/</id>
     <published>2019-07-23T05:43:15.000Z</published>
-    <updated>2019-07-23T06:23:00.994Z</updated>
+    <updated>2019-07-23T06:41:58.670Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Features-and-Services-기능-서비스"><a href="#Features-and-Services-기능-서비스" class="headerlink" title="Features and Services(기능 서비스)"></a>Features and Services(기능 서비스)</h3><p>Both platforms are very similar in the functions, features and services they provide users.</p><p>두 플랫폼 모두 사용자에게 제공하는 기능, 기능 및 서비스면에서 매우 유사합니다.</p><p>With Voice, SMS, and Authentication available from both Nexmo and Twilio, the key differences lie in not only the specific features included for each section, but also what functions if any the platforms include beyond these three.</p><p>Nexmo와 Twilio에서 음성, SMS 및 인증을 사용할 수있는 주요 차이점은 각 섹션에 포함 된 특정 기능뿐만 아니라이 세 가지를 넘어 플랫폼이 포함될 경우 어떤 기능이 있는지에 있습니다.</p><p>I rounded up the most relevant information provided by both Nexmo and Twilio to offer as close to a complete comparison as possible.</p><p>Nexmo와 Twilio가 제공 한 가장 관련성 높은ㅈ 정보를 가능한 한 완벽하게 비교할 수 있도록 제공했습니다.</p><h3 id="Messaging"><a href="#Messaging" class="headerlink" title="Messaging"></a>Messaging</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/messagin.png" alt="messaging"></p><p>※ 넥스모의 Free Inbound SMS  정책은 현재 유료로 바뀐것으로 보인다.</p><h3 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/auth.png" alt="auth"></p><h3 id="Pricing-가격"><a href="#Pricing-가격" class="headerlink" title="Pricing(가격)"></a>Pricing(가격)</h3><p>When it comes to the pricing of these platforms, the paradigm is different from what we have seen when comparing VoIP providers or even Team Collaboration apps. Generally, the cost of a platform is a reoccurring monthly fee based on the active users – however with Nexmo and Twilio, pricing is broken down between the phone numbers your account owns, and the incoming our out coming communications that occur. Pricing will of course differ between outbound and inbound messages, as well as between voice, SMS or authentication functions.</p><p>이러한 플랫폼의 가격 체계는  VoIP 공급자 또는 Team Collaboration 응용 프로그램을 비교할 때 보았던 것과 다릅니다. 일반적으로 플랫폼 비용은 활성 사용자를 기준으로 월별 요금이 다시 발생합니다. Nexmo 및 Twilio를 사용하면 계정에있는 전화 번호와 발생할 외부 통화에 대한 가격이 책정됩니다. 물론 발신, 수신 메시지는 물론 음성, SMS 또는 인증 기능간에 가격이 다릅니다.</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/pricing.png" alt="pricing"></p><p>Twilio Pricing : <a href="https://www.twilio.com/sms/pricing/us" target="_blank" rel="noopener">https://www.twilio.com/sms/pricing/us</a></p><p>Nexmo Pricing : <a href="https://www.nexmo.com/pricing" target="_blank" rel="noopener">https://www.nexmo.com/pricing</a></p><p>nexmo소수점은 유로 → 달러 환전에 따른 값으로 보이고 위의 보내는 메세지는 미국 기준이지만 다른 나라도 대체로 비슷한 수준이다.</p><h3 id="Support-지원"><a href="#Support-지원" class="headerlink" title="Support(지원)"></a>Support(지원)</h3><p>Of course for any Cloud platform, support is as crucial as the user experience – if something ever goes wrong, you want to ensure help is there and that it will arrive within a reasonable window. With both Twilio and Nexmo, every account will start with standard, free yet limited, support. For a bit of a premium, users can upgrade their support to varying levels.</p><p>물론 클라우드 플랫폼의 경우 사용자 경험만큼 지원이 중요하다. 문제가 발생할 경우 도움이 있어야 하며 적절한 시간 내에 도움이 제공되도록 해야 한다. Twilio와 Nexmo 둘 다와 함께 모든 계정은 무료지만 제한된 지원으로 시작할 것이다. 약간의 프리미엄을 위해, 사용자들은 그들의 지원을 다양한 수준으로 업그레이드할 수 있다.</p><p><strong>Twilio(<a href="https://www.twilio.com/support-plans" target="_blank" rel="noopener">https://www.twilio.com/support-plans</a>)</strong></p><p>Free – Email only, no guaranteed response time<br>PRODUCTION– 4% of monthly spend (or $250 minimum), depending on Priority level - Answer in business hours(3h,6h,9h)<br>BUSINESS– 6% of monthly spend (or $1,500 minimum), depending on Priority level - Answer in business hours(1h(24/7),6h,9h), Email and phone support (24/7)<br>PERSONALIZED – 8% of monthly spend (or $5,000 minimum), depending on Priority level - Answer in business hours(1h(24/7),6h,9h), Email and phone support (24/7),Technical account manager,Support escalation line,Quarterly status review</p><p><strong>Nexmo(<a href="https://www.nexmo.com/pricing" target="_blank" rel="noopener">https://www.nexmo.com/pricing</a>)</strong></p><p>Standard–  Support via email and web<br>Priority Support– $1,500 a month for Support via chat, email, and web 24/7 escalation<br>Enterprise  - contact<br>The Bottom Line(결론)<br>At the end of the day, both Twilio and Nexmo should satisfy the majority of users and developers. Both providers offer comparable features, functions, products and service. Both providers include detailed and rich docs for developers, as well as a well thought out design and a solid user experience. Both providers include comprehensive support, and allow users the option to upgrade support for 24×7 coverage and personal engineers.</p><p>두 회사 모두 유사한 기능, 기능, 제품 및 서비스를 제공합니다. </p><p>두 회사 모두 개발자를위한 상세하고 풍부한 문서뿐만 아니라 잘 설계된 디자인과 확실한 사용자 경험을 제공합니다. </p><p>두 회사 모두 포괄적 인 지원을 제공하며 사용자가 24x7 커버리지 및 개인 엔지니어 지원을 업그레이드 할 수있는 옵션을 제공합니다.</p><p>비슷한 가격에 twilio가 더 나은 기능과 서비스를 제공하는 것 같다.</p><p>관리(console)의 편의성이나 개발(api)의  편리함이 보인다.</p><p>또한 email서비스인 sendgrid도 twilio의 서비스이다. </p><h3 id="참고사이트"><a href="#참고사이트" class="headerlink" title="참고사이트"></a>참고사이트</h3><p><a href="https://getvoip.com/blog/2017/01/05/twilio-vs-nexmo/" target="_blank" rel="noopener">https://getvoip.com/blog/2017/01/05/twilio-vs-nexmo/</a><br><a href="https://www.twiilio.com/" target="_blank" rel="noopener">https://www.twiilio.com/</a><br><a href="https://www.nexmo.com" target="_blank" rel="noopener">https://www.nexmo.com</a></p>]]></content>
     
@@ -40,6 +40,8 @@
       <category term="sms" scheme="https://skarlsla.github.io/tags/sms/"/>
     
       <category term="email" scheme="https://skarlsla.github.io/tags/email/"/>
+    
+      <category term="해외sms" scheme="https://skarlsla.github.io/tags/%ED%95%B4%EC%99%B8sms/"/>
     
   </entry>
   
@@ -499,9 +501,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="devops" scheme="https://skarlsla.github.io/tags/devops/"/>
-    
       <category term="CD" scheme="https://skarlsla.github.io/tags/CD/"/>
+    
+      <category term="devops" scheme="https://skarlsla.github.io/tags/devops/"/>
     
       <category term="CI/CD" scheme="https://skarlsla.github.io/tags/CI-CD/"/>
     
