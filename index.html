@@ -69,6 +69,85 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-webserver-auth5" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/25/webserver-auth5/" class="article-date">
+  <time datetime="2019-07-25T02:43:15.000Z" itemprop="datePublished">2019-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/webserver/">webserver</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/25/webserver-auth5/">[SNS LOGIN] SNS 로그인시 받는 DATA분석 및 활용</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="FACEBOOK-RESPONSE-DATA"><a href="#FACEBOOK-RESPONSE-DATA" class="headerlink" title="FACEBOOK RESPONSE DATA"></a>FACEBOOK RESPONSE DATA</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;authResponse&quot;: &#123;</span><br><span class="line">    &quot;accessToken&quot;: &quot;EAAUNGBaxD3QBAN5ZAwPTZCqcvi1Gl8UH1fHMnOfR9dC8gefA9Enz2OT6d9Wh2zWrGZAixagphCS60UR4oWRc7Vj0jfRn6lNUHyLUSh0oplmZBZAVtiR1rFL2t1gmXJ6zMeWoSk8thQhHIaQM0VRp3c8J0LfZBp4lZCeP8ZA4vkSxYX0WxaCdJMAlZCJ13PIMkbtPmfVEHZBoHGpgZDZD&quot;,</span><br><span class="line">    &quot;userID&quot;: &quot;2389167894508646&quot;,</span><br><span class="line">    &quot;expiresIn&quot;: 5278,</span><br><span class="line">    &quot;signedRequest&quot;: &quot;JwLCSwZmTIr6UP82lL1CFOL24nvtAp3aYmJB7pbemjI.eyJ1c2VyX2lkIjoiMjM4OTE2Nzg5NDUwODY0NiIsImNvZGUiOiJBUUNvR1RsUENrVnpsZWd3eDNRYi05bHJmNGU5X0dKd0RoMjdkMExLTFlxazJXQkxJMllRNEtKcldpTG8zS29WanJSaF9zSkFHNzFxV0UtMnVRS3ZiM2p2Rm5EUktMb2ZYS2ZnUktwamdjMXQyeGtXNjlWVUZKREtHY1pQcDBFNTBUUklvczQ0V1k1OE5LSWhFLW5td3hYZGtqMjRTbk5ncm4wVDdxZlVpdTlZSEVCei1oM0ZjblppTGxuYXF3UVU3U0U2Sll6eUc5TEJuVVFieWt6OXB3TG1pNXlmLVpjTzdwNG5ObXRzdHR3U1JRSVVXRlRFU1RTNUM3YkJrRWYyOGx1RTRfZm5ZRnZNemNXYnQ0dEt0VkgtbVI2ZjB6OFhweHdNZFhjamRZMlI1VHdUSHRpY05yMkU4U3o1bllkSFdvc0tFbkhFTUJ3ejdFZkhlQXg1LVcyNyIsImFsZ29yaXRobSI6IkhNQUMtU0hBMjU2IiwiaXNzdWVkX2F0IjoxNTY0MDE4MzIyfQ&quot;,</span><br><span class="line">    &quot;data_access_expiration_time&quot;: 1571794322</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;status&quot;: &quot;connected&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>status는 앱 사용자의 로그인 상태를 지정합니다. status는 다음 중 하나일 수 있습니다.</p>
+<blockquote>
+<p>connected - 사용자가 Facebook에 로그인하고 앱에 로그인했습니다.<br>not_authorized - 사용자가 Facebook에는 로그인했지만 앱에 로그인하지 않았습니다.<br>unknown - 사용자가 Facebook에 로그인하지 않았으므로 앱에 로그인했는지 알 수 없습니다. 또는 이전에 FB.logout()이 호출되었으므로 Facebook에 연결할 수 없습니다.<br>connected 상태인 경우 authResponse가 포함되며 다음과 같이 구성되어 있습니다.</p>
+<blockquote>
+<p>accessToken - 앱 사용자의 액세스 토큰이 포함되어 있습니다.<br>expiresIn - 토큰이 만료되어 갱신해야 하는 UNIX 시간을 표시합니다.<br>reauthorize_required_in - 로그인이 만료되어 재인증이 필요하기 전까지의 시간(초)입니다.<br>signedRequest - 앱 사용자에 대한 정보를 포함하는 서명된 매개변수입니다.<br>userID - 앱 사용자의 ID입니다.</p>
+</blockquote>
+</blockquote>
+<p>connected 가 정상적으로 되었을 경우 profile (정보)조회 가능 사전 앱 설정에 따라 제한할수있고<br>요청하는 DATA를 지정  (예시로 이메일 또는 이름 등 )하여 받을 수 있음.</p>
+<hr>
+<h3 id="GOOGLE-RESPONSE-DATA"><a href="#GOOGLE-RESPONSE-DATA" class="headerlink" title="GOOGLE+ RESPONSE DATA"></a>GOOGLE+ RESPONSE DATA</h3><p><strong>gauth.currentUser.get().getAuthResponse()</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;token_type&quot;: &quot;Bearer&quot;,</span><br><span class="line">  &quot;login_hint&quot;: &quot;AJDLj6JUa8yxXrhHdWRHIV0S13cAg4jk7EmnQadLF4urG05JxMLfWG5jnuaIYokj9TBX5defwHDYlm3wwAS_3ha8RuzhYS2JNg&quot;,</span><br><span class="line">  &quot;expires_in&quot;: 3600,</span><br><span class="line">  &quot;id_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6ImRmMzc1ODkwOGI3OTIyOTNhZDk3N2EwYjk5MWQ5OGE3N2Y0ZWVlY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNzUyODMwMTMyMDE5LXUyNXFpMGFmMnZxb2tpNzVxdDlpbmtpbGNlOTVzaXUyLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNzUyODMwMTMyMDE5LXUyNXFpMGFmMnZxb2tpNzVxdDlpbmtpbGNlOTVzaXUyLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE1MDY1ODEwODA4OTgxMjY1NzgwIiwiZW1haWwiOiJza2FybHNsYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InNnd1NQbXJCN2J2Rnd3MXZ3OTZhWnciLCJuYW1lIjoi7Jyk64Ko6riwIiwicGljdHVyZSI6Imh0dHBzOi8vbGg2Lmdvb2dsZXVzZXJjb250ZW50LmNvbS8tNGFQUUpOTGgzMm8vQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQUNIaTNyZEdBRnE4VkIxTEVMM3JMaEs4N2RXbHZsM2VmQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoi64Ko6riwIiwiZmFtaWx5X25hbWUiOiLsnKQiLCJsb2NhbGUiOiJrbyIsImlhdCI6MTU2NDAxOTA0MiwiZXhwIjoxNTY0MDIyNjQyLCJqdGkiOiI4ZDc0MWVhMTgzMzhjM2FlY2Q1OTVlYWVhNTgxMWI5MWRkYWUyM2I5In0.aKUSck0apteYWhRLKdsWs21xqICkkmWDnA9rc97UOV0l1OECy_fo5rxf8QFKzDorsbkfuY50eG5x7PjW65Wak7DujW08kOGfwh6POBCxe_pAkwSNXpNf0g8ZHefOK2RAGzOzBmp5U2Ptg6a9pPrlIMa_eb7C-RVIHTRKM48HdcCNZN8XGq4WhEoAnZ2-ZGVQnzFgMCMusQgrMzdabAwfvHpjAdKNVR9Vq7iPSTouXiWHJfbRPNnp6LEQxlrOt8GZEVK5AFxnnDIgP26y81hfwIssNHuDNlveoWvKpyk0creKwPG5dDbrVS4c0lGAV7gimz7M40spH8CimNgowZRk6Q&quot;,</span><br><span class="line">  &quot;session_state&quot;: &#123;</span><br><span class="line">    &quot;extraQueryParams&quot;: &#123;</span><br><span class="line">      &quot;authuser&quot;: &quot;0&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;first_issued_at&quot;: 1564019043142,</span><br><span class="line">  &quot;expires_at&quot;: 1564022643142,</span><br><span class="line">  &quot;idpId&quot;: &quot;google&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>gauth.currentUser.get().getBasicProfile()</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> profile = auth2.currentUser.get().getBasicProfile();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'ID: '</span> + profile.getId());</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Full Name: '</span> + profile.getName());</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Given Name: '</span> + profile.getGivenName());</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Family Name: '</span> + profile.getFamilyName());</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Image URL: '</span> + profile.getImageUrl());</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Email: '</span> + profile.getEmail());</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="간편로그인-및-간편회원가입시-활용-DATA"><a href="#간편로그인-및-간편회원가입시-활용-DATA" class="headerlink" title="간편로그인 및 간편회원가입시 활용 DATA"></a>간편로그인 및 간편회원가입시 활용 DATA</h3><p>access_token은 sns의 추가 api기능을 활용할 때 이용하게 된다.</p>
+<p>간편로그인 및 간편회원가입시 실제 필요한 DATA는  <strong>userID + profile</strong> 정보이다.</p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/sns_db.png" alt="SNS 회원정보 연동 DB구성(스키마) 예시"></p>
+<p><a href="https://developers.naver.com/docs/login/devguide/#4-1-1-database%EC%9D%98-%EA%B5%AC%EC%84%B1" target="_blank" rel="noopener">참고</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/07/25/webserver-auth5/" data-id="cjyi1i00s002s2cnvdd9r307j" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-service-email" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/07/23/service-email/" class="article-date">
@@ -151,7 +230,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/23/service-email/" data-id="cjyfmd32g005vf0nv5s5jltlg" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/23/service-email/" data-id="cjyi1i03n00622cnv5b7f8u7g" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/email-api/">email api</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/해외-email/">해외 email</a></li></ul>
@@ -241,7 +320,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/23/service-message/" data-id="cjyfmd2zs0039f0nvvxjr8g19" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/23/service-message/" data-id="cjyi1i00w002v2cnvftp09guq" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/email/">email</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sms/">sms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/해외sms/">해외sms</a></li></ul>
@@ -335,7 +414,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjyfmd30c003nf0nvusn571io" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjyi1i00q002o2cnvs7nmx3fv" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
@@ -432,7 +511,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/18/webserver-auth3/" data-id="cjyfmd309003kf0nvpvne49b8" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/18/webserver-auth3/" data-id="cjyi1i00n002l2cnvqu71c2xf" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
@@ -513,7 +592,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth2/" data-id="cjyfmd301003gf0nv2ao1aaij" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth2/" data-id="cjyi1i00c002a2cnvcfh3cp04" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/인증/">인증</a></li></ul>
@@ -587,7 +666,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjyfmd2zy003df0nvcww8xwbs" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjyi1i00l002g2cnvo5jkh6ou" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/인증/">인증</a></li></ul>
@@ -654,7 +733,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/11/jenkins-pipeline/" data-id="cjyfmd2yc001zf0nvhqqybrdk" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/jenkins-pipeline/" data-id="cjyi1hzz2000v2cnvx5ornb2f" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pipeline/">pipeline</a></li></ul>
@@ -721,7 +800,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/11/node-express-ws/" data-id="cjyfmd2zf002vf0nvyfb1m0ui" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/node-express-ws/" data-id="cjyi1i000001x2cnvkmyfs071" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebSocket/">WebSocket</a></li></ul>
@@ -797,104 +876,10 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/11/pattern/" data-id="cjyfmd2z8002of0nv7p3ym4ql" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/pattern/" data-id="cjyi1i00500252cnv3v9afo25" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pattern/">pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/singleton/">singleton</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-node-with-type" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/07/10/node-with-type/" class="article-date">
-  <time datetime="2019-07-10T11:40:30.000Z" itemprop="datePublished">2019-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/NODEJS/">NODEJS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/10/node-with-type/">[NODEJS] TypeScript with Node.js </a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="NODEJS-TypeScript-with-Node-js"><a href="#NODEJS-TypeScript-with-Node-js" class="headerlink" title="[NODEJS] TypeScript with Node.js ?"></a>[NODEJS] TypeScript with Node.js ?</h3><ol>
-<li><p>프로젝트 폴더 생성 </p>
-</li>
-<li><p>init</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>타입스크립트 설치</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g typescript</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>타입설정 초기화</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc — init</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>tsconfig.json 수정</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="comment">/* Basic Options */</span></span><br><span class="line">    <span class="string">"target"</span>: <span class="string">"es5"</span>,                          <span class="comment">/* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */</span></span><br><span class="line">    <span class="string">"module"</span>: <span class="string">"commonjs"</span>,                     <span class="comment">/* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */</span></span><br><span class="line">    <span class="string">"outDir"</span>: <span class="string">"./dist"</span>,                        <span class="comment">/* Redirect output structure to the directory. */</span></span><br><span class="line">    <span class="string">"strict"</span>: <span class="literal">true</span>,                           <span class="comment">/* Enable all strict type-checking options. */</span></span><br><span class="line">    <span class="string">"esModuleInterop"</span>: <span class="literal">true</span>                   <span class="comment">/* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */</span></span><br><span class="line">​</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"include"</span>: [</span><br><span class="line">    <span class="string">"./src/**/*"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>​</p>
-<ol start="6">
-<li><p>폴더생성 ./src ./dist</p>
-</li>
-<li><p>.src/test.ts 작성</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    private hello: <span class="built_in">String</span> = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">constructor</span>(private name: String) &#123;</span><br><span class="line">        <span class="keyword">this</span>.hello = name + <span class="string">" Hello~"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    public getHello(): <span class="built_in">String</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.hello;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> person: Person = <span class="keyword">new</span> Person(<span class="string">"namgi"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(person.getHello());</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>tsc 컴파일</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>js 파일 실행</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./dist/test.js</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>결과물 확인<br><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FNqjy6%2FbtqwyOUXEz4%2F9fO6Y00sqZWNDucdOqzfA0%2Fimg.png" alt="결과"></p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2019/07/10/node-with-type/" data-id="cjyfmd2zj002zf0nv9zofe7zu" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li></ul>
 
     </footer>
   </div>
@@ -938,7 +923,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/email/" style="font-size: 10px;">email</a> <a href="/tags/email-api/" style="font-size: 10px;">email api</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sms/" style="font-size: 10px;">sms</a> <a href="/tags/sns/" style="font-size: 12.5px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 12.5px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a> <a href="/tags/해외-email/" style="font-size: 10px;">해외 email</a> <a href="/tags/해외sms/" style="font-size: 10px;">해외sms</a>
+      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/email/" style="font-size: 10px;">email</a> <a href="/tags/email-api/" style="font-size: 10px;">email api</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sms/" style="font-size: 10px;">sms</a> <a href="/tags/sns/" style="font-size: 15px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 15px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a> <a href="/tags/해외-email/" style="font-size: 10px;">해외 email</a> <a href="/tags/해외sms/" style="font-size: 10px;">해외sms</a>
     </div>
   </div>
     
@@ -960,6 +945,10 @@
       <ul>
         
           <li>
+            <a href="/2019/07/25/webserver-auth5/">[SNS LOGIN] SNS 로그인시 받는 DATA분석 및 활용</a>
+          </li>
+        
+          <li>
             <a href="/2019/07/23/service-email/">[해외 EMAIL] AWS SES vs SendGrid vs Mailgun</a>
           </li>
         
@@ -973,10 +962,6 @@
         
           <li>
             <a href="/2019/07/18/webserver-auth3/">[WEBSERVER] sns login (oauth2)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/17/webserver-auth2/">[WEBSERVER] JWT(JSON WEB TOKEN)? </a>
           </li>
         
       </ul>

@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>https://skarlsla.github.io/2019/07/25/webserver-auth5/</loc>
+        <lastmod>2019-07-25T02:10:19.983Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://skarlsla.github.io/2019/07/23/service-email/</loc>
         <lastmod>2019-07-23T09:31:08.894Z</lastmod>
         <changefreq>weekly</changefreq>
