@@ -209,11 +209,11 @@
     
       <category term="oauth" scheme="https://skarlsla.github.io/tags/oauth/"/>
     
-      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
-    
       <category term="jwt" scheme="https://skarlsla.github.io/tags/jwt/"/>
     
       <category term="인증" scheme="https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/"/>
+    
+      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
     
   </entry>
   
