@@ -5,15 +5,15 @@
   
 
   
-  <title>[SLACK] 외부시스템에서 슬랙 메세지 알람받기(incoming webhook) | </title>
+  <title>[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="slack webhook 사용하는법슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동">
+  <meta name="description" content="slack ?슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동 할수있다.   aws">
 <meta name="keywords" content="SLACK,incoming webhook,slack연동">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[SLACK] 외부시스템에서 슬랙 메세지 알람받기(incoming webhook)">
+<meta property="og:title" content="[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비">
 <meta property="og:url" content="https://skarlsla.github.io/2019/12/10/slackalarm/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="slack webhook 사용하는법슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동">
+<meta property="og:description" content="slack ?슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동 할수있다.   aws">
 <meta property="og:locale" content="ko">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/0.workspace1.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/1.createapp.jpg">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/5.completewebhook.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/6.postman.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/7.slackalarm.jpg">
-<meta property="og:updated_time" content="2019-12-10T06:52:33.863Z">
+<meta property="og:updated_time" content="2019-12-10T07:00:22.096Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[SLACK] 외부시스템에서 슬랙 메세지 알람받기(incoming webhook)">
-<meta name="twitter:description" content="slack webhook 사용하는법슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동">
+<meta name="twitter:title" content="[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비">
+<meta name="twitter:description" content="slack ?슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동 할수있다.   aws">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/0.workspace1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
@@ -109,7 +109,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [SLACK] 외부시스템에서 슬랙 메세지 알람받기(incoming webhook)
+      [SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비
     </h1>
   
 
@@ -117,7 +117,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="slack-webhook-사용하는법"><a href="#slack-webhook-사용하는법" class="headerlink" title="slack webhook 사용하는법"></a>slack webhook 사용하는법</h3><p>슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동 할수있다. </p>
+        <h3 id="slack"><a href="#slack" class="headerlink" title="slack ?"></a>slack ?</h3><p>슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동 할수있다. </p>
 <hr>
 <h3 id="aws-모니터링"><a href="#aws-모니터링" class="headerlink" title="aws 모니터링"></a>aws 모니터링</h3><p>aws cloudwatch나  cloudtrail의 특정 알람을  람다를 통해 슬랙으로 보내 모니터링을 하는게 대세인 듯 하다.</p>
 <hr>
@@ -142,7 +142,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/12/10/slackalarm/" data-id="ck3zid5rh002iegnvgbagwo79" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/12/10/slackalarm/" data-id="ck3zimn9c002jtcnv71tgwr35" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SLACK/">SLACK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/incoming-webhook/">incoming webhook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/slack연동/">slack연동</a></li></ul>
@@ -214,7 +214,7 @@
       <ul>
         
           <li>
-            <a href="/2019/12/10/slackalarm/">[SLACK] 외부시스템에서 슬랙 메세지 알람받기(incoming webhook)</a>
+            <a href="/2019/12/10/slackalarm/">[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비</a>
           </li>
         
           <li>

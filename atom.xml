@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-12-10T06:52:33.863Z</updated>
+  <updated>2019-12-10T07:00:22.096Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -17,19 +17,19 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>[SLACK] 외부시스템에서 슬랙 메세지 알람받기(incoming webhook)</title>
+    <title>[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비</title>
     <link href="https://skarlsla.github.io/2019/12/10/slackalarm/"/>
     <id>https://skarlsla.github.io/2019/12/10/slackalarm/</id>
     <published>2019-12-10T07:43:15.000Z</published>
-    <updated>2019-12-10T06:52:33.863Z</updated>
+    <updated>2019-12-10T07:00:22.096Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="slack-webhook-사용하는법"><a href="#slack-webhook-사용하는법" class="headerlink" title="slack webhook 사용하는법"></a>slack webhook 사용하는법</h3><p>슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동 할수있다. </p><hr><h3 id="aws-모니터링"><a href="#aws-모니터링" class="headerlink" title="aws 모니터링"></a>aws 모니터링</h3><p>aws cloudwatch나  cloudtrail의 특정 알람을  람다를 통해 슬랙으로 보내 모니터링을 하는게 대세인 듯 하다.</p><hr><h3 id="슬랙-incoming-webhook-준비"><a href="#슬랙-incoming-webhook-준비" class="headerlink" title="슬랙  incoming webhook 준비"></a>슬랙  incoming webhook 준비</h3><p><strong>1. 가입은 패스</strong><br><strong>2. 워크스페이스 만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/0.workspace1.jpg" alt="워크스페이스"></p><p><strong>3. 앱만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/1.createapp.jpg" alt="앱만들기"></p><p><strong>4. 채널 만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/3.createchannel.jpg" alt="채널생성"></p><p><strong>5. incoming webhook 생성</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/2.incomingwebhook.jpg" alt="incomingwebhook"><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/4.selectchannel.jpg" alt="채널선택"><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/5.completewebhook.jpg" alt="웹훅주소생성"></p><p><strong>6. 호출테스트</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/6.postman.jpg" alt="호출"></p><p><strong>7. 호출테스트</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/7.slackalarm.jpg" alt="메세지알람"></p><hr>]]></content>
+    <content type="html"><![CDATA[<h3 id="slack"><a href="#slack" class="headerlink" title="slack ?"></a>slack ?</h3><p>슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동 할수있다. </p><hr><h3 id="aws-모니터링"><a href="#aws-모니터링" class="headerlink" title="aws 모니터링"></a>aws 모니터링</h3><p>aws cloudwatch나  cloudtrail의 특정 알람을  람다를 통해 슬랙으로 보내 모니터링을 하는게 대세인 듯 하다.</p><hr><h3 id="슬랙-incoming-webhook-준비"><a href="#슬랙-incoming-webhook-준비" class="headerlink" title="슬랙  incoming webhook 준비"></a>슬랙  incoming webhook 준비</h3><p><strong>1. 가입은 패스</strong><br><strong>2. 워크스페이스 만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/0.workspace1.jpg" alt="워크스페이스"></p><p><strong>3. 앱만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/1.createapp.jpg" alt="앱만들기"></p><p><strong>4. 채널 만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/3.createchannel.jpg" alt="채널생성"></p><p><strong>5. incoming webhook 생성</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/2.incomingwebhook.jpg" alt="incomingwebhook"><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/4.selectchannel.jpg" alt="채널선택"><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/5.completewebhook.jpg" alt="웹훅주소생성"></p><p><strong>6. 호출테스트</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/6.postman.jpg" alt="호출"></p><p><strong>7. 호출테스트</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/7.slackalarm.jpg" alt="메세지알람"></p><hr>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;slack-webhook-사용하는법&quot;&gt;&lt;a href=&quot;#slack-webhook-사용하는법&quot; class=&quot;headerlink&quot; title=&quot;slack webhook 사용하는법&quot;&gt;&lt;/a&gt;slack webhook 사용하는법&lt;/h3&gt;&lt;p&gt;슬랙
+        &lt;h3 id=&quot;slack&quot;&gt;&lt;a href=&quot;#slack&quot; class=&quot;headerlink&quot; title=&quot;slack ?&quot;&gt;&lt;/a&gt;slack ?&lt;/h3&gt;&lt;p&gt;슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비
       
     
     </summary>
