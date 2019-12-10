@@ -69,6 +69,79 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-slackalarm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/10/slackalarm/" class="article-date">
+  <time datetime="2019-12-10T07:43:15.000Z" itemprop="datePublished">2019-12-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SLACK/">SLACK</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/10/slackalarm/">[SLACK] 외부시스템에서 슬랙 메세지 알람받기(incoming webhook)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="slack-webhook-사용하는법"><a href="#slack-webhook-사용하는법" class="headerlink" title="slack webhook 사용하는법"></a>slack webhook 사용하는법</h3><p>슬랙(Slack)은 이 중요한 커뮤니케이션의 효율성을 높이기 위한 도구다. 슬랙의 공개 채널, 비공개 그룹, 직접 메시징 기능은 팀원들에게 각 주제에 맞는 모드로 커뮤니케이션할 수 있는 옵션을 제공한다. 보통 채널을 만들어 메신저를 기본으로 사용한다. 또한 구글,트렐로,깃헙 등을 연동 할수있다. 그외에도 수많은 앱을 연동 할수있다. </p>
+<hr>
+<h3 id="aws-모니터링"><a href="#aws-모니터링" class="headerlink" title="aws 모니터링"></a>aws 모니터링</h3><p>aws cloudwatch나  cloudtrail의 특정 알람을  람다를 통해 슬랙으로 보내 모니터링을 하는게 대세인 듯 하다.</p>
+<hr>
+<h3 id="슬랙-incoming-webhook-준비"><a href="#슬랙-incoming-webhook-준비" class="headerlink" title="슬랙  incoming webhook 준비"></a>슬랙  incoming webhook 준비</h3><p><strong>1. 가입은 패스</strong><br><strong>2. 워크스페이스 만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/0.workspace1.jpg" alt="워크스페이스"></p>
+<p><strong>3. 앱만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/1.createapp.jpg" alt="앱만들기"></p>
+<p><strong>4. 채널 만들기</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/3.createchannel.jpg" alt="채널생성"></p>
+<p><strong>5. incoming webhook 생성</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/2.incomingwebhook.jpg" alt="incomingwebhook"><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/4.selectchannel.jpg" alt="채널선택"><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/5.completewebhook.jpg" alt="웹훅주소생성"></p>
+<p><strong>6. 호출테스트</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/6.postman.jpg" alt="호출"></p>
+<p><strong>7. 호출테스트</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/7.slackalarm.jpg" alt="메세지알람"></p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/12/10/slackalarm/" data-id="ck3zid5rh002iegnvgbagwo79" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SLACK/">SLACK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/incoming-webhook/">incoming webhook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/slack연동/">slack연동</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-service-message-nexmo" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/08/20/service-message-nexmo/" class="article-date">
@@ -156,7 +229,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/08/20/service-message-nexmo/" data-id="cjzjjdo2z002g1onv3bv1hkdx" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/08/20/service-message-nexmo/" data-id="ck3zid5rf002eegnv4341heuj" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sms/">sms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sms-verify/">sms verify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/해외sms/">해외sms</a></li></ul>
@@ -242,7 +315,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/25/webserver-auth5/" data-id="cjzjjdo3h00301onv8jyyr09c" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/25/webserver-auth5/" data-id="ck3zid5s60034egnv4urm29t6" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
@@ -336,7 +409,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/23/service-email/" data-id="cjzjjdo6i006d1onvxaulwjcy" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/23/service-email/" data-id="ck3zid5vn006pegnvpk8t1dkl" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/email-api/">email api</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/해외-email/">해외 email</a></li></ul>
@@ -426,7 +499,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/23/service-message/" data-id="cjzjjdo31002k1onvf49xa6jd" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/23/service-message/" data-id="ck3zid5rr002segnvtzxqd4ei" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/email/">email</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sms/">sms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/해외sms/">해외sms</a></li></ul>
@@ -520,7 +593,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="cjzjjdo3f002x1onvicis099o" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/19/webserver-auth4/" data-id="ck3zid5s0002yegnvux2b2ogu" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
@@ -617,7 +690,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/18/webserver-auth3/" data-id="cjzjjdo3c002u1onv2t7n8nm9" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/18/webserver-auth3/" data-id="ck3zid5s30030egnvz7zhxrla" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sns/">sns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/간편로그인/">간편로그인</a></li></ul>
@@ -698,7 +771,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth2/" data-id="cjzjjdo38002s1onv3ocopcwl" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth2/" data-id="ck3zid5rv002vegnv8c65k8fu" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/인증/">인증</a></li></ul>
@@ -772,7 +845,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="cjzjjdo35002n1onvtqmryr5o" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/17/webserver-auth/" data-id="ck3zid5rp002pegnvdjdyhzjf" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth/">oauth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/인증/">인증</a></li></ul>
@@ -839,77 +912,10 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/07/11/jenkins-pipeline/" data-id="cjzjjdo1r00151onv9dooht3l" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/07/11/jenkins-pipeline/" data-id="ck3zid5pr000zegnvcstx3ly1" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pipeline/">pipeline</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-node-express-ws" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/07/11/node-express-ws/" class="article-date">
-  <time datetime="2019-07-11T08:30:30.000Z" itemprop="datePublished">2019-07-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/NODEJS/">NODEJS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/11/node-express-ws/">[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="EXPRESS-node-js-to-WebSocket-세션-공유"><a href="#EXPRESS-node-js-to-WebSocket-세션-공유" class="headerlink" title="EXPRESS(node.js) to WebSocket 세션 공유"></a>EXPRESS(node.js) to WebSocket 세션 공유</h3><p>Express로 웹서버 생성 후  서버 및 세션정보를 WebSocket으로 전달<br>WebSocket 서버 생성 시 verifyClient 옵션으로 세션 처리</p>
-<p><strong>server.ts</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bodyParser <span class="keyword">from</span> <span class="string">"body-parser"</span>;</span><br><span class="line"><span class="keyword">import</span> cors <span class="keyword">from</span> <span class="string">"cors"</span>;</span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">"express"</span>;</span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">"http"</span>;</span><br><span class="line"><span class="keyword">import</span> methodOverride <span class="keyword">from</span> <span class="string">"method-override"</span>;</span><br><span class="line"><span class="keyword">import</span> morgan <span class="keyword">from</span> <span class="string">"morgan"</span>;</span><br><span class="line"><span class="keyword">import</span> session <span class="keyword">from</span> <span class="string">"express-session"</span>;</span><br><span class="line"><span class="keyword">import</span> passport <span class="keyword">from</span> <span class="string">"passport"</span>;</span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">"path"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; WS &#125; <span class="keyword">from</span> <span class="string">"./app/ws"</span>;</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* private static ConnectDB(): Promise&lt;any&gt; &#123;</span></span><br><span class="line"><span class="comment">        return Connection;</span></span><br><span class="line"><span class="comment">    &#125; */</span></span><br><span class="line">    private readonly app: express.Application;</span><br><span class="line">    private readonly server: http.Server;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.app = express();</span><br><span class="line">        <span class="keyword">this</span>.server = http.createServer(<span class="keyword">this</span>.app);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"> .</span><br><span class="line"> .</span><br><span class="line"> .</span><br><span class="line"> </span><br><span class="line">    private ExpressConfiguration(): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="comment">// const RedisStore = connectRedis(session);</span></span><br><span class="line">        <span class="keyword">const</span> cookieOptions = &#123;</span><br><span class="line">            maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span>,</span><br><span class="line">            <span class="comment">// secure:true, 브라우저가 HTTPS를 통해서만 쿠키를 전송하도록 합니다.</span></span><br><span class="line">            httpOnly: <span class="literal">false</span>,</span><br><span class="line">            <span class="comment">// 쿠키가 클라이언트 JavaScript가 아닌 HTTP(S)를 통해서만 전송되도록 하며, 이를 통해 XSS(Cross-site scripting) 공격으로부터 보호할 수 있습니다.</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">const</span> sessionInfo = &#123;</span><br><span class="line">            secret: <span class="string">"sec"</span>,</span><br><span class="line">            resave: <span class="literal">true</span>,</span><br><span class="line">            saveUninitialized: <span class="literal">true</span>,</span><br><span class="line">            cookie: cookieOptions,</span><br><span class="line">            <span class="comment">// store: new RedisStore(config.REDIS_OPTS),</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">this</span>.sessionOptions = session(sessionInfo);</span><br><span class="line">        <span class="keyword">this</span>.app.use(bodyParser.urlencoded(&#123;<span class="attr">extended</span>: <span class="literal">true</span>&#125;));</span><br><span class="line">        <span class="keyword">this</span>.app.use(bodyParser.json(&#123;<span class="attr">limit</span>: <span class="string">"50mb"</span>&#125;));</span><br><span class="line">        <span class="keyword">this</span>.app.use(<span class="keyword">this</span>.sessionOptions);</span><br><span class="line">        <span class="comment">/* this.app.use(session(</span></span><br><span class="line"><span class="comment">            &#123;</span></span><br><span class="line"><span class="comment">                resave: true,</span></span><br><span class="line"><span class="comment">                saveUninitialized: true,</span></span><br><span class="line"><span class="comment">                secret: config.SECRET,</span></span><br><span class="line"><span class="comment">                store: new RedisStore(config.REDIS_OPTS),</span></span><br><span class="line"><span class="comment">            &#125;,</span></span><br><span class="line"><span class="comment">        )); */</span></span><br><span class="line">        <span class="keyword">this</span>.app.use(passport.initialize());</span><br><span class="line">        <span class="keyword">this</span>.app.use(passport.session());</span><br><span class="line">        <span class="keyword">this</span>.app.use(methodOverride());</span><br><span class="line">        <span class="comment">// const viewpath = path.join(__dirname, "../views");</span></span><br><span class="line">        <span class="comment">// serverService.debug(viewpath);</span></span><br><span class="line">        <span class="comment">// this.app.set("views", "./views");</span></span><br><span class="line">        <span class="keyword">this</span>.app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line">        <span class="keyword">this</span>.app.set(<span class="string">"view engine"</span>, <span class="string">"ejs"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.app.use((req, res, next): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"X-Requested-With, Content-Type, Authorization"</span>);</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"GET,PUT,PATCH,POST,DELETE,OPTIONS"</span>);</span><br><span class="line">            next();</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">this</span>.app.use(morgan(<span class="string">"combined"</span>));</span><br><span class="line">        <span class="keyword">this</span>.app.use(cors());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.app.use((err: any, <span class="attr">req</span>: express.Request, <span class="attr">res</span>: express.Response, <span class="attr">next</span>: express.NextFunction): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">            err.status = <span class="number">404</span>;</span><br><span class="line">            next(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private setWebSocket(): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.ws = <span class="keyword">new</span> WS(<span class="keyword">this</span>.server, <span class="keyword">this</span>.sessionOptions);</span><br><span class="line">    &#125;       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>ws.ts</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> WebSocket <span class="keyword">from</span> <span class="string">'ws'</span>;</span><br><span class="line"><span class="keyword">import</span> express, &#123; Router &#125; <span class="keyword">from</span> <span class="string">"express"</span>;</span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">"http"</span>;</span><br><span class="line"></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">WS</span> </span>&#123;</span><br><span class="line">    private wss: WebSocket.Server;</span><br><span class="line">    private server: http.Server;</span><br><span class="line">    private session: express.RequestHandler;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>(server: http.Server, session: express.RequestHandler) &#123;</span><br><span class="line">        <span class="keyword">this</span>.server = server;</span><br><span class="line">        <span class="keyword">this</span>.session = session;</span><br><span class="line">        <span class="keyword">this</span>.init(server, session);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private init(serve: http.Server, <span class="attr">session</span>: any) &#123;</span><br><span class="line">        <span class="keyword">this</span>.wss = <span class="keyword">new</span> WebSocket.Server(&#123;</span><br><span class="line">            </span><br><span class="line">            verifyClient:<span class="function">(<span class="params">info: &#123;origin: string; secure: boolean; req: any &#125;, done</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'Parsing session from request...'</span>);</span><br><span class="line">                session(info.req,( )=&gt;&#123;&#125;, ()=&gt;&#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">this</span>.isSessionPassport(info.req))&#123;</span><br><span class="line">                        done(info.req.session);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="comment">// done(false,401,'unathorized');</span></span><br><span class="line">                        done(<span class="literal">true</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="built_in">console</span>.log(info.req.session.id);</span><br><span class="line"></span><br><span class="line">                &#125;)                </span><br><span class="line">            &#125;, <span class="attr">server</span>: serve </span><br><span class="line">            , <span class="attr">path</span>: <span class="string">"/"</span></span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">/* this.pushController = new PushController(this.wss);</span></span><br><span class="line"><span class="comment">        this.pushController.startPush(); */</span></span><br><span class="line">        <span class="keyword">this</span>.connection();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private connection()&#123;</span><br><span class="line">        <span class="keyword">this</span>.wss.on(<span class="string">"connection"</span>,(ws: WebSocket) =&gt; &#123;</span><br><span class="line">            <span class="comment">// this.pushController.broadcastPush("100" , "msg");</span></span><br><span class="line">            ws.on(<span class="string">"message"</span>, (msg: string) =&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(msg);                 </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;);        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private isSessionPassport(req: express.Request)&#123;</span><br><span class="line">        <span class="keyword">if</span>(req.session.passport &amp;&amp; req.session.passport.user)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(req.session.passport.user);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"no passport"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">                </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2019/07/11/node-express-ws/" data-id="cjzjjdo2d001w1onv1fm17rnl" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebSocket/">WebSocket</a></li></ul>
 
     </footer>
   </div>
@@ -933,7 +939,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">카테고리</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/NODEJS/">NODEJS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/service/">service</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webserver/">webserver</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/NODEJS/">NODEJS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SLACK/">SLACK</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/service/">service</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webserver/">webserver</a></li></ul>
     </div>
   </div>
 
@@ -943,7 +949,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email/">email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email-api/">email api</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms/">sms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms-verify/">sms verify</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sns/">sns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/간편로그인/">간편로그인</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외-email/">해외 email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외sms/">해외sms</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SLACK/">SLACK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email/">email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email-api/">email api</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/incoming-webhook/">incoming webhook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack연동/">slack연동</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms/">sms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms-verify/">sms verify</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sns/">sns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/간편로그인/">간편로그인</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외-email/">해외 email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외sms/">해외sms</a></li></ul>
     </div>
   </div>
 
@@ -953,7 +959,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/email/" style="font-size: 10px;">email</a> <a href="/tags/email-api/" style="font-size: 10px;">email api</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/sms/" style="font-size: 12.5px;">sms</a> <a href="/tags/sms-verify/" style="font-size: 10px;">sms verify</a> <a href="/tags/sns/" style="font-size: 15px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 15px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a> <a href="/tags/해외-email/" style="font-size: 10px;">해외 email</a> <a href="/tags/해외sms/" style="font-size: 12.5px;">해외sms</a>
+      <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/SLACK/" style="font-size: 10px;">SLACK</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/email/" style="font-size: 10px;">email</a> <a href="/tags/email-api/" style="font-size: 10px;">email api</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/incoming-webhook/" style="font-size: 10px;">incoming webhook</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/slack연동/" style="font-size: 10px;">slack연동</a> <a href="/tags/sms/" style="font-size: 12.5px;">sms</a> <a href="/tags/sms-verify/" style="font-size: 10px;">sms verify</a> <a href="/tags/sns/" style="font-size: 15px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 15px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a> <a href="/tags/해외-email/" style="font-size: 10px;">해외 email</a> <a href="/tags/해외sms/" style="font-size: 12.5px;">해외sms</a>
     </div>
   </div>
     
@@ -962,7 +968,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">아카이브</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">8월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">7월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">5월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">12월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">8월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">7월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">5월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
     </div>
   </div>
 
@@ -973,6 +979,10 @@
     <h3 class="widget-title">최근 포스트</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/12/10/slackalarm/">[SLACK] 외부시스템에서 슬랙 메세지 알람받기(incoming webhook)</a>
+          </li>
         
           <li>
             <a href="/2019/08/20/service-message-nexmo/">[해외 SMS] nexmo sms verify</a>
@@ -988,10 +998,6 @@
         
           <li>
             <a href="/2019/07/23/service-message/">[해외 SMS] twilio vs nexmo</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/19/webserver-auth4/">[SNS LOGIN] sns(kakao) login with javascript</a>
           </li>
         
       </ul>
