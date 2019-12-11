@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[AWS] CloudWatch Alarms to Slack(로그 에러메세지 슬랙으로 알림) | </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SAM ?AWS에서 서버리스 애플리케이션을 빌드하는 데 사용할 수 있는 오픈 소스 프레임워크입니다.Lambda 함수, 이벤트 소스 및 기타 리소스의 조합.  굳이 힘들게 만들지 않아도 기본적인 앱들이 많다. 그중에 cloudwatch to slack 을 이용해서 해본다. lambda -&amp;gt; 어플리케이션 -&amp;gt; 검색 serverlessrepo-clou">
+<meta name="keywords" content="AWS,incoming webhook,CloudWatch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[AWS] CloudWatch Alarms to Slack(로그 에러메세지 슬랙으로 알림)">
+<meta property="og:url" content="https://skarlsla.github.io/2019/12/11/cloudwatchtoslack/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="SAM ?AWS에서 서버리스 애플리케이션을 빌드하는 데 사용할 수 있는 오픈 소스 프레임워크입니다.Lambda 함수, 이벤트 소스 및 기타 리소스의 조합.  굳이 힘들게 만들지 않아도 기본적인 앱들이 많다. 그중에 cloudwatch to slack 을 이용해서 해본다. lambda -&amp;gt; 어플리케이션 -&amp;gt; 검색 serverlessrepo-clou">
+<meta property="og:locale" content="ko">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/blueprint-flow.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/7.samcreated.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/8.topicandfunction.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/9.vari.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/1.alarmcreate.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/2.jipyo.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/3.error.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/4.condition.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/5.selectSNS.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/6.createdAlarm.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/10.makeerror.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/11.genealert.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/12.slackmessage.JPG">
+<meta property="og:updated_time" content="2019-12-11T08:43:54.507Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[AWS] CloudWatch Alarms to Slack(로그 에러메세지 슬랙으로 알림)">
+<meta name="twitter:description" content="SAM ?AWS에서 서버리스 애플리케이션을 빌드하는 데 사용할 수 있는 오픈 소스 프레임워크입니다.Lambda 함수, 이벤트 소스 및 기타 리소스의 조합.  굳이 힘들게 만들지 않아도 기본적인 앱들이 많다. 그중에 cloudwatch to slack 을 이용해서 해본다. lambda -&amp;gt; 어플리케이션 -&amp;gt; 검색 serverlessrepo-clou">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/blueprint-flow.png">
+  
+    <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8194749947474200",
+    enable_page_level_ads: true
+  });
+</script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo"></a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skarlsla.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-cloudwatchtoslack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/11/cloudwatchtoslack/" class="article-date">
+  <time datetime="2019-12-11T08:22:15.000Z" itemprop="datePublished">2019-12-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/AWS/">AWS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [AWS] CloudWatch Alarms to Slack(로그 에러메세지 슬랙으로 알림)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="SAM"><a href="#SAM" class="headerlink" title="SAM ?"></a>SAM ?</h3><p>AWS에서 서버리스 애플리케이션을 빌드하는 데 사용할 수 있는 오픈 소스 프레임워크입니다.<br>Lambda 함수, 이벤트 소스 및 기타 리소스의 조합. </p>
+<p>굳이 힘들게 만들지 않아도 기본적인 앱들이 많다.</p>
+<p>그중에 cloudwatch to slack 을 이용해서 해본다.</p>
+<p>lambda -&gt; 어플리케이션 -&gt; 검색 serverlessrepo-cloudwatch-alarm-to-slack</p>
+<hr>
+<h3 id="slack-incoming-webhook"><a href="#slack-incoming-webhook" class="headerlink" title="slack incoming webhook"></a>slack incoming webhook</h3><p>미리 생성</p>
+<hr>
+<h3 id="CloudWatch-Alarms-to-Slack"><a href="#CloudWatch-Alarms-to-Slack" class="headerlink" title="CloudWatch Alarms to Slack"></a>CloudWatch Alarms to Slack</h3><p>흐름?<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/blueprint-flow.png" alt="흐름도"></p>
+<p>그림상 CPU로 했지만 이번엔 특정 람다함수의 에러로그시 알람을 받아보기로함.</p>
+<p><strong>1. SAM을 이용해서 앱 생성</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/7.samcreated.jpg" alt="SAM"></p>
+<p><strong>2. 생성된 리소스 확인해보자</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/8.topicandfunction.jpg" alt="리소스"></p>
+<p>SAM이 아니였다면 일일이 수작업을 해야한다.<br>SNS Topic, Role, Lambda function &amp; permission &amp; SNS연결</p>
+<p><strong>3. 앱 환경변수</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/9.vari.jpg" alt="환경변수"></p>
+<p>웹훅 url을 KMS로 암호화해서 넣어야한다.<br>알람을 받을 채널명을 입력한다.</p>
+<p><strong>4. Lambda이벤트소스</strong><br>이벤트 -&gt; 슬랙 메세지 전송<br>이벤트 파라미터를 통해 채널별로 별도로 전송도 가능하겠다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function processEvent(event, callback) &#123;</span><br><span class="line">    console.log(&quot;event&quot;);</span><br><span class="line">    const message = JSON.parse(event.Records[0].Sns.Message);</span><br><span class="line"></span><br><span class="line">    const alarmName = message.AlarmName; //event.Records[0].Sns.Message.AlarmName;</span><br><span class="line">    //var oldState = message.OldStateValue;</span><br><span class="line">    const newState = message.NewStateValue; //event.Records[0].Sns.Message.NewStateValue; </span><br><span class="line">    const reason = message.NewStateReason; //event.Records[0].Sns.Message.NewStateReason; </span><br><span class="line"></span><br><span class="line">    const slackMessage = &#123;</span><br><span class="line">        channel: slackChannel,</span><br><span class="line">        text: `$&#123;alarmName&#125; state is now $&#123;newState&#125;: $&#123;reason&#125;`</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    postMessage(slackMessage, (response) =&gt; &#123;</span><br><span class="line">        if (response.statusCode &lt; 400) &#123;</span><br><span class="line">            console.info(&apos;Message posted successfully&apos;);</span><br><span class="line">            callback(null);</span><br><span class="line">        &#125; else if (response.statusCode &lt; 500) &#123;</span><br><span class="line">            console.error(`Error posting message to Slack API: $&#123;response.statusCode&#125; - $&#123;response.statusMessage&#125;`);</span><br><span class="line">            callback(null);  // Don&apos;t retry because the error is due to a problem with the request</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // Let Lambda retry</span><br><span class="line">            callback(`Server error when processing message: $&#123;response.statusCode&#125; - $&#123;response.statusMessage&#125;`);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>5. KMS로 암호화</strong><br>aws kms로 이동 후 kms 생성</p>
+<p>작업PC에 aws-cli를 설치하고 sdk config를 설정한후 (key, secret, region ) </p>
+<p>암호화 명령어(웹훅 주소는 https://는 빼고한다.)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aws kms encrypt --key-id &quot;alias/firstKey&quot; --plaintext hooks.slack.com/services/T919NHKHQ/BRC2C9JTW/AWHkTB9tqxxxx</span><br><span class="line">&#123;</span><br><span class="line">    &quot;CiphertextBlob&quot;: &quot;AQICAHjZAWxDFIzL7Oag6zTm7iWRjsIxxxxxgEJyyQbbCYC6gzchcB1MLs6AAAApzCBpAYJKoZIhvcNAQcGoIGWMIGTAgEAMIGNBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDMlBSyOT7QHDEM8sLAIBEIBgFilgF7ONYEgiiiM4yxz+Iy8TkbzFlOiDoa79s4z................................+HWPErBuwGtje3bwfmoRCL1D24aosHuW8lekMJUqF0SqdlmGuxxxxx&quot;,</span><br><span class="line">    &quot;KeyId&quot;: &quot;arn:aws:kms:us-east-2:271382xxxxxx193:key/ab9a5099-01aa-46dc-b284-xxxxxx&quot;,</span><br><span class="line">    &quot;EncryptionAlgorithm&quot;: &quot;SYMMETRIC_DEFAULT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>6. CloudWatch Alert</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/1.alarmcreate.jpg" alt="경보생성"></p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/2.jipyo.jpg" alt="지표선택"></p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/3.error.jpg" alt="지표선택오류시"></p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/4.condition.jpg" alt="조건설정"></p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/5.selectSNS.jpg" alt="연결SNS 선택"></p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/6.createdAlarm.jpg" alt="알람 생성"></p>
+<p><strong>7. 경보호출</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/10.makeerror.jpg" alt="소스수정"></p>
+<p>소스수정으로 hello function실행시 error로그가 발생하도록 수정</p>
+<p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/11.genealert.jpg" alt="에러발생"></p>
+<p><strong>8. 슬랙 채널 확인</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/12.slackmessage.JPG" alt="슬랙"></p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/12/11/cloudwatchtoslack/" data-id="ck411rpmg001164nvmqia4kam" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AWS/">AWS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CloudWatch/">CloudWatch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/incoming-webhook/">incoming webhook</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/12/10/slackalarm/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/NODEJS/">NODEJS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SLACK/">SLACK</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/service/">service</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webserver/">webserver</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CloudWatch/">CloudWatch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SLACK/">SLACK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email/">email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email-api/">email api</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/incoming-webhook/">incoming webhook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack연동/">slack연동</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms/">sms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms-verify/">sms verify</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sns/">sns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/간편로그인/">간편로그인</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외-email/">해외 email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외sms/">해외sms</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/CloudWatch/" style="font-size: 10px;">CloudWatch</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/SLACK/" style="font-size: 10px;">SLACK</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/email/" style="font-size: 10px;">email</a> <a href="/tags/email-api/" style="font-size: 10px;">email api</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/incoming-webhook/" style="font-size: 12.5px;">incoming webhook</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/slack연동/" style="font-size: 10px;">slack연동</a> <a href="/tags/sms/" style="font-size: 12.5px;">sms</a> <a href="/tags/sms-verify/" style="font-size: 10px;">sms verify</a> <a href="/tags/sns/" style="font-size: 15px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 15px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a> <a href="/tags/해외-email/" style="font-size: 10px;">해외 email</a> <a href="/tags/해외sms/" style="font-size: 12.5px;">해외sms</a>
+    </div>
+  </div>
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">12월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">8월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">7월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">5월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
+    </div>
+  </div>
+
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/12/11/cloudwatchtoslack/">[AWS] CloudWatch Alarms to Slack(로그 에러메세지 슬랙으로 알림)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/10/slackalarm/">[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/20/service-message-nexmo/">[해외 SMS] nexmo sms verify</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/25/webserver-auth5/">[SNS LOGIN] SNS 로그인시 받는 DATA분석 및 활용</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/23/service-email/">[해외 EMAIL] AWS SES vs SendGrid vs Mailgun</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+    
+    
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 NamGi YOON<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

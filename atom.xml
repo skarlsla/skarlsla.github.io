@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2019-12-10T07:00:22.096Z</updated>
+  <updated>2019-12-11T08:43:54.507Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[AWS] CloudWatch Alarms to Slack(로그 에러메세지 슬랙으로 알림)</title>
+    <link href="https://skarlsla.github.io/2019/12/11/cloudwatchtoslack/"/>
+    <id>https://skarlsla.github.io/2019/12/11/cloudwatchtoslack/</id>
+    <published>2019-12-11T08:22:15.000Z</published>
+    <updated>2019-12-11T08:43:54.507Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="SAM"><a href="#SAM" class="headerlink" title="SAM ?"></a>SAM ?</h3><p>AWS에서 서버리스 애플리케이션을 빌드하는 데 사용할 수 있는 오픈 소스 프레임워크입니다.<br>Lambda 함수, 이벤트 소스 및 기타 리소스의 조합. </p><p>굳이 힘들게 만들지 않아도 기본적인 앱들이 많다.</p><p>그중에 cloudwatch to slack 을 이용해서 해본다.</p><p>lambda -&gt; 어플리케이션 -&gt; 검색 serverlessrepo-cloudwatch-alarm-to-slack</p><hr><h3 id="slack-incoming-webhook"><a href="#slack-incoming-webhook" class="headerlink" title="slack incoming webhook"></a>slack incoming webhook</h3><p>미리 생성</p><hr><h3 id="CloudWatch-Alarms-to-Slack"><a href="#CloudWatch-Alarms-to-Slack" class="headerlink" title="CloudWatch Alarms to Slack"></a>CloudWatch Alarms to Slack</h3><p>흐름?<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/blueprint-flow.png" alt="흐름도"></p><p>그림상 CPU로 했지만 이번엔 특정 람다함수의 에러로그시 알람을 받아보기로함.</p><p><strong>1. SAM을 이용해서 앱 생성</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/7.samcreated.jpg" alt="SAM"></p><p><strong>2. 생성된 리소스 확인해보자</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/8.topicandfunction.jpg" alt="리소스"></p><p>SAM이 아니였다면 일일이 수작업을 해야한다.<br>SNS Topic, Role, Lambda function &amp; permission &amp; SNS연결</p><p><strong>3. 앱 환경변수</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/9.vari.jpg" alt="환경변수"></p><p>웹훅 url을 KMS로 암호화해서 넣어야한다.<br>알람을 받을 채널명을 입력한다.</p><p><strong>4. Lambda이벤트소스</strong><br>이벤트 -&gt; 슬랙 메세지 전송<br>이벤트 파라미터를 통해 채널별로 별도로 전송도 가능하겠다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function processEvent(event, callback) &#123;</span><br><span class="line">    console.log(&quot;event&quot;);</span><br><span class="line">    const message = JSON.parse(event.Records[0].Sns.Message);</span><br><span class="line"></span><br><span class="line">    const alarmName = message.AlarmName; //event.Records[0].Sns.Message.AlarmName;</span><br><span class="line">    //var oldState = message.OldStateValue;</span><br><span class="line">    const newState = message.NewStateValue; //event.Records[0].Sns.Message.NewStateValue; </span><br><span class="line">    const reason = message.NewStateReason; //event.Records[0].Sns.Message.NewStateReason; </span><br><span class="line"></span><br><span class="line">    const slackMessage = &#123;</span><br><span class="line">        channel: slackChannel,</span><br><span class="line">        text: `$&#123;alarmName&#125; state is now $&#123;newState&#125;: $&#123;reason&#125;`</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    postMessage(slackMessage, (response) =&gt; &#123;</span><br><span class="line">        if (response.statusCode &lt; 400) &#123;</span><br><span class="line">            console.info(&apos;Message posted successfully&apos;);</span><br><span class="line">            callback(null);</span><br><span class="line">        &#125; else if (response.statusCode &lt; 500) &#123;</span><br><span class="line">            console.error(`Error posting message to Slack API: $&#123;response.statusCode&#125; - $&#123;response.statusMessage&#125;`);</span><br><span class="line">            callback(null);  // Don&apos;t retry because the error is due to a problem with the request</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // Let Lambda retry</span><br><span class="line">            callback(`Server error when processing message: $&#123;response.statusCode&#125; - $&#123;response.statusMessage&#125;`);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>5. KMS로 암호화</strong><br>aws kms로 이동 후 kms 생성</p><p>작업PC에 aws-cli를 설치하고 sdk config를 설정한후 (key, secret, region ) </p><p>암호화 명령어(웹훅 주소는 https://는 빼고한다.)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aws kms encrypt --key-id &quot;alias/firstKey&quot; --plaintext hooks.slack.com/services/T919NHKHQ/BRC2C9JTW/AWHkTB9tqxxxx</span><br><span class="line">&#123;</span><br><span class="line">    &quot;CiphertextBlob&quot;: &quot;AQICAHjZAWxDFIzL7Oag6zTm7iWRjsIxxxxxgEJyyQbbCYC6gzchcB1MLs6AAAApzCBpAYJKoZIhvcNAQcGoIGWMIGTAgEAMIGNBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDMlBSyOT7QHDEM8sLAIBEIBgFilgF7ONYEgiiiM4yxz+Iy8TkbzFlOiDoa79s4z................................+HWPErBuwGtje3bwfmoRCL1D24aosHuW8lekMJUqF0SqdlmGuxxxxx&quot;,</span><br><span class="line">    &quot;KeyId&quot;: &quot;arn:aws:kms:us-east-2:271382xxxxxx193:key/ab9a5099-01aa-46dc-b284-xxxxxx&quot;,</span><br><span class="line">    &quot;EncryptionAlgorithm&quot;: &quot;SYMMETRIC_DEFAULT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p><strong>6. CloudWatch Alert</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/1.alarmcreate.jpg" alt="경보생성"></p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/2.jipyo.jpg" alt="지표선택"></p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/3.error.jpg" alt="지표선택오류시"></p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/4.condition.jpg" alt="조건설정"></p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/5.selectSNS.jpg" alt="연결SNS 선택"></p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/6.createdAlarm.jpg" alt="알람 생성"></p><p><strong>7. 경보호출</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/10.makeerror.jpg" alt="소스수정"></p><p>소스수정으로 hello function실행시 error로그가 발생하도록 수정</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/11.genealert.jpg" alt="에러발생"></p><p><strong>8. 슬랙 채널 확인</strong><br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/12.slackmessage.JPG" alt="슬랙"></p><hr>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;SAM&quot;&gt;&lt;a href=&quot;#SAM&quot; class=&quot;headerlink&quot; title=&quot;SAM ?&quot;&gt;&lt;/a&gt;SAM ?&lt;/h3&gt;&lt;p&gt;AWS에서 서버리스 애플리케이션을 빌드하는 데 사용할 수 있는 오픈 소스 프레임워크입니다.&lt;br&gt;Lambda 함
+      
+    
+    </summary>
+    
+      <category term="AWS" scheme="https://skarlsla.github.io/categories/AWS/"/>
+    
+    
+      <category term="AWS" scheme="https://skarlsla.github.io/tags/AWS/"/>
+    
+      <category term="incoming webhook" scheme="https://skarlsla.github.io/tags/incoming-webhook/"/>
+    
+      <category term="CloudWatch" scheme="https://skarlsla.github.io/tags/CloudWatch/"/>
+    
+  </entry>
   
   <entry>
     <title>[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비</title>
@@ -37,9 +66,9 @@
       <category term="SLACK" scheme="https://skarlsla.github.io/categories/SLACK/"/>
     
     
-      <category term="SLACK" scheme="https://skarlsla.github.io/tags/SLACK/"/>
-    
       <category term="incoming webhook" scheme="https://skarlsla.github.io/tags/incoming-webhook/"/>
+    
+      <category term="SLACK" scheme="https://skarlsla.github.io/tags/SLACK/"/>
     
       <category term="slack연동" scheme="https://skarlsla.github.io/tags/slack%EC%97%B0%EB%8F%99/"/>
     
@@ -498,9 +527,9 @@
       <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
     
     
-      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
       <category term="ci" scheme="https://skarlsla.github.io/tags/ci/"/>
+    
+      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
     
   </entry>
   
@@ -560,34 +589,6 @@
       <category term="배포" scheme="https://skarlsla.github.io/tags/%EB%B0%B0%ED%8F%AC/"/>
     
       <category term="cd" scheme="https://skarlsla.github.io/tags/cd/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JENKINS] GitLab 연동 및 빌드 테스트</title>
-    <link href="https://skarlsla.github.io/2019/05/08/GitLab-%EC%97%B0%EB%8F%99-%EB%B0%8F-%EB%B9%8C%EB%93%9C-%ED%85%8C%EC%8A%A4%ED%8A%B8/"/>
-    <id>https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/</id>
-    <published>2019-05-08T02:43:15.000Z</published>
-    <updated>2019-07-15T09:01:13.652Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h3 id="1-소스-코드-관리"><a href="#1-소스-코드-관리" class="headerlink" title="1. 소스 코드 관리"></a>1. 소스 코드 관리</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-2-36.png" alt="Alt text"></p><hr><h3 id="2-URL-연결시-ssl-이슈"><a href="#2-URL-연결시-ssl-이슈" class="headerlink" title="2. URL 연결시  ssl 이슈"></a>2. URL 연결시  ssl 이슈</h3><p>jenkins 관리 - 시스템설정 - 환경변수 추가</p><p>GIT_SSL_NO_VERIFY , true</p><hr><h3 id="3-빌드유발-웹훅-주소-획득"><a href="#3-빌드유발-웹훅-주소-획득" class="headerlink" title="3. 빌드유발 - 웹훅 주소 획득"></a>3. 빌드유발 - 웹훅 주소 획득</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/jenkins_build.png" alt="Alt text"></p><hr><h3 id="4-gitlab-프로젝트-설정-integrations"><a href="#4-gitlab-프로젝트-설정-integrations" class="headerlink" title="4. gitlab - 프로젝트 - 설정- integrations"></a>4. gitlab - 프로젝트 - 설정- integrations</h3><p>웹훅 url 입력 <a href="http://jenkins.xxx.com:9090/project/gitlab-devops-test" target="_blank" rel="noopener">http://jenkins.xxx.com:9090/project/gitlab-devops-test</a></p><p>푸쉬 이벤트시 빌드 유발</p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-6-29.png" alt="Alt text"></p><hr><h3 id="5-웹훅-처리를-위한-아웃바운드-허용-ADMIN-설정"><a href="#5-웹훅-처리를-위한-아웃바운드-허용-ADMIN-설정" class="headerlink" title="5. 웹훅 처리를 위한 아웃바운드 허용 -  ADMIN- 설정"></a>5. 웹훅 처리를 위한 아웃바운드 허용 -  ADMIN- 설정</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-9-50.png" alt="Alt text"></p><hr><h3 id="6-빌드-시-작업-테스트"><a href="#6-빌드-시-작업-테스트" class="headerlink" title="6.  빌드 시 작업 테스트"></a>6.  빌드 시 작업 테스트</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-8-40.png" alt="Alt text"></p><hr><h3 id="7-푸쉬-이벤트-발생시-젠킨스-빌드"><a href="#7-푸쉬-이벤트-발생시-젠킨스-빌드" class="headerlink" title="7. 푸쉬 이벤트 발생시  젠킨스 빌드"></a>7. 푸쉬 이벤트 발생시  젠킨스 빌드</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-16_18-7-37.png" alt="Alt text"></p><p>참고: <a href="http://egloos.zum.com/mcchae/v/11246199" target="_blank" rel="noopener">http://egloos.zum.com/mcchae/v/11246199</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h3 id=&quot;1-소스-코드-관리&quot;&gt;&lt;a href=&quot;#1-소스-코드-관리&quot; class=&quot;headerlink&quot; title=&quot;1. 소스 코드 관리&quot;&gt;&lt;/a&gt;1. 소스 코드 관리&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubuse
-      
-    
-    </summary>
-    
-      <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
-    
-    
-      <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
-    
-      <category term="gitlab" scheme="https://skarlsla.github.io/tags/gitlab/"/>
     
   </entry>
   
