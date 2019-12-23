@@ -282,22 +282,36 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/AWS/</loc>
-        <lastmod>2019-12-11T08:49:38.114Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/incoming-webhook/</loc>
-        <lastmod>2019-12-11T08:49:38.114Z</lastmod>
+        <lastmod>2019-12-11T09:43:18.928Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://skarlsla.github.io/tags/CloudWatch/</loc>
-        <lastmod>2019-12-11T08:49:38.114Z</lastmod>
+        <lastmod>2019-12-11T09:43:18.928Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/AWS/</loc>
+        <lastmod>2019-12-23T08:23:51.993Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/SAM/</loc>
+        <lastmod>2019-12-23T08:23:51.993Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/SERVERLESS/</loc>
+        <lastmod>2019-12-23T08:23:51.993Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
