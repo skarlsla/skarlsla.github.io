@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>https://skarlsla.github.io/2020/02/11/aws-serverless-framework/</loc>
+        <lastmod>2020-02-11T05:27:53.583Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://skarlsla.github.io/2019/12/23/aws-sam-simple/</loc>
         <lastmod>2019-12-23T08:23:51.993Z</lastmod>
         <changefreq>weekly</changefreq>
