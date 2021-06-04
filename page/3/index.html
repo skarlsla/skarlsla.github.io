@@ -69,6 +69,85 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JENKINS-ANSIBLE-연동" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/08/JENKINS-ANSIBLE-연동/" class="article-date">
+  <time datetime="2019-05-08T03:25:42.000Z" itemprop="datePublished">2019-05-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/08/JENKINS-ANSIBLE-연동/">[JENKINS] - ANSIBLE 연동</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="1-플러그인-설치-ansible-plugin"><a href="#1-플러그인-설치-ansible-plugin" class="headerlink" title="1. 플러그인 설치 ansible plugin"></a>1. 플러그인 설치 ansible plugin</h3><hr>
+<h3 id="2-Global-Tool-Config"><a href="#2-Global-Tool-Config" class="headerlink" title="2. Global Tool Config"></a>2. Global Tool Config</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-26-29.png" alt="Alt text"></p>
+<hr>
+<h3 id="3-Credential-추가-system-global-credentials"><a href="#3-Credential-추가-system-global-credentials" class="headerlink" title="3. Credential 추가 - system - global credentials"></a>3. Credential 추가 - system - global credentials</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-27-52.png" alt="Alt text"></p>
+<hr>
+<h3 id="4-빌드-추가-invoke-ansible-ad-hoc-command"><a href="#4-빌드-추가-invoke-ansible-ad-hoc-command" class="headerlink" title="4. 빌드 추가  invoke ansible ad-hoc command"></a>4. 빌드 추가  invoke ansible ad-hoc command</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-29-28.png" alt="Alt text"></p>
+<hr>
+<h3 id="5-credential-등록을-했음에도-에러가-난다…"><a href="#5-credential-등록을-했음에도-에러가-난다…" class="headerlink" title="5. credential 등록을 했음에도  에러가 난다…"></a>5. credential 등록을 했음에도  에러가 난다…</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-30-37.png" alt="Alt text"></p>
+<hr>
+<h3 id="6-jenkins-권한으로도-ssh-key를-등록해야한다"><a href="#6-jenkins-권한으로도-ssh-key를-등록해야한다" class="headerlink" title="6.  jenkins 권한으로도  ssh key를 등록해야한다."></a>6.  jenkins 권한으로도  ssh key를 등록해야한다.</h3><p>root에서는 ansible all -a “ls” 명령이 잘된다.</p>
+<p>jenkins로 변경 후 테스트<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su -s /bin/bash jenkins</span><br><span class="line">xxx.xxx.xxx.xxx | UNREACHABLE! =&gt; &#123;</span><br><span class="line"><span class="string">"changed"</span>: <span class="literal">false</span>, </span><br><span class="line"><span class="string">"msg"</span>: <span class="string">"Failed to connect to the host via ssh: Warning: Permanently added 'xxx.xxx.xxx.xxx' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey,gssapi-keyex,gssapi-with-mic,password)."</span>, </span><br><span class="line"><span class="string">"unreachable"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ssh 위치는  /var/lib/jenkins/.ssh</p>
+<p>root .ssh/ 파일들을 복사해준다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ansible all -a <span class="string">"ls"</span> </span><br><span class="line"></span><br><span class="line">xxx.xxx.xxx.xxx | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">1</span><br><span class="line">cx</span><br><span class="line">node-v10.13.0</span><br><span class="line">node-v10.13.0-linux-x64</span><br><span class="line">node-v10.13.0-linux-x64.tar</span><br><span class="line">node-v10.13.0.tar.gz</span><br><span class="line">remi-release-7.5-2.el7.remi.noarch.rpm</span><br><span class="line">zabbix-agent-3.4.11-1.el7.x86_64.rpm</span><br><span class="line">zabbix-tcp-master</span><br><span class="line">Finished: SUCCESS</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="7-최종-빌드-테스트"><a href="#7-최종-빌드-테스트" class="headerlink" title="7. 최종 빌드 테스트"></a>7. 최종 빌드 테스트</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/image2019-4-19_11-37-23.png" alt="Alt text"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2019/05/08/JENKINS-ANSIBLE-연동/" data-id="ckphqmue5000s2gnvzgj67ua0" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ANSIBLE-Ad-Hoc" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/05/08/ANSIBLE-Ad-Hoc/" class="article-date">
@@ -126,7 +205,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="ck6hg2gos00016knvfaql9x7n" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-Ad-Hoc/" data-id="ckphqmucw00092gnvh7ms607p" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -195,7 +274,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="ck6hg2gol00006knv5ft9ipye" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/ANSIBLE-NODE-등록/" data-id="ckphqmuce00052gnvn27jr830" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -275,7 +354,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="ck6hg2gpj000h6knve9ws2e0f" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/05/08/GitLab-연동-및-빌드-테스트/" data-id="ckphqmud0000a2gnvmkjzlo8r" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -339,7 +418,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/devops-auto/" data-id="ck6hg2gq500146knvzngo2b0k" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/devops-auto/" data-id="ckphqmuef00112gnvq9t7ifhs" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CD/">CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI/">CI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/devops/">devops</a></li></ul>
@@ -408,7 +487,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="ck6hg2gp9000a6knvyyv0wlvq" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/ANSIBLE-설치-및-설정/" data-id="ckphqmucb00042gnvg84kkuvu" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cd/">cd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/배포/">배포</a></li></ul>
@@ -473,7 +552,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="ck6hg2gsf003d6knvws806j4i" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/젠킨스-설치-및-설정/" data-id="ckphqmugv002w2gnv9tdar5ap" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -545,7 +624,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="ck6hg2gr300226knvdt6z6z83" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/reply-to-옵션에-대한-분석/" data-id="ckphqmugj002n2gnveq4pqxww" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reply-to/">reply-to</a></li></ul>
@@ -613,7 +692,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" data-id="ck6hg2gq200116knv3ldqf7s6" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RabbitMQ가-재기동-됐을때-대응책/" data-id="ckphqmue0000o2gnvfvq439re" class="article-share-link">공유</a>
       
       
     </footer>
@@ -689,103 +768,10 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/04/29/RPC/" data-id="ck6hg2gpf000e6knvzkj0pmgk" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/04/29/RPC/" data-id="ckphqmudx000m2gnv7jk8h19c" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Persistent-Durable-Ack" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/29/Persistent-Durable-Ack/" class="article-date">
-  <time datetime="2019-04-29T08:09:10.000Z" itemprop="datePublished">2019-04-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/RabbitMq/">RabbitMq</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/29/Persistent-Durable-Ack/">[RABBITMQ] Persistent, Durable, Ack</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="1-메시지-수신-자동-확인-ack-noAck"><a href="#1-메시지-수신-자동-확인-ack-noAck" class="headerlink" title="1. 메시지 수신 자동 확인(ack , noAck)"></a>1. 메시지 수신 자동 확인(ack , noAck)</h3><p>작업을 수행하는 데 몇 초가 걸릴 수 있습니다. </p>
-<p>소비자 중 한 명이 긴 작업을 시작하고 부분적으로 만 수행되어 사망하는 경우 어떻게되는지 궁금 할 수 있습니다. </p>
-<p>현재의 코드(</p>
-<p>noAck : true<br>)를 사용하면 RabbitMQ가 고객에게 메시지를 전달하면 바로 삭제 표시가됩니다. </p>
-<p>이 경우 작업자를 죽이면 처리중인 메시지가 손실됩니다. </p>
-<p>이 특정 작업자에게 발송되었지만 아직 처리되지 않은 모든 메시지도 손실됩니다.</p>
-<p>noAck : false<br>ack를 전송하지 않고 소비자가 죽거나 (채널이 닫히거나 연결이 끊어 지거나 TCP 연결이 끊어지는 경우),</p>
-<p>RabbitMQ는 메시지가 완전히 처리되지 않았 음을 인식하고 다시 대기합니다.</p>
-<p>가끔씩 사망하더라도 메시지를 잃어 버리지 않을 것입니다.</p>
-<p>메시지 시간 초과가 없습니다. RabbitMQ는 소비자가 사망 할 때 메시지를 재전송합니다. </p>
-<p>메시지 처리가 매우 오랜 시간이 걸리는 경우에도 괜찮습니다.</p>
-<p>앞의 예에서 메시지 수신 확인이 해제되었습니다. 작업을 마친 후 에는  noAck : false    </p>
-<p>옵션 을 사용하여 설정을 해제하고 작업자에게 적절한 응답을 보내야합니다.</p>
-<p>ex) 자동 응답</p>
-<p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p>
-<p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>  }, secs * 1000);<br>}, {noAck: true});</p>
-<p>ex) 자동 미응답 &amp; ack(msg)</p>
-<p>ch.consume(q, function(msg) {<br>  var secs = msg.content.toString().split(‘.’).length - 1;</p>
-<p>  console.log(“ [x] Received %s”, msg.content.toString());<br>  setTimeout(function() {<br>    console.log(“ [x] Done”);<br>    ch.ack(msg);<br>  }, secs * 1000);<br>}, {noAck: false});</p>
-<hr>
-<h3 id="2-메시지-내구성-durable-지속성-persistent"><a href="#2-메시지-내구성-durable-지속성-persistent" class="headerlink" title="2.  메시지 내구성(durable) , 지속성(persistent)"></a>2.  메시지 내구성(durable) , 지속성(persistent)</h3><p>우리는 소비자가 사망하더라도 작업이 손실되지 않도록하는 방법을 배웠습니다.  그러나 RabbitMQ 서버가 중지되면 우리의 작업은 여전히 손실됩니다.</p>
-<p>RabbitMQ가 종료되거나 충돌하면 사용자가 알리지 않는 한 대기열과 메시지를 잊어 버리게됩니다. 메시지가 손실되지 않도록하려면 큐와 메시지를 모두 튼튼하게 표시해야합니다.</p>
-<p>첫째, 우리는 RabbitMQ가 결코 우리 큐를 잃지 않도록해야합니다. 그렇게하기 위해서 우리는 그것을 durable 으로 선언 할 필요가있다 .</p>
-<p>ex) </p>
-<p>큐 할당시 </p>
-<p>ch.assertQueue ( ‘hello’ , { durable : true });<br>큐로 전송시 옵션</p>
-<p>ch.sendToQueue(q, new Buffer(msg), {persistent: true});</p>
-<hr>
-<h3 id="3-최종적으로-구현해야-할-옵션을-포함한-소스"><a href="#3-최종적으로-구현해야-할-옵션을-포함한-소스" class="headerlink" title="3.  최종적으로  구현해야 할 옵션을 포함한  소스"></a>3.  최종적으로  구현해야 할 옵션을 포함한  소스</h3><p>new_task.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line">    <span class="keyword">var</span> msg = process.argv.slice(<span class="number">2</span>).join(<span class="string">' '</span>) || <span class="string">"Hello World!"</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.sendToQueue(q, <span class="keyword">new</span> Buffer(msg), &#123;<span class="attr">persistent</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [x] Sent '%s'"</span>, msg);</span><br><span class="line">  &#125;);</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; conn.close(); process.exit(<span class="number">0</span>) &#125;, <span class="number">500</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>worker.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib/callback_api'</span>);</span><br><span class="line">amqp.connect(<span class="string">'amqp://localhost'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, conn</span>) </span>&#123;</span><br><span class="line">  conn.createChannel(<span class="function"><span class="keyword">function</span>(<span class="params">err, ch</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> q = <span class="string">'task_queue'</span>;</span><br><span class="line"></span><br><span class="line">    ch.assertQueue(q, &#123;<span class="attr">durable</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">    ch.prefetch(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">" [*] Waiting for messages in %s. To exit press CTRL+C"</span>, q);</span><br><span class="line">    ch.consume(q, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> secs = msg.content.toString().split(<span class="string">'.'</span>).length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">" [x] Received %s"</span>, msg.content.toString());</span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">" [x] Done"</span>);</span><br><span class="line">        ch.ack(msg);</span><br><span class="line">      &#125;, secs * <span class="number">1000</span>);</span><br><span class="line">    &#125;, &#123;<span class="attr">noAck</span>: <span class="literal">false</span>&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2019/04/29/Persistent-Durable-Ack/" data-id="ck6hg2gpv000t6knv1h923g08" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li></ul>
 
     </footer>
   </div>
@@ -809,7 +795,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">카테고리</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/NODEJS/">NODEJS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SLACK/">SLACK</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/service/">service</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webserver/">webserver</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/NODEJS/">NODEJS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMq/">RabbitMq</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SLACK/">SLACK</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SUMSUB/">SUMSUB</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/patterns/">patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/service/">service</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webserver/">webserver</a></li></ul>
     </div>
   </div>
 
@@ -819,7 +805,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CloudWatch/">CloudWatch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SAM/">SAM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SERVERLESS/">SERVERLESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SLACK/">SLACK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email/">email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email-api/">email api</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/incoming-webhook/">incoming webhook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack연동/">slack연동</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms/">sms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms-verify/">sms verify</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sns/">sns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/간편로그인/">간편로그인</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외-email/">해외 email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외sms/">해외sms</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AML/">AML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CD/">CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-CD/">CI/CD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CloudWatch/">CloudWatch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXPRESS/">EXPRESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KYC/">KYC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/">NODEJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SAM/">SAM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SERVERLESS/">SERVERLESS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SLACK/">SLACK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SUMSUB-FLOW/">SUMSUB FLOW</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SUMSUB-SDK/">SUMSUB SDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ack/">ack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cd/">cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/">devops</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email/">email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/email-api/">email api</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/">gitlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/incoming-webhook/">incoming webhook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ingress/">ingress</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oauth/">oauth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pipeline/">pipeline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reply-to/">reply-to</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/singleton/">singleton</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack연동/">slack연동</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms/">sms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sms-verify/">sms verify</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sns/">sns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/간편로그인/">간편로그인</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/배포/">배포</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인증/">인증</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/타입스크립트/">타입스크립트</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외-email/">해외 email</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/해외sms/">해외sms</a></li></ul>
     </div>
   </div>
 
@@ -829,7 +815,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AWS/" style="font-size: 15px;">AWS</a> <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/CloudWatch/" style="font-size: 10px;">CloudWatch</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/SAM/" style="font-size: 10px;">SAM</a> <a href="/tags/SERVERLESS/" style="font-size: 12.5px;">SERVERLESS</a> <a href="/tags/SLACK/" style="font-size: 10px;">SLACK</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/email/" style="font-size: 10px;">email</a> <a href="/tags/email-api/" style="font-size: 10px;">email api</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/incoming-webhook/" style="font-size: 12.5px;">incoming webhook</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/slack연동/" style="font-size: 10px;">slack연동</a> <a href="/tags/sms/" style="font-size: 12.5px;">sms</a> <a href="/tags/sms-verify/" style="font-size: 10px;">sms verify</a> <a href="/tags/sns/" style="font-size: 15px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 15px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a> <a href="/tags/해외-email/" style="font-size: 10px;">해외 email</a> <a href="/tags/해외sms/" style="font-size: 12.5px;">해외sms</a>
+      <a href="/tags/AML/" style="font-size: 10px;">AML</a> <a href="/tags/AWS/" style="font-size: 15px;">AWS</a> <a href="/tags/CD/" style="font-size: 15px;">CD</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/CloudWatch/" style="font-size: 10px;">CloudWatch</a> <a href="/tags/EXPRESS/" style="font-size: 10px;">EXPRESS</a> <a href="/tags/KYC/" style="font-size: 10px;">KYC</a> <a href="/tags/NODEJS/" style="font-size: 15px;">NODEJS</a> <a href="/tags/SAM/" style="font-size: 10px;">SAM</a> <a href="/tags/SERVERLESS/" style="font-size: 12.5px;">SERVERLESS</a> <a href="/tags/SLACK/" style="font-size: 10px;">SLACK</a> <a href="/tags/SUMSUB-FLOW/" style="font-size: 10px;">SUMSUB FLOW</a> <a href="/tags/SUMSUB-SDK/" style="font-size: 10px;">SUMSUB SDK</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/ack/" style="font-size: 10px;">ack</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/cd/" style="font-size: 17.5px;">cd</a> <a href="/tags/ci/" style="font-size: 15px;">ci</a> <a href="/tags/devops/" style="font-size: 12.5px;">devops</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/email/" style="font-size: 10px;">email</a> <a href="/tags/email-api/" style="font-size: 10px;">email api</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/incoming-webhook/" style="font-size: 12.5px;">incoming webhook</a> <a href="/tags/ingress/" style="font-size: 12.5px;">ingress</a> <a href="/tags/jenkins/" style="font-size: 17.5px;">jenkins</a> <a href="/tags/jwt/" style="font-size: 12.5px;">jwt</a> <a href="/tags/kubernetes/" style="font-size: 17.5px;">kubernetes</a> <a href="/tags/oauth/" style="font-size: 15px;">oauth</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reply-to/" style="font-size: 10px;">reply-to</a> <a href="/tags/rpc/" style="font-size: 12.5px;">rpc</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/singleton/" style="font-size: 10px;">singleton</a> <a href="/tags/slack연동/" style="font-size: 10px;">slack연동</a> <a href="/tags/sms/" style="font-size: 12.5px;">sms</a> <a href="/tags/sms-verify/" style="font-size: 10px;">sms verify</a> <a href="/tags/sns/" style="font-size: 15px;">sns</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/간편로그인/" style="font-size: 15px;">간편로그인</a> <a href="/tags/배포/" style="font-size: 20px;">배포</a> <a href="/tags/인증/" style="font-size: 12.5px;">인증</a> <a href="/tags/타입스크립트/" style="font-size: 12.5px;">타입스크립트</a> <a href="/tags/해외-email/" style="font-size: 10px;">해외 email</a> <a href="/tags/해외sms/" style="font-size: 12.5px;">해외sms</a>
     </div>
   </div>
     
@@ -838,7 +824,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">아카이브</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">2월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">12월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">8월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">7월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">5월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">6월 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">2월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">12월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">8월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">7월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">5월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">4월 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a></li></ul>
     </div>
   </div>
 
@@ -849,6 +835,10 @@
     <h3 class="widget-title">최근 포스트</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/06/04/sumsub/">[SUMSUB] SUBSUB API LIST &amp; FLOW </a>
+          </li>
         
           <li>
             <a href="/2020/02/11/aws-serverless-framework/">[AWS] 서버리스 프레임워크 간단한 예제(Serverless Framework Simple Example)</a>
@@ -866,10 +856,6 @@
             <a href="/2019/12/10/slackalarm/">[SLACK] 슬랙 메세지 알람받기(incoming webhook) 준비</a>
           </li>
         
-          <li>
-            <a href="/2019/08/20/service-message-nexmo/">[해외 SMS] nexmo sms verify</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -882,7 +868,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2020 NamGi YOON<br>
+      &copy; 2021 NamGi YOON<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
