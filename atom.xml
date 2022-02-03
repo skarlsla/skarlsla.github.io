@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2021-06-04T02:58:37.011Z</updated>
+  <updated>2022-02-03T02:54:32.432Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[JUMIO] JUMIO API FLOW </title>
+    <link href="https://skarlsla.github.io/2021/08/04/jumio/"/>
+    <id>https://skarlsla.github.io/2021/08/04/jumio/</id>
+    <published>2021-08-04T03:50:55.000Z</published>
+    <updated>2022-02-03T02:54:32.432Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="JUMIO-SDK-FLOW"><a href="#JUMIO-SDK-FLOW" class="headerlink" title="JUMIO SDK FLOW"></a>JUMIO SDK FLOW</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/CRM_EVS.jpg" alt="FLOW"></p><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/CRM_EVS2.jpg" alt="FLOW"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;JUMIO-SDK-FLOW&quot;&gt;&lt;a href=&quot;#JUMIO-SDK-FLOW&quot; class=&quot;headerlink&quot; title=&quot;JUMIO SDK FLOW&quot;&gt;&lt;/a&gt;JUMIO SDK FLOW&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;https://raw.
+      
+    
+    </summary>
+    
+      <category term="JUMIO" scheme="https://skarlsla.github.io/categories/JUMIO/"/>
+    
+    
+      <category term="KYC" scheme="https://skarlsla.github.io/tags/KYC/"/>
+    
+      <category term="JUMIO SDK" scheme="https://skarlsla.github.io/tags/JUMIO-SDK/"/>
+    
+      <category term="AML" scheme="https://skarlsla.github.io/tags/AML/"/>
+    
+      <category term="JUMIO FLOW" scheme="https://skarlsla.github.io/tags/JUMIO-FLOW/"/>
+    
+  </entry>
   
   <entry>
     <title>[SUMSUB] SUBSUB API LIST &amp; FLOW </title>
@@ -39,9 +70,9 @@
     
       <category term="KYC" scheme="https://skarlsla.github.io/tags/KYC/"/>
     
-      <category term="SUMSUB SDK" scheme="https://skarlsla.github.io/tags/SUMSUB-SDK/"/>
-    
       <category term="AML" scheme="https://skarlsla.github.io/tags/AML/"/>
+    
+      <category term="SUMSUB SDK" scheme="https://skarlsla.github.io/tags/SUMSUB-SDK/"/>
     
       <category term="SUMSUB FLOW" scheme="https://skarlsla.github.io/tags/SUMSUB-FLOW/"/>
     
@@ -469,11 +500,11 @@
       <category term="patterns" scheme="https://skarlsla.github.io/categories/patterns/"/>
     
     
+      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
+    
       <category term="singleton" scheme="https://skarlsla.github.io/tags/singleton/"/>
     
       <category term="pattern" scheme="https://skarlsla.github.io/tags/pattern/"/>
-    
-      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
     
   </entry>
   
@@ -498,11 +529,11 @@
       <category term="NODEJS" scheme="https://skarlsla.github.io/categories/NODEJS/"/>
     
     
-      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
-    
       <category term="NODEJS" scheme="https://skarlsla.github.io/tags/NODEJS/"/>
     
       <category term="타입스크립트" scheme="https://skarlsla.github.io/tags/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/"/>
+    
+      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
     
   </entry>
   
@@ -527,11 +558,11 @@
       <category term="NODEJS" scheme="https://skarlsla.github.io/categories/NODEJS/"/>
     
     
-      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
-    
       <category term="NODEJS" scheme="https://skarlsla.github.io/tags/NODEJS/"/>
     
       <category term="타입스크립트" scheme="https://skarlsla.github.io/tags/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/"/>
+    
+      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
     
   </entry>
   
@@ -550,35 +581,6 @@
       
         &lt;hr&gt;
 &lt;h3 id=&quot;playbook-구조&quot;&gt;&lt;a href=&quot;#playbook-구조&quot; class=&quot;headerlink&quot; title=&quot;playbook 구조&quot;&gt;&lt;/a&gt;playbook 구조&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubu
-      
-    
-    </summary>
-    
-      <category term="DevOps" scheme="https://skarlsla.github.io/categories/DevOps/"/>
-    
-    
-      <category term="배포" scheme="https://skarlsla.github.io/tags/%EB%B0%B0%ED%8F%AC/"/>
-    
-      <category term="CD" scheme="https://skarlsla.github.io/tags/CD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[ANSIBLE] - PLAYBOOK 작성</title>
-    <link href="https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-%EC%9E%91%EC%84%B1/"/>
-    <id>https://skarlsla.github.io/2019/05/09/ANSIBLE-PLAYBOOK-작성/</id>
-    <published>2019-05-09T07:23:03.000Z</published>
-    <updated>2019-07-15T09:00:04.732Z</updated>
-    
-    <content type="html"><![CDATA[<p>playbook :<br>설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다. </p><hr><p>example<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers   <span class="comment"># /etc/ansible/hosts에 정의된 [webservers] 그룹</span></span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80    </span><br><span class="line">    max_clients: 200</span><br><span class="line">  remote_user: root   <span class="comment"># 작업유저</span></span><br><span class="line">  tasks:  <span class="comment"># 작업리스트</span></span><br><span class="line">  - name: ensure apache is at the latest version</span><br><span class="line">    yum:  <span class="comment"># 패키지 설치</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: latest</span><br><span class="line">  - name: write the apache config file</span><br><span class="line">    template: <span class="comment"># 파일 복사</span></span><br><span class="line">      src: /srv/httpd.j2</span><br><span class="line">      dest: /etc/httpd.conf</span><br><span class="line">    notify: <span class="comment"># handlers 노티</span></span><br><span class="line">    - restart apache</span><br><span class="line">  - name: ensure apache is running</span><br><span class="line">    service: <span class="comment">#서비스 실행</span></span><br><span class="line">      name: httpd</span><br><span class="line">      state: started</span><br><span class="line">  handlers: <span class="comment"># 노티를 listen</span></span><br><span class="line">    - name: restart apache</span><br><span class="line">      service:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br></pre></td></tr></table></figure></p><p>작성된 playbook 실행<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook playbook.yml -f 10 <span class="comment"># 병렬처리 레벨 10</span></span><br></pre></td></tr></table></figure></p><p>팁 명령어 옵션  –syntax-check  flag<br>에러 체크해쥼</p><p>ansible-playbook playbook.yml –list-hosts # host 목록확인</p><p>참고: <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html" target="_blank" rel="noopener">https://docs.ansible.com/ansible/latest/user_guide/playbooks.html</a><br>playbook 문법: <a href="https://taesany.tistory.com/139" target="_blank" rel="noopener">https://taesany.tistory.com/139</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;playbook :&lt;br&gt;설정파일(YAML)에 미리 정의하여 원격 노드서버의 구성 및 배포를 관리 할수있다. &lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;example&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=
       
     
     </summary>
