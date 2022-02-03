@@ -23,13 +23,6 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/pattern/</loc>
-        <lastmod>2019-07-11T07:34:26.407Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/EXPRESS/</loc>
         <lastmod>2019-07-11T08:22:24.310Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -58,13 +51,6 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/typescript/</loc>
-        <lastmod>2019-07-11T08:38:19.173Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/pipeline/</loc>
         <lastmod>2019-07-11T10:25:27.915Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -79,14 +65,14 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/jenkins/</loc>
+        <loc>https://skarlsla.github.io/tags/ci/</loc>
         <lastmod>2019-07-15T09:01:31.031Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/ci/</loc>
+        <loc>https://skarlsla.github.io/tags/jenkins/</loc>
         <lastmod>2019-07-15T09:01:31.031Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -184,13 +170,6 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/session/</loc>
-        <lastmod>2019-07-18T01:24:48.854Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://skarlsla.github.io/tags/jwt/</loc>
         <lastmod>2019-07-18T01:24:48.854Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -199,6 +178,13 @@
 
     <url>
         <loc>https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/</loc>
+        <lastmod>2019-07-18T01:24:48.854Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/session/</loc>
         <lastmod>2019-07-18T01:24:48.854Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -354,6 +340,41 @@
     <url>
         <loc>https://skarlsla.github.io/tags/JUMIO-FLOW/</loc>
         <lastmod>2022-02-03T02:54:32.432Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/Factory/</loc>
+        <lastmod>2022-02-03T08:54:09.994Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/Facade/</loc>
+        <lastmod>2022-02-03T08:54:43.530Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/typescript/</loc>
+        <lastmod>2022-02-03T08:54:53.175Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/pattern/</loc>
+        <lastmod>2022-02-03T08:54:53.175Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/Adapter/</loc>
+        <lastmod>2022-02-03T08:54:53.175Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
