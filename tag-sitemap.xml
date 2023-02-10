@@ -142,14 +142,14 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/CD/</loc>
+        <loc>https://skarlsla.github.io/tags/devops/</loc>
         <lastmod>2019-07-16T02:43:39.557Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/devops/</loc>
+        <loc>https://skarlsla.github.io/tags/CD/</loc>
         <lastmod>2019-07-16T02:43:39.557Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -170,6 +170,13 @@
     </url>
 
     <url>
+        <loc>https://skarlsla.github.io/tags/session/</loc>
+        <lastmod>2019-07-18T01:24:48.854Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://skarlsla.github.io/tags/jwt/</loc>
         <lastmod>2019-07-18T01:24:48.854Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -178,13 +185,6 @@
 
     <url>
         <loc>https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/</loc>
-        <lastmod>2019-07-18T01:24:48.854Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://skarlsla.github.io/tags/session/</loc>
         <lastmod>2019-07-18T01:24:48.854Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -366,6 +366,13 @@
     </url>
 
     <url>
+        <loc>https://skarlsla.github.io/tags/Adapter/</loc>
+        <lastmod>2022-02-03T08:54:53.175Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://skarlsla.github.io/tags/pattern/</loc>
         <lastmod>2022-02-03T08:54:53.175Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -373,8 +380,36 @@
     </url>
 
     <url>
-        <loc>https://skarlsla.github.io/tags/Adapter/</loc>
-        <lastmod>2022-02-03T08:54:53.175Z</lastmod>
+        <loc>https://skarlsla.github.io/tags/telegram/</loc>
+        <lastmod>2023-02-10T05:54:44.618Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/Telegram-Bot/</loc>
+        <lastmod>2023-02-10T05:54:44.618Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/%ED%85%94%EB%A0%88%EA%B7%B8%EB%9E%A8/</loc>
+        <lastmod>2023-02-10T05:54:44.618Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/%ED%85%94%EB%A0%88%EA%B7%B8%EB%9E%A8-%EB%B4%87/</loc>
+        <lastmod>2023-02-10T05:54:44.618Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://skarlsla.github.io/tags/telegram-go/</loc>
+        <lastmod>2023-02-10T05:54:44.618Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

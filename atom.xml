@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://skarlsla.github.io/"/>
-  <updated>2022-02-03T08:54:09.994Z</updated>
+  <updated>2023-02-10T05:54:38.627Z</updated>
   <id>https://skarlsla.github.io/</id>
   
   <author>
@@ -15,6 +15,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[텔레그램 봇] Go Telegram Bot With Golang</title>
+    <link href="https://skarlsla.github.io/2023/02/10/telegrambot-start1/"/>
+    <id>https://skarlsla.github.io/2023/02/10/telegrambot-start1/</id>
+    <published>2023-02-10T05:24:30.000Z</published>
+    <updated>2023-02-10T05:54:38.627Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="시작하기"><a href="#시작하기" class="headerlink" title="시작하기"></a>시작하기</h3><ol><li>API 받기 및 bot생성</li></ol><p>BotFather: telegram.me/BotFather<br>/help 명령어를 통해 가능한 기능들 확인<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/botfather.JPG" alt="father"><br>/newbot 으로 생성해서 순서대로 시키는대로 하면 토큰이 나온다.</p><ol start="2"><li>Library Example 따라하기</li></ol><p><a href="https://github.com/mymmrac/telego" target="_blank" rel="noopener">https://github.com/mymmrac/telego</a></p><p>데이터 수신방법 2가지</p><p>using long polling (bot.UpdatesViaLongPolling)<br>using webhook (bot.UpdatesViaWebhook)</p><p>유틸을 사용해서 메시지말고 다양한 형태로 보낼수있다.</p><p>Message(chatID, text) =&gt; SendMessageParams<br>Photo(chatID, photoFile) =&gt; SendPhotoParams<br>Location(chatID, latitude, longitude) =&gt; SendLocationParams<br>…<br>Or other useful methods like:</p><p>ID(intID) =&gt; ChatID<br>File(namedReader) =&gt; InputFile<br>…</p><p>채팅방 Input 기능</p><p>/명령어  , 키보드버튼, 인라인버튼 </p><p>예제에는 Bot과의 Interaction 기능 ,외부 서버와 Integration 기능은 없다. </p><ol start="3"><li>실전소스 with Golang</li></ol><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"fmt"</span></span><br><span class="line"><span class="string">"io"</span></span><br><span class="line"><span class="string">"os"</span></span><br><span class="line"><span class="string">"strconv"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"github.com/mymmrac/telego"</span></span><br><span class="line">th <span class="string">"github.com/mymmrac/telego/telegohandler"</span></span><br><span class="line">tu <span class="string">"github.com/mymmrac/telego/telegoutil"</span></span><br><span class="line">log <span class="string">"github.com/sirupsen/logrus"</span></span><br><span class="line"><span class="string">"gopkg.in/natefinch/lumberjack.v2"</span></span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">botToken := <span class="string">"6048725563:xxxx"</span> <span class="comment">// set token</span></span><br><span class="line"></span><br><span class="line">bot, err := telego.NewBot(botToken)  <span class="comment">// telego 생성</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">fmt.Println(err)</span><br><span class="line">os.Exit(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get updates channel</span></span><br><span class="line">updates, _ := bot.UpdatesViaLongPolling(<span class="literal">nil</span>)  <span class="comment">// 폴링방식으로</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Create bot handler and specify from where to get updates</span></span><br><span class="line">bh, _ := th.NewBotHandler(bot, updates)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stop handling updates</span></span><br><span class="line"><span class="keyword">defer</span> bh.Stop()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stop getting updates</span></span><br><span class="line"><span class="keyword">defer</span> bot.StopLongPolling()</span><br></pre></td></tr></table></figure><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//인라인 키보드 생성 EXAM</span></span><br><span class="line">inlineInit := tu.InlineKeyboard(</span><br><span class="line">tu.InlineKeyboardRow(   <span class="comment">// 한줄</span></span><br><span class="line">tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>), <span class="comment">//버튼</span></span><br><span class="line">),</span><br><span class="line">tu.InlineKeyboardRow(    <span class="comment">// 두줄</span></span><br><span class="line">tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>),</span><br><span class="line">tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>),</span><br><span class="line">),</span><br><span class="line">)</span><br></pre></td></tr></table></figure><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Register new handler with match on command `/start`</span></span><br><span class="line">bh.HandleMessage(<span class="function"><span class="keyword">func</span><span class="params">(bot *telego.Bot, message telego.Message)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Send message with inline keyboard</span></span><br><span class="line">    <span class="keyword">var</span> introduce = <span class="string">"Welcome ~"</span></span><br><span class="line"></span><br><span class="line">_, _ = bot.SendMessage(tu.Messagef(</span><br><span class="line">tu.ID(id),</span><br><span class="line">fmt.Sprintf(<span class="string">"Hello %s! \n%s"</span>, name, introduce),</span><br><span class="line">))</span><br><span class="line"></span><br><span class="line">params := &amp;telego.SendPhotoParams&#123;</span><br><span class="line">ChatID:      tu.ID(id),</span><br><span class="line">Photo:       tu.FileByURL(<span class="string">"any picture.png"</span>),  <span class="comment">// 그림도 내보내기</span></span><br><span class="line">ReplyMarkup: inlineInit, <span class="comment">// 인라인 버튼 내보내기</span></span><br><span class="line">&#125;</span><br><span class="line">_, _ = bot.SendPhoto(params)</span><br><span class="line">&#125;, th.CommandEqual(<span class="string">"start"</span>)) <span class="comment">//  봇채팅방에서 입력한 커맨드 명령어가 start일때</span></span><br></pre></td></tr></table></figure><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//inline button click 시  callback 처리</span></span><br><span class="line">bh.HandleCallbackQuery(<span class="function"><span class="keyword">func</span><span class="params">(bot *telego.Bot, query telego.CallbackQuery)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 후처리</span></span><br><span class="line">&#125;, th.AnyCallbackQueryWithMessage(), th.CallbackDataEqual(<span class="string">"콜백왔을때 구분값"</span>))</span><br></pre></td></tr></table></figure><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// inline button에 웹앱 링크걸기</span></span><br><span class="line">tu.InlineKeyboardButton(<span class="string">"Open the Webapp"</span>).WithWebApp(&amp;telego.WebAppInfo&#123;URL: uri&#125;),</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;시작하기&quot;&gt;&lt;a href=&quot;#시작하기&quot; class=&quot;headerlink&quot; title=&quot;시작하기&quot;&gt;&lt;/a&gt;시작하기&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;API 받기 및 bot생성&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;BotFather: telegram.me/BotF
+      
+    
+    </summary>
+    
+      <category term="bot" scheme="https://skarlsla.github.io/categories/bot/"/>
+    
+    
+      <category term="telegram" scheme="https://skarlsla.github.io/tags/telegram/"/>
+    
+      <category term="Telegram Bot" scheme="https://skarlsla.github.io/tags/Telegram-Bot/"/>
+    
+      <category term="텔레그램" scheme="https://skarlsla.github.io/tags/%ED%85%94%EB%A0%88%EA%B7%B8%EB%9E%A8/"/>
+    
+      <category term="텔레그램 봇" scheme="https://skarlsla.github.io/tags/%ED%85%94%EB%A0%88%EA%B7%B8%EB%9E%A8-%EB%B4%87/"/>
+    
+      <category term="telegram go" scheme="https://skarlsla.github.io/tags/telegram-go/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[텔레그램 봇] Telegram Bot Architecture Diagram</title>
+    <link href="https://skarlsla.github.io/2023/02/10/telegrambot-architecture/"/>
+    <id>https://skarlsla.github.io/2023/02/10/telegrambot-architecture/</id>
+    <published>2023-02-10T05:24:30.000Z</published>
+    <updated>2023-02-10T05:54:44.618Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Architecture-Diagram"><a href="#Architecture-Diagram" class="headerlink" title="Architecture Diagram"></a>Architecture Diagram</h3><p><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/telegrambot_common.jpg" alt="telegram bot"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Architecture-Diagram&quot;&gt;&lt;a href=&quot;#Architecture-Diagram&quot; class=&quot;headerlink&quot; title=&quot;Architecture Diagram&quot;&gt;&lt;/a&gt;Architecture Diagram&lt;/h3&gt;&lt;
+      
+    
+    </summary>
+    
+      <category term="bot" scheme="https://skarlsla.github.io/categories/bot/"/>
+    
+    
+      <category term="telegram" scheme="https://skarlsla.github.io/tags/telegram/"/>
+    
+      <category term="Telegram Bot" scheme="https://skarlsla.github.io/tags/Telegram-Bot/"/>
+    
+      <category term="텔레그램" scheme="https://skarlsla.github.io/tags/%ED%85%94%EB%A0%88%EA%B7%B8%EB%9E%A8/"/>
+    
+      <category term="텔레그램 봇" scheme="https://skarlsla.github.io/tags/%ED%85%94%EB%A0%88%EA%B7%B8%EB%9E%A8-%EB%B4%87/"/>
+    
+      <category term="telegram go" scheme="https://skarlsla.github.io/tags/telegram-go/"/>
+    
+  </entry>
   
   <entry>
     <title>[TYPESCRIPT] 타입스크립트 디자인 패턴 - Factory</title>
@@ -68,9 +137,9 @@
     
       <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
     
-      <category term="Facade" scheme="https://skarlsla.github.io/tags/Facade/"/>
-    
       <category term="pattern" scheme="https://skarlsla.github.io/tags/pattern/"/>
+    
+      <category term="Facade" scheme="https://skarlsla.github.io/tags/Facade/"/>
     
   </entry>
   
@@ -97,9 +166,9 @@
     
       <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
     
-      <category term="pattern" scheme="https://skarlsla.github.io/tags/pattern/"/>
-    
       <category term="Adapter" scheme="https://skarlsla.github.io/tags/Adapter/"/>
+    
+      <category term="pattern" scheme="https://skarlsla.github.io/tags/pattern/"/>
     
   </entry>
   
@@ -385,9 +454,9 @@
     
       <category term="sms" scheme="https://skarlsla.github.io/tags/sms/"/>
     
-      <category term="email" scheme="https://skarlsla.github.io/tags/email/"/>
-    
       <category term="해외sms" scheme="https://skarlsla.github.io/tags/%ED%95%B4%EC%99%B8sms/"/>
+    
+      <category term="email" scheme="https://skarlsla.github.io/tags/email/"/>
     
   </entry>
   
@@ -501,11 +570,11 @@
     
       <category term="oauth" scheme="https://skarlsla.github.io/tags/oauth/"/>
     
+      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
+    
       <category term="jwt" scheme="https://skarlsla.github.io/tags/jwt/"/>
     
       <category term="인증" scheme="https://skarlsla.github.io/tags/%EC%9D%B8%EC%A6%9D/"/>
-    
-      <category term="session" scheme="https://skarlsla.github.io/tags/session/"/>
     
   </entry>
   
@@ -534,64 +603,6 @@
       <category term="jenkins" scheme="https://skarlsla.github.io/tags/jenkins/"/>
     
       <category term="pipeline" scheme="https://skarlsla.github.io/tags/pipeline/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[NODEJS] EXPRESS(node.js) to WebSocket 세션 공유</title>
-    <link href="https://skarlsla.github.io/2019/07/11/node-express-ws/"/>
-    <id>https://skarlsla.github.io/2019/07/11/node-express-ws/</id>
-    <published>2019-07-11T08:30:30.000Z</published>
-    <updated>2019-07-11T08:22:24.310Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="EXPRESS-node-js-to-WebSocket-세션-공유"><a href="#EXPRESS-node-js-to-WebSocket-세션-공유" class="headerlink" title="EXPRESS(node.js) to WebSocket 세션 공유"></a>EXPRESS(node.js) to WebSocket 세션 공유</h3><p>Express로 웹서버 생성 후  서버 및 세션정보를 WebSocket으로 전달<br>WebSocket 서버 생성 시 verifyClient 옵션으로 세션 처리</p><p><strong>server.ts</strong></p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bodyParser <span class="keyword">from</span> <span class="string">"body-parser"</span>;</span><br><span class="line"><span class="keyword">import</span> cors <span class="keyword">from</span> <span class="string">"cors"</span>;</span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">"express"</span>;</span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">"http"</span>;</span><br><span class="line"><span class="keyword">import</span> methodOverride <span class="keyword">from</span> <span class="string">"method-override"</span>;</span><br><span class="line"><span class="keyword">import</span> morgan <span class="keyword">from</span> <span class="string">"morgan"</span>;</span><br><span class="line"><span class="keyword">import</span> session <span class="keyword">from</span> <span class="string">"express-session"</span>;</span><br><span class="line"><span class="keyword">import</span> passport <span class="keyword">from</span> <span class="string">"passport"</span>;</span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">"path"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; WS &#125; <span class="keyword">from</span> <span class="string">"./app/ws"</span>;</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* private static ConnectDB(): Promise&lt;any&gt; &#123;</span></span><br><span class="line"><span class="comment">        return Connection;</span></span><br><span class="line"><span class="comment">    &#125; */</span></span><br><span class="line">    private readonly app: express.Application;</span><br><span class="line">    private readonly server: http.Server;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.app = express();</span><br><span class="line">        <span class="keyword">this</span>.server = http.createServer(<span class="keyword">this</span>.app);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"> .</span><br><span class="line"> .</span><br><span class="line"> .</span><br><span class="line"> </span><br><span class="line">    private ExpressConfiguration(): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="comment">// const RedisStore = connectRedis(session);</span></span><br><span class="line">        <span class="keyword">const</span> cookieOptions = &#123;</span><br><span class="line">            maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span>,</span><br><span class="line">            <span class="comment">// secure:true, 브라우저가 HTTPS를 통해서만 쿠키를 전송하도록 합니다.</span></span><br><span class="line">            httpOnly: <span class="literal">false</span>,</span><br><span class="line">            <span class="comment">// 쿠키가 클라이언트 JavaScript가 아닌 HTTP(S)를 통해서만 전송되도록 하며, 이를 통해 XSS(Cross-site scripting) 공격으로부터 보호할 수 있습니다.</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">const</span> sessionInfo = &#123;</span><br><span class="line">            secret: <span class="string">"sec"</span>,</span><br><span class="line">            resave: <span class="literal">true</span>,</span><br><span class="line">            saveUninitialized: <span class="literal">true</span>,</span><br><span class="line">            cookie: cookieOptions,</span><br><span class="line">            <span class="comment">// store: new RedisStore(config.REDIS_OPTS),</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">this</span>.sessionOptions = session(sessionInfo);</span><br><span class="line">        <span class="keyword">this</span>.app.use(bodyParser.urlencoded(&#123;<span class="attr">extended</span>: <span class="literal">true</span>&#125;));</span><br><span class="line">        <span class="keyword">this</span>.app.use(bodyParser.json(&#123;<span class="attr">limit</span>: <span class="string">"50mb"</span>&#125;));</span><br><span class="line">        <span class="keyword">this</span>.app.use(<span class="keyword">this</span>.sessionOptions);</span><br><span class="line">        <span class="comment">/* this.app.use(session(</span></span><br><span class="line"><span class="comment">            &#123;</span></span><br><span class="line"><span class="comment">                resave: true,</span></span><br><span class="line"><span class="comment">                saveUninitialized: true,</span></span><br><span class="line"><span class="comment">                secret: config.SECRET,</span></span><br><span class="line"><span class="comment">                store: new RedisStore(config.REDIS_OPTS),</span></span><br><span class="line"><span class="comment">            &#125;,</span></span><br><span class="line"><span class="comment">        )); */</span></span><br><span class="line">        <span class="keyword">this</span>.app.use(passport.initialize());</span><br><span class="line">        <span class="keyword">this</span>.app.use(passport.session());</span><br><span class="line">        <span class="keyword">this</span>.app.use(methodOverride());</span><br><span class="line">        <span class="comment">// const viewpath = path.join(__dirname, "../views");</span></span><br><span class="line">        <span class="comment">// serverService.debug(viewpath);</span></span><br><span class="line">        <span class="comment">// this.app.set("views", "./views");</span></span><br><span class="line">        <span class="keyword">this</span>.app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line">        <span class="keyword">this</span>.app.set(<span class="string">"view engine"</span>, <span class="string">"ejs"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.app.use((req, res, next): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"X-Requested-With, Content-Type, Authorization"</span>);</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"GET,PUT,PATCH,POST,DELETE,OPTIONS"</span>);</span><br><span class="line">            next();</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">this</span>.app.use(morgan(<span class="string">"combined"</span>));</span><br><span class="line">        <span class="keyword">this</span>.app.use(cors());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.app.use((err: any, <span class="attr">req</span>: express.Request, <span class="attr">res</span>: express.Response, <span class="attr">next</span>: express.NextFunction): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">            err.status = <span class="number">404</span>;</span><br><span class="line">            next(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private setWebSocket(): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.ws = <span class="keyword">new</span> WS(<span class="keyword">this</span>.server, <span class="keyword">this</span>.sessionOptions);</span><br><span class="line">    &#125;       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>ws.ts</strong></p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> WebSocket <span class="keyword">from</span> <span class="string">'ws'</span>;</span><br><span class="line"><span class="keyword">import</span> express, &#123; Router &#125; <span class="keyword">from</span> <span class="string">"express"</span>;</span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">"http"</span>;</span><br><span class="line"></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">WS</span> </span>&#123;</span><br><span class="line">    private wss: WebSocket.Server;</span><br><span class="line">    private server: http.Server;</span><br><span class="line">    private session: express.RequestHandler;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>(server: http.Server, session: express.RequestHandler) &#123;</span><br><span class="line">        <span class="keyword">this</span>.server = server;</span><br><span class="line">        <span class="keyword">this</span>.session = session;</span><br><span class="line">        <span class="keyword">this</span>.init(server, session);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private init(serve: http.Server, <span class="attr">session</span>: any) &#123;</span><br><span class="line">        <span class="keyword">this</span>.wss = <span class="keyword">new</span> WebSocket.Server(&#123;</span><br><span class="line">            </span><br><span class="line">            verifyClient:<span class="function">(<span class="params">info: &#123;origin: string; secure: boolean; req: any &#125;, done</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'Parsing session from request...'</span>);</span><br><span class="line">                session(info.req,( )=&gt;&#123;&#125;, ()=&gt;&#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">this</span>.isSessionPassport(info.req))&#123;</span><br><span class="line">                        done(info.req.session);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="comment">// done(false,401,'unathorized');</span></span><br><span class="line">                        done(<span class="literal">true</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="built_in">console</span>.log(info.req.session.id);</span><br><span class="line"></span><br><span class="line">                &#125;)                </span><br><span class="line">            &#125;, <span class="attr">server</span>: serve </span><br><span class="line">            , <span class="attr">path</span>: <span class="string">"/"</span></span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">/* this.pushController = new PushController(this.wss);</span></span><br><span class="line"><span class="comment">        this.pushController.startPush(); */</span></span><br><span class="line">        <span class="keyword">this</span>.connection();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private connection()&#123;</span><br><span class="line">        <span class="keyword">this</span>.wss.on(<span class="string">"connection"</span>,(ws: WebSocket) =&gt; &#123;</span><br><span class="line">            <span class="comment">// this.pushController.broadcastPush("100" , "msg");</span></span><br><span class="line">            ws.on(<span class="string">"message"</span>, (msg: string) =&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(msg);                 </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;);        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private isSessionPassport(req: express.Request)&#123;</span><br><span class="line">        <span class="keyword">if</span>(req.session.passport &amp;&amp; req.session.passport.user)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(req.session.passport.user);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"no passport"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">                </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;EXPRESS-node-js-to-WebSocket-세션-공유&quot;&gt;&lt;a href=&quot;#EXPRESS-node-js-to-WebSocket-세션-공유&quot; class=&quot;headerlink&quot; title=&quot;EXPRESS(node.js) to WebS
-      
-    
-    </summary>
-    
-      <category term="NODEJS" scheme="https://skarlsla.github.io/categories/NODEJS/"/>
-    
-    
-      <category term="NODEJS" scheme="https://skarlsla.github.io/tags/NODEJS/"/>
-    
-      <category term="EXPRESS" scheme="https://skarlsla.github.io/tags/EXPRESS/"/>
-    
-      <category term="WebSocket" scheme="https://skarlsla.github.io/tags/WebSocket/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[TYPESCRIPT] 타입스크립트 디자인 패턴 - Singleton</title>
-    <link href="https://skarlsla.github.io/2019/07/11/pattern/"/>
-    <id>https://skarlsla.github.io/2019/07/11/pattern/</id>
-    <published>2019-07-11T07:24:30.000Z</published>
-    <updated>2019-07-11T07:34:26.407Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Singleton-Pattern"><a href="#Singleton-Pattern" class="headerlink" title="Singleton Pattern"></a>Singleton Pattern</h3><p>The singleton pattern is a creational software design pattern.</p><p>클래스가 단 하나의 인스턴스 만 갖도록 보장한다.</p><p><strong>이점</strong></p><ol><li>하나의 인스턴스만 할당함으로 메모리낭비 방지.</li><li>하나의 프로세스에서 공유자원 접근시 이점</li><li>db커넥션풀, 로그 등에 사용됨.</li></ol><p><strong>단점</strong></p><ol><li>멀티 프로세스 상황에서 인스턴스공유 이슈 생길수있음</li><li>하나의 인스턴스로 많은 작업을 하게될 경우 문제</li></ol><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123; </span><br><span class="line">    private <span class="keyword">static</span> instance: Singleton; </span><br><span class="line">    private _temperature: number; </span><br><span class="line">    private <span class="keyword">constructor</span>() &#123; &#125; </span><br><span class="line">    <span class="keyword">static</span> getInstance() &#123; </span><br><span class="line">        <span class="keyword">if</span> (!Singleton.instance) &#123; </span><br><span class="line">            Singleton.instance = <span class="keyword">new</span> Singleton(); </span><br><span class="line">            Singleton.instance._temperature = <span class="number">0</span>; </span><br><span class="line">            &#125; </span><br><span class="line">        <span class="keyword">return</span> Singleton.instance; </span><br><span class="line">    &#125; </span><br><span class="line">    get temperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature; </span><br><span class="line">    &#125; </span><br><span class="line">    set temperature(score) &#123; </span><br><span class="line">        <span class="keyword">this</span>._temperature = score; </span><br><span class="line">    &#125; </span><br><span class="line">    increaseTemperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature += <span class="number">1</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    decreaseTemperature(): number &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._temperature -= <span class="number">1</span>; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">const</span> myInstance = Singleton.getInstance(); </span><br><span class="line"><span class="keyword">const</span> myInstance2 = Singleton.getInstance(); </span><br><span class="line"><span class="built_in">console</span>.log(myInstance === myInstance2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;Singleton-Pattern&quot;&gt;&lt;a href=&quot;#Singleton-Pattern&quot; class=&quot;headerlink&quot; title=&quot;Singleton Pattern&quot;&gt;&lt;/a&gt;Singleton Pattern&lt;/h3&gt;&lt;p&gt;The single
-      
-    
-    </summary>
-    
-      <category term="patterns" scheme="https://skarlsla.github.io/categories/patterns/"/>
-    
-    
-      <category term="typescript" scheme="https://skarlsla.github.io/tags/typescript/"/>
-    
-      <category term="pattern" scheme="https://skarlsla.github.io/tags/pattern/"/>
-    
-      <category term="singleton" scheme="https://skarlsla.github.io/tags/singleton/"/>
     
   </entry>
   
