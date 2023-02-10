@@ -69,93 +69,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-telegrambot-start1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/02/10/telegrambot-start1/" class="article-date">
-  <time datetime="2023-02-10T05:24:30.000Z" itemprop="datePublished">2023-02-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/bot/">bot</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-      <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8194749947474200"
-      data-ad-slot="1037278219"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/02/10/telegrambot-start1/">[텔레그램 봇] Go Telegram Bot With Golang</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="시작하기"><a href="#시작하기" class="headerlink" title="시작하기"></a>시작하기</h3><ol>
-<li>API 받기 및 bot생성</li>
-</ol>
-<p>BotFather: telegram.me/BotFather<br>/help 명령어를 통해 가능한 기능들 확인<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/botfather.JPG" alt="father"><br>/newbot 으로 생성해서 순서대로 시키는대로 하면 토큰이 나온다.</p>
-<ol start="2">
-<li>Library Example 따라하기</li>
-</ol>
-<p><a href="https://github.com/mymmrac/telego" target="_blank" rel="noopener">https://github.com/mymmrac/telego</a></p>
-<p>데이터 수신방법 2가지</p>
-<p>using long polling (bot.UpdatesViaLongPolling)<br>using webhook (bot.UpdatesViaWebhook)</p>
-<p>유틸을 사용해서 메시지말고 다양한 형태로 보낼수있다.</p>
-<p>Message(chatID, text) =&gt; SendMessageParams<br>Photo(chatID, photoFile) =&gt; SendPhotoParams<br>Location(chatID, latitude, longitude) =&gt; SendLocationParams<br>…<br>Or other useful methods like:</p>
-<p>ID(intID) =&gt; ChatID<br>File(namedReader) =&gt; InputFile<br>…</p>
-<p>채팅방 Input 기능</p>
-<p>/명령어  , 키보드버튼, 인라인버튼 </p>
-<p>예제에는 Bot과의 Interaction 기능 ,외부 서버와 Integration 기능은 없다. </p>
-<ol start="3">
-<li>실전소스 with Golang</li>
-</ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/mymmrac/telego"</span></span><br><span class="line">	th <span class="string">"github.com/mymmrac/telego/telegohandler"</span></span><br><span class="line">	tu <span class="string">"github.com/mymmrac/telego/telegoutil"</span></span><br><span class="line">	log <span class="string">"github.com/sirupsen/logrus"</span></span><br><span class="line">	<span class="string">"gopkg.in/natefinch/lumberjack.v2"</span></span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">botToken := <span class="string">"6048725563:xxxx"</span> <span class="comment">// set token</span></span><br><span class="line"></span><br><span class="line">bot, err := telego.NewBot(botToken)  <span class="comment">// telego 생성</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">		os.Exit(<span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get updates channel</span></span><br><span class="line">updates, _ := bot.UpdatesViaLongPolling(<span class="literal">nil</span>)  <span class="comment">// 폴링방식으로</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Create bot handler and specify from where to get updates</span></span><br><span class="line">bh, _ := th.NewBotHandler(bot, updates)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stop handling updates</span></span><br><span class="line"><span class="keyword">defer</span> bh.Stop()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stop getting updates</span></span><br><span class="line"><span class="keyword">defer</span> bot.StopLongPolling()</span><br></pre></td></tr></table></figure>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//인라인 키보드 생성 EXAM</span></span><br><span class="line">inlineInit := tu.InlineKeyboard(</span><br><span class="line">		tu.InlineKeyboardRow(   <span class="comment">// 한줄</span></span><br><span class="line">			tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>), <span class="comment">//버튼</span></span><br><span class="line">		),</span><br><span class="line">		tu.InlineKeyboardRow(    <span class="comment">// 두줄</span></span><br><span class="line">			tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>),</span><br><span class="line">			tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>),</span><br><span class="line">		),</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Register new handler with match on command `/start`</span></span><br><span class="line">bh.HandleMessage(<span class="function"><span class="keyword">func</span><span class="params">(bot *telego.Bot, message telego.Message)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Send message with inline keyboard</span></span><br><span class="line">    <span class="keyword">var</span> introduce = <span class="string">"Welcome ~"</span></span><br><span class="line"></span><br><span class="line">	_, _ = bot.SendMessage(tu.Messagef(</span><br><span class="line">		tu.ID(id),</span><br><span class="line">		fmt.Sprintf(<span class="string">"Hello %s! \n%s"</span>, name, introduce),</span><br><span class="line">	))</span><br><span class="line"></span><br><span class="line">	params := &amp;telego.SendPhotoParams&#123;</span><br><span class="line">		ChatID:      tu.ID(id),</span><br><span class="line">		Photo:       tu.FileByURL(<span class="string">"any picture.png"</span>),  <span class="comment">// 그림도 내보내기</span></span><br><span class="line">		ReplyMarkup: inlineInit, <span class="comment">// 인라인 버튼 내보내기</span></span><br><span class="line">	&#125;</span><br><span class="line">	_, _ = bot.SendPhoto(params)</span><br><span class="line">&#125;, th.CommandEqual(<span class="string">"start"</span>)) <span class="comment">//  봇채팅방에서 입력한 커맨드 명령어가 start일때</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//inline button click 시  callback 처리</span></span><br><span class="line">bh.HandleCallbackQuery(<span class="function"><span class="keyword">func</span><span class="params">(bot *telego.Bot, query telego.CallbackQuery)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 후처리</span></span><br><span class="line">&#125;, th.AnyCallbackQueryWithMessage(), th.CallbackDataEqual(<span class="string">"콜백왔을때 구분값"</span>))</span><br></pre></td></tr></table></figure>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// inline button에 웹앱 링크걸기</span></span><br><span class="line">tu.InlineKeyboardButton(<span class="string">"Open the Webapp"</span>).WithWebApp(&amp;telego.WebAppInfo&#123;URL: uri&#125;),</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-        <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8194749947474200"
-        data-ad-slot="1037278219"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  
-      <a data-url="https://skarlsla.github.io/2023/02/10/telegrambot-start1/" data-id="cldy47255003lkknvjcnn48px" class="article-share-link">공유</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Telegram-Bot/">Telegram Bot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/telegram/">telegram</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/telegram-go/">telegram go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/텔레그램/">텔레그램</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/텔레그램-봇/">텔레그램 봇</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-telegrambot-architecture" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2023/02/10/telegrambot-architecture/" class="article-date">
@@ -207,7 +120,95 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2023/02/10/telegrambot-architecture/" data-id="cldy47252003ikknvzsih71ac" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2023/02/10/telegrambot-architecture/" data-id="cldy4fbhr00379onvynfpzy14" class="article-share-link">공유</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Telegram-Bot/">Telegram Bot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/telegram/">telegram</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/telegram-go/">telegram go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/텔레그램/">텔레그램</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/텔레그램-봇/">텔레그램 봇</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-telegrambot-start1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/02/10/telegrambot-start1/" class="article-date">
+  <time datetime="2023-02-10T05:24:30.000Z" itemprop="datePublished">2023-02-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/bot/">bot</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+      <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-8194749947474200"
+      data-ad-slot="1037278219"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/02/10/telegrambot-start1/">[텔레그램 봇] Go Telegram Bot With Golang</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="시작하기"><a href="#시작하기" class="headerlink" title="시작하기"></a>시작하기</h3><ol>
+<li>API 받기 및 bot생성</li>
+</ol>
+<p>👉🏻<a href="https://telegram.me/BotFather" target="_blank" rel="noopener">BotFather</a></p>
+<p>/help 명령어를 통해 가능한 기능들 확인<br><img src="https://raw.githubusercontent.com/skarlsla/skarlsla.github.io/master/css/image/botfather.JPG" alt="father"><br>/newbot 으로 생성해서 순서대로 시키는대로 하면 토큰이 나온다.</p>
+<ol start="2">
+<li>Library Example 따라하기</li>
+</ol>
+<p><a href="https://github.com/mymmrac/telego" target="_blank" rel="noopener">https://github.com/mymmrac/telego</a></p>
+<p>데이터 수신방법 2가지</p>
+<p>using long polling (bot.UpdatesViaLongPolling)<br>using webhook (bot.UpdatesViaWebhook)</p>
+<p>유틸을 사용해서 메시지말고 다양한 형태로 보낼수있다.</p>
+<p>Message(chatID, text) =&gt; SendMessageParams<br>Photo(chatID, photoFile) =&gt; SendPhotoParams<br>Location(chatID, latitude, longitude) =&gt; SendLocationParams<br>…<br>Or other useful methods like:</p>
+<p>ID(intID) =&gt; ChatID<br>File(namedReader) =&gt; InputFile<br>…</p>
+<p>채팅방 Input 기능</p>
+<p>/명령어  , 키보드버튼, 인라인버튼 </p>
+<p>예제에는 Bot과의 Interaction 기능 ,외부 서버와 Integration 기능은 없다. </p>
+<ol start="3">
+<li>실전소스 with Golang</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/mymmrac/telego"</span></span><br><span class="line">	th <span class="string">"github.com/mymmrac/telego/telegohandler"</span></span><br><span class="line">	tu <span class="string">"github.com/mymmrac/telego/telegoutil"</span></span><br><span class="line">	log <span class="string">"github.com/sirupsen/logrus"</span></span><br><span class="line">	<span class="string">"gopkg.in/natefinch/lumberjack.v2"</span></span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">botToken := <span class="string">"6048725563:xxxx"</span> <span class="comment">// set token</span></span><br><span class="line"></span><br><span class="line">bot, err := telego.NewBot(botToken)  <span class="comment">// telego 생성</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">		os.Exit(<span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get updates channel</span></span><br><span class="line">updates, _ := bot.UpdatesViaLongPolling(<span class="literal">nil</span>)  <span class="comment">// 폴링방식으로</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Create bot handler and specify from where to get updates</span></span><br><span class="line">bh, _ := th.NewBotHandler(bot, updates)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stop handling updates</span></span><br><span class="line"><span class="keyword">defer</span> bh.Stop()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stop getting updates</span></span><br><span class="line"><span class="keyword">defer</span> bot.StopLongPolling()</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//인라인 키보드 생성 EXAM</span></span><br><span class="line">inlineInit := tu.InlineKeyboard(</span><br><span class="line">		tu.InlineKeyboardRow(   <span class="comment">// 한줄</span></span><br><span class="line">			tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>), <span class="comment">//버튼</span></span><br><span class="line">		),</span><br><span class="line">		tu.InlineKeyboardRow(    <span class="comment">// 두줄</span></span><br><span class="line">			tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>),</span><br><span class="line">			tu.InlineKeyboardButton(<span class="string">"버튼이름"</span>).WithCallbackData(<span class="string">"콜백왔을때 구분값"</span>),</span><br><span class="line">		),</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Register new handler with match on command `/start`</span></span><br><span class="line">bh.HandleMessage(<span class="function"><span class="keyword">func</span><span class="params">(bot *telego.Bot, message telego.Message)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Send message with inline keyboard</span></span><br><span class="line">    <span class="keyword">var</span> introduce = <span class="string">"Welcome ~"</span></span><br><span class="line"></span><br><span class="line">	_, _ = bot.SendMessage(tu.Messagef(</span><br><span class="line">		tu.ID(id),</span><br><span class="line">		fmt.Sprintf(<span class="string">"Hello %s! \n%s"</span>, name, introduce),</span><br><span class="line">	))</span><br><span class="line"></span><br><span class="line">	params := &amp;telego.SendPhotoParams&#123;</span><br><span class="line">		ChatID:      tu.ID(id),</span><br><span class="line">		Photo:       tu.FileByURL(<span class="string">"any picture.png"</span>),  <span class="comment">// 그림도 내보내기</span></span><br><span class="line">		ReplyMarkup: inlineInit, <span class="comment">// 인라인 버튼 내보내기</span></span><br><span class="line">	&#125;</span><br><span class="line">	_, _ = bot.SendPhoto(params)</span><br><span class="line">&#125;, th.CommandEqual(<span class="string">"start"</span>)) <span class="comment">//  봇채팅방에서 입력한 커맨드 명령어가 start일때</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//inline button click 시  callback 처리</span></span><br><span class="line">bh.HandleCallbackQuery(<span class="function"><span class="keyword">func</span><span class="params">(bot *telego.Bot, query telego.CallbackQuery)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 후처리</span></span><br><span class="line">&#125;, th.AnyCallbackQueryWithMessage(), th.CallbackDataEqual(<span class="string">"콜백왔을때 구분값"</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// inline button에 웹앱 링크걸기</span></span><br><span class="line">tu.InlineKeyboardButton(<span class="string">"Open the Webapp"</span>).WithWebApp(&amp;telego.WebAppInfo&#123;URL: uri&#125;),</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8194749947474200"
+        data-ad-slot="1037278219"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  
+      <a data-url="https://skarlsla.github.io/2023/02/10/telegrambot-start1/" data-id="cldy4fbhw003b9onvfhgxvaxd" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Telegram-Bot/">Telegram Bot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/telegram/">telegram</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/telegram-go/">telegram go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/텔레그램/">텔레그램</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/텔레그램-봇/">텔레그램 봇</a></li></ul>
@@ -277,7 +278,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2022/01/03/pattern-factory/" data-id="cldy47242002okknvatnokvzk" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2022/01/03/pattern-factory/" data-id="cldy4fbgy002o9onvwq2kii86" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Factory/">Factory</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pattern/">pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
@@ -349,7 +350,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2022/01/03/pattern-facade/" data-id="cldy4724k0031kknv6tfmm3ci" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2022/01/03/pattern-facade/" data-id="cldy4fbgo002h9onvox4thkzc" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Facade/">Facade</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pattern/">pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
@@ -419,7 +420,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2022/01/03/pattern-adapter/" data-id="cldy4723p002fkknv03i0vc6h" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2022/01/03/pattern-adapter/" data-id="cldy4fbgh002c9onv8ctx2tx3" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Adapter/">Adapter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pattern/">pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
@@ -483,7 +484,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2021/08/04/jumio/" data-id="cldy4722v001okknvmtw11dal" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2021/08/04/jumio/" data-id="cldy4fbfb001l9onvrpcwlqa2" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AML/">AML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JUMIO-FLOW/">JUMIO FLOW</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JUMIO-SDK/">JUMIO SDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KYC/">KYC</a></li></ul>
@@ -546,7 +547,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2021/06/04/sumsub/" data-id="cldy4724q0036kknvzfc92c0o" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2021/06/04/sumsub/" data-id="cldy4fbhz003e9onve0upihce" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AML/">AML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KYC/">KYC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SUMSUB-FLOW/">SUMSUB FLOW</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SUMSUB-SDK/">SUMSUB SDK</a></li></ul>
@@ -629,7 +630,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2020/02/11/aws-serverless-framework/" data-id="cldy472au008tkknvjbgfb59p" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2020/02/11/aws-serverless-framework/" data-id="cldy4fbo2008l9onv1kuvs7h3" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AWS/">AWS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SERVERLESS/">SERVERLESS</a></li></ul>
@@ -715,7 +716,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/12/23/aws-sam-simple/" data-id="cldy4722i001ckknvg10s3z4f" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/12/23/aws-sam-simple/" data-id="cldy4fbel000z9onvqvbsafe5" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AWS/">AWS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SAM/">SAM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SERVERLESS/">SERVERLESS</a></li></ul>
@@ -807,7 +808,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   
-      <a data-url="https://skarlsla.github.io/2019/12/11/cloudwatchtoslack/" data-id="cldy4722l001gkknvlt5ee06q" class="article-share-link">공유</a>
+      <a data-url="https://skarlsla.github.io/2019/12/11/cloudwatchtoslack/" data-id="cldy4fbeo00119onv6iclq65c" class="article-share-link">공유</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AWS/">AWS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CloudWatch/">CloudWatch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/incoming-webhook/">incoming webhook</a></li></ul>
@@ -876,11 +877,11 @@
       <ul>
         
           <li>
-            <a href="/2023/02/10/telegrambot-start1/">[텔레그램 봇] Go Telegram Bot With Golang</a>
+            <a href="/2023/02/10/telegrambot-architecture/">[텔레그램 봇] Telegram Bot Architecture Diagram</a>
           </li>
         
           <li>
-            <a href="/2023/02/10/telegrambot-architecture/">[텔레그램 봇] Telegram Bot Architecture Diagram</a>
+            <a href="/2023/02/10/telegrambot-start1/">[텔레그램 봇] Go Telegram Bot With Golang</a>
           </li>
         
           <li>
