@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>[GitHub Blog] GitHub 블로그에 새로운 포스트 작성하기 | </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="GitHub Pages 블로그에 새로운 포스트를 작성하는 과정을 상세하게 설명합니다.">
+<meta name="keywords" content="github,blog,posting,hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[GitHub Blog] GitHub 블로그에 새로운 포스트 작성하기">
+<meta property="og:url" content="https://skarlsla.github.io/2024/03/24/github-blog-posting/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="GitHub Pages 블로그에 새로운 포스트를 작성하는 과정을 상세하게 설명합니다.">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2024-03-24T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[GitHub Blog] GitHub 블로그에 새로운 포스트 작성하기">
+<meta name="twitter:description" content="GitHub Pages 블로그에 새로운 포스트를 작성하는 과정을 상세하게 설명합니다.">
+
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="icon" href="/favicon.png">
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+        <div id="banner"></div>
+        <div id="header-outer" class="outer">
+          <div id="header-title" class="inner">
+            <h1 id="logo-wrap">
+              <a href="/" id="logo"></a>
+            </h1>
+          </div>
+          <div id="header-inner" class="inner">
+            <nav id="main-nav">
+              <a id="main-nav-toggle" class="nav-icon"></a>
+              <a class="main-nav-link" href="/">Home</a>
+              <a class="main-nav-link" href="/archives">Archives</a>
+            </nav>
+            <nav id="sub-nav">
+              <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+              <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+            </nav>
+            <div id="search-form-wrap">
+              <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+                <input type="search" name="q" class="search-form-input" placeholder="Search">
+                <button type="submit" class="search-form-submit">&#xF002;</button>
+                <input type="hidden" name="sitesearch" value="https://skarlsla.github.io">
+              </form>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <div class="outer">
+        <section id="main">
+          <article id="post-github-blog-posting" class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-meta">
+              <a href="/2024/03/24/github-blog-posting/" class="article-date">
+                <time datetime="2024-03-24T00:00:00.000Z" itemprop="datePublished">2024-03-24</time>
+              </a>
+              <div class="article-category">
+                <a class="article-category-link" href="/categories/blog/">blog</a>
+              </div>
+            </div>
+            <div class="article-inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">
+                  [GitHub Blog] GitHub 블로그에 새로운 포스트 작성하기
+                </h1>
+              </header>
+              
+              <div class="article-entry" itemprop="articleBody">
+                <h2 id="소개"><a href="#소개" class="headerlink" title="소개"></a>소개</h2>
+                <p>이 글에서는 GitHub Pages 블로그에 새로운 포스트를 작성하는 전체 과정을 상세하게 설명하겠습니다. 실제 예시로 "JWT Authentication in Gin Web Framework" 포스트를 작성한 과정을 함께 살펴보겠습니다.</p>
+
+                <h2 id="블로그-포스트-작성-과정"><a href="#블로그-포스트-작성-과정" class="headerlink" title="블로그 포스트 작성 과정"></a>블로그 포스트 작성 과정</h2>
+
+                <h3 id="1-디렉토리-구조-파악"><a href="#1-디렉토리-구조-파악" class="headerlink" title="1. 디렉토리 구조 파악"></a>1. 디렉토리 구조 파악</h3>
+                <p>GitHub Pages 블로그는 특정한 디렉토리 구조를 따릅니다. 새 포스트를 작성하기 전에 먼저 기존 블로그의 구조를 파악해야 합니다.</p>
+                <ul>
+                  <li>연도별 디렉토리 구조 (예: 2024/03/24/)</li>
+                  <li>각 포스트는 자신만의 디렉토리를 가짐</li>
+                  <li>포스트 내용은 index.html 파일에 작성</li>
+                </ul>
+
+                <h3 id="2-새-포스트-디렉토리-생성"><a href="#2-새-포스트-디렉토리-생성" class="headerlink" title="2. 새 포스트 디렉토리 생성"></a>2. 새 포스트 디렉토리 생성</h3>
+                <p>새 포스트를 위한 디렉토리를 생성합니다:</p>
+                <figure class="highlight plaintext">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>2024/
+└── 03/
+    └── 24/
+        └── jwt-auth-gin/
+            └── index.html</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="3-포스트-메타데이터-설정"><a href="#3-포스트-메타데이터-설정" class="headerlink" title="3. 포스트 메타데이터 설정"></a>3. 포스트 메타데이터 설정</h3>
+                <p>HTML 파일의 head 섹션에 필요한 메타데이터를 설정합니다:</p>
+                <ul>
+                  <li>제목 (title)</li>
+                  <li>설명 (description)</li>
+                  <li>키워드 (keywords)</li>
+                  <li>작성일 (datePublished)</li>
+                  <li>카테고리 (category)</li>
+                  <li>태그 (tags)</li>
+                </ul>
+
+                <h3 id="4-포스트-내용-작성"><a href="#4-포스트-내용-작성" class="headerlink" title="4. 포스트 내용 작성"></a>4. 포스트 내용 작성</h3>
+                <p>포스트의 내용은 HTML 구조를 따르되, 마크다운 스타일의 가독성 좋은 형식으로 작성합니다:</p>
+                <ul>
+                  <li>제목은 h1~h6 태그 사용</li>
+                  <li>코드 블록은 highlight 클래스를 가진 figure 태그 사용</li>
+                  <li>문단은 p 태그 사용</li>
+                  <li>목록은 ul/ol과 li 태그 사용</li>
+                </ul>
+
+                <h3 id="5-GitHub에-푸시하기"><a href="#5-GitHub에-푸시하기" class="headerlink" title="5. GitHub에 푸시하기"></a>5. GitHub에 푸시하기</h3>
+                <p>작성한 포스트를 GitHub 저장소에 푸시하는 과정:</p>
+                <figure class="highlight bash">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+# 변경사항 확인
+git status
+
+# 새로운 파일 추가
+git add 2024/
+
+# 변경사항 커밋
+git commit -m "Add new post: JWT Authentication in Gin Web Framework"
+
+# GitHub에 푸시
+git push origin master</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="6-배포-확인"><a href="#6-배포-확인" class="headerlink" title="6. 배포 확인"></a>6. 배포 확인</h3>
+                <p>GitHub Pages는 자동으로 변경사항을 감지하고 사이트를 다시 빌드합니다. 보통 몇 분 내에 새로운 포스트가 웹사이트에 반영됩니다.</p>
+
+                <h2 id="포스트-구조의-예시"><a href="#포스트-구조의-예시" class="headerlink" title="포스트 구조의 예시"></a>포스트 구조의 예시</h2>
+                <p>실제 작성한 "JWT Authentication in Gin Web Framework" 포스트의 구조:</p>
+                <ul>
+                  <li>소개</li>
+                  <li>필요한 패키지</li>
+                  <li>프로젝트 구조</li>
+                  <li>환경 변수 설정</li>
+                  <li>각 컴포넌트 구현
+                    <ul>
+                      <li>사용자 모델</li>
+                      <li>JWT 미들웨어</li>
+                      <li>인증 핸들러</li>
+                      <li>메인 애플리케이션</li>
+                    </ul>
+                  </li>
+                  <li>사용 방법</li>
+                  <li>보안 고려사항</li>
+                  <li>결론</li>
+                </ul>
+
+                <h2 id="주의사항"><a href="#주의사항" class="headerlink" title="주의사항"></a>주의사항</h2>
+                <ol>
+                  <li>포스트 URL이 겹치지 않도록 고유한 디렉토리 이름 사용</li>
+                  <li>모든 메타데이터 필드를 올바르게 설정</li>
+                  <li>이미지를 사용할 경우 적절한 경로 설정</li>
+                  <li>코드 블록은 적절한 언어 하이라이팅 적용</li>
+                  <li>마크다운 문법과 HTML 구조의 적절한 조화</li>
+                </ol>
+
+                <h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2>
+                <p>GitHub Pages 블로그에 새로운 포스트를 작성하는 것은 HTML 구조를 이해하고 일관된 형식을 유지하는 것이 중요합니다. 위의 과정을 따르면 깔끔하고 체계적인 기술 블로그 포스트를 작성할 수 있습니다.</p>
+              </div>
+              
+              <footer class="article-footer">
+                <a data-url="https://skarlsla.github.io/2024/03/24/github-blog-posting/" data-id="github-blog-posting" class="article-share-link">공유</a>
+                <ul class="article-tag-list">
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/posting/">posting</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li>
+                </ul>
+              </footer>
+            </div>
+          </article>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 
