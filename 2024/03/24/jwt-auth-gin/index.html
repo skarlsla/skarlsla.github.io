@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>[Golang] JWT Authentication in Gin Web Framework | </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Gin 웹 프레임워크에서 JWT를 이용한 인증 시스템 구현하기">
+<meta name="keywords" content="golang,gin,jwt,authentication,web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Golang] JWT Authentication in Gin Web Framework">
+<meta property="og:url" content="https://skarlsla.github.io/2024/03/24/jwt-auth-gin/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Gin 웹 프레임워크에서 JWT를 이용한 인증 시스템 구현하기">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2024-03-24T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Golang] JWT Authentication in Gin Web Framework">
+<meta name="twitter:description" content="Gin 웹 프레임워크에서 JWT를 이용한 인증 시스템 구현하기">
+
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="icon" href="/favicon.png">
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+        <div id="banner"></div>
+        <div id="header-outer" class="outer">
+          <div id="header-title" class="inner">
+            <h1 id="logo-wrap">
+              <a href="/" id="logo"></a>
+            </h1>
+          </div>
+          <div id="header-inner" class="inner">
+            <nav id="main-nav">
+              <a id="main-nav-toggle" class="nav-icon"></a>
+              <a class="main-nav-link" href="/">Home</a>
+              <a class="main-nav-link" href="/archives">Archives</a>
+            </nav>
+            <nav id="sub-nav">
+              <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+              <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+            </nav>
+            <div id="search-form-wrap">
+              <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+                <input type="search" name="q" class="search-form-input" placeholder="Search">
+                <button type="submit" class="search-form-submit">&#xF002;</button>
+                <input type="hidden" name="sitesearch" value="https://skarlsla.github.io">
+              </form>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <div class="outer">
+        <section id="main">
+          <article id="post-jwt-auth-gin" class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-meta">
+              <a href="/2024/03/24/jwt-auth-gin/" class="article-date">
+                <time datetime="2024-03-24T00:00:00.000Z" itemprop="datePublished">2024-03-24</time>
+              </a>
+              <div class="article-category">
+                <a class="article-category-link" href="/categories/golang/">golang</a>
+              </div>
+            </div>
+            <div class="article-inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">
+                  [Golang] JWT Authentication in Gin Web Framework
+                </h1>
+              </header>
+              
+              <div class="article-entry" itemprop="articleBody">
+                <h2 id="소개"><a href="#소개" class="headerlink" title="소개"></a>소개</h2>
+                <p>이 글에서는 Golang의 Gin 웹 프레임워크를 사용하여 JWT(JSON Web Token) 기반의 인증 시스템을 구현하는 방법을 알아보겠습니다.</p>
+
+                <h2 id="필요한-패키지"><a href="#필요한-패키지" class="headerlink" title="필요한 패키지"></a>필요한 패키지</h2>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+go get -u github.com/gin-gonic/gin
+go get -u github.com/golang-jwt/jwt/v5
+go get -u github.com/joho/godotenv</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="프로젝트-구조"><a href="#프로젝트-구조" class="headerlink" title="프로젝트 구조"></a>프로젝트 구조</h2>
+                <figure class="highlight plaintext">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+├── .env
+├── main.go
+├── middleware
+│   └── auth.go
+├── models
+│   └── user.go
+└── handlers
+    └── auth.go</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="환경-변수-설정"><a href="#환경-변수-설정" class="headerlink" title="환경 변수 설정"></a>환경 변수 설정</h2>
+                <p>.env 파일을 생성하고 JWT 시크릿 키를 설정합니다:</p>
+                <figure class="highlight plaintext">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>JWT_SECRET=your-secret-key</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="사용자-모델-정의"><a href="#사용자-모델-정의" class="headerlink" title="사용자 모델 정의"></a>사용자 모델 정의</h2>
+                <p>models/user.go:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+package models
+
+type User struct {
+    ID       uint   `json:"id"`
+    Username string `json:"username"`
+    Password string `json:"password"`
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="JWT-미들웨어-구현"><a href="#JWT-미들웨어-구현" class="headerlink" title="JWT 미들웨어 구현"></a>JWT 미들웨어 구현</h2>
+                <p>middleware/auth.go:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+package middleware
+
+import (
+    "net/http"
+    "os"
+    "strings"
+
+    "github.com/gin-gonic/gin"
+    "github.com/golang-jwt/jwt/v5"
+)
+
+func AuthMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        authHeader := c.GetHeader("Authorization")
+        if authHeader == "" {
+            c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is required"})
+            c.Abort()
+            return
+        }
+
+        bearerToken := strings.Split(authHeader, " ")
+        if len(bearerToken) != 2 {
+            c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token format"})
+            c.Abort()
+            return
+        }
+
+        tokenString := bearerToken[1]
+        token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+            return []byte(os.Getenv("JWT_SECRET")), nil
+        })
+
+        if err != nil || !token.Valid {
+            c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+            c.Abort()
+            return
+        }
+
+        claims, ok := token.Claims.(jwt.MapClaims)
+        if !ok {
+            c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token claims"})
+            c.Abort()
+            return
+        }
+
+        c.Set("user_id", claims["user_id"])
+        c.Next()
+    }
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="인증-핸들러-구현"><a href="#인증-핸들러-구현" class="headerlink" title="인증 핸들러 구현"></a>인증 핸들러 구현</h2>
+                <p>handlers/auth.go:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+package handlers
+
+import (
+    "net/http"
+    "os"
+    "time"
+
+    "github.com/gin-gonic/gin"
+    "github.com/golang-jwt/jwt/v5"
+    "your-project/models"
+)
+
+func Login(c *gin.Context) {
+    var user models.User
+    if err := c.ShouldBindJSON(&user); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    // 여기에서 실제 데이터베이스 검증 로직을 구현해야 합니다
+    // 예시를 위해 하드코딩된 검증을 사용합니다
+    if user.Username != "test" || user.Password != "password" {
+        c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+        return
+    }
+
+    // JWT 토큰 생성
+    token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+        "user_id": 1,
+        "exp":     time.Now().Add(time.Hour * 24).Unix(),
+    })
+
+    tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not generate token"})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{
+        "token": tokenString,
+    })
+}
+
+func Protected(c *gin.Context) {
+    userID, exists := c.Get("user_id")
+    if !exists {
+        c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{
+        "message": "This is a protected route",
+        "user_id": userID,
+    })
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="메인-애플리케이션-구현"><a href="#메인-애플리케이션-구현" class="headerlink" title="메인 애플리케이션 구현"></a>메인 애플리케이션 구현</h2>
+                <p>main.go:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+package main
+
+import (
+    "log"
+
+    "github.com/gin-gonic/gin"
+    "github.com/joho/godotenv"
+    "your-project/handlers"
+    "your-project/middleware"
+)
+
+func main() {
+    if err := godotenv.Load(); err != nil {
+        log.Fatal("Error loading .env file")
+    }
+
+    r := gin.Default()
+
+    // 공개 라우트
+    r.POST("/login", handlers.Login)
+
+    // 보호된 라우트
+    protected := r.Group("/api")
+    protected.Use(middleware.AuthMiddleware())
+    {
+        protected.GET("/protected", handlers.Protected)
+    }
+
+    r.Run(":8080")
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="사용-방법"><a href="#사용-방법" class="headerlink" title="사용 방법"></a>사용 방법</h2>
+                <h3 id="로그인"><a href="#로그인" class="headerlink" title="로그인"></a>로그인</h3>
+                <figure class="highlight bash">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+curl -X POST http://localhost:8080/login \
+-H "Content-Type: application/json" \
+-d '{"username": "test", "password": "password"}'</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="보호된-엔드포인트-접근"><a href="#보호된-엔드포인트-접근" class="headerlink" title="보호된 엔드포인트 접근"></a>보호된 엔드포인트 접근</h3>
+                <figure class="highlight bash">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+curl http://localhost:8080/api/protected \
+-H "Authorization: Bearer YOUR_JWT_TOKEN"</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="보안-고려사항"><a href="#보안-고려사항" class="headerlink" title="보안 고려사항"></a>보안 고려사항</h2>
+                <ol>
+                  <li>실제 프로덕션 환경에서는 안전한 비밀번호 해싱을 구현해야 합니다.</li>
+                  <li>토큰 만료 시간을 적절히 설정해야 합니다.</li>
+                  <li>HTTPS를 사용하여 통신을 암호화해야 합니다.</li>
+                  <li>토큰 블랙리스트 구현을 고려해야 합니다.</li>
+                </ol>
+
+                <h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2>
+                <p>이 예제에서는 Gin 프레임워크와 JWT를 사용하여 기본적인 인증 시스템을 구현해보았습니다. 실제 프로덕션 환경에서는 추가적인 보안 조치와 에러 처리가 필요합니다.</p>
+              </div>
+              
+              <footer class="article-footer">
+                <a data-url="https://skarlsla.github.io/2024/03/24/jwt-auth-gin/" data-id="jwt-auth-gin" class="article-share-link">공유</a>
+                <ul class="article-tag-list">
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gin/">gin</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/authentication/">authentication</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li>
+                </ul>
+              </footer>
+            </div>
+          </article>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 
