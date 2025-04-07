@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Golang으로 Firebase Cloud Messaging(FCM) 구현하기 | </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Golang을 사용하여 Firebase Cloud Messaging(FCM)을 구현하는 방법에 대해 상세히 알아봅니다.">
+<meta name="keywords" content="golang,fcm,firebase,push-notification">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang으로 Firebase Cloud Messaging(FCM) 구현하기">
+<meta property="og:url" content="https://skarlsla.github.io/2024/05/20/golang-fcm-development/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Golang을 사용하여 Firebase Cloud Messaging(FCM)을 구현하는 방법에 대해 상세히 알아봅니다.">
+<meta property="og:locale" content="ko">
+<meta property="og:updated_time" content="2024-05-20T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Golang으로 Firebase Cloud Messaging(FCM) 구현하기">
+<meta name="twitter:description" content="Golang을 사용하여 Firebase Cloud Messaging(FCM)을 구현하는 방법에 대해 상세히 알아봅니다.">
+
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="icon" href="/favicon.png">
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo"></a>
+      </h1>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <a class="main-nav-link" href="/">Home</a>
+        <a class="main-nav-link" href="/archives">Archives</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skarlsla.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+          <article id="post-golang-fcm-development" class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-meta">
+              <a href="/2024/05/20/golang-fcm-development/" class="article-date">
+                <time datetime="2024-05-20T00:00:00.000Z" itemprop="datePublished">2024-05-20</time>
+              </a>
+              <div class="article-category">
+                <a class="article-category-link" href="/categories/golang/">golang</a>
+              </div>
+            </div>
+            <div class="article-inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">
+                  Golang으로 Firebase Cloud Messaging(FCM) 구현하기
+                </h1>
+              </header>
+              
+              <div class="article-entry" itemprop="articleBody">
+                <h2 id="소개"><a href="#소개" class="headerlink" title="소개"></a>소개</h2>
+                <p>Firebase Cloud Messaging(FCM)은 Android, iOS 및 웹 애플리케이션에 무료로 메시지를 안정적으로 전송할 수 있는 크로스 플랫폼 메시징 솔루션입니다. 이 글에서는 Golang을 사용하여 FCM을 구현하는 방법에 대해 자세히 알아보겠습니다.</p>
+
+                <h2 id="FCM이란"><a href="#FCM이란" class="headerlink" title="FCM이란"></a>FCM이란</h2>
+                <p>Firebase Cloud Messaging(FCM)은 다음과 같은 기능을 제공합니다:</p>
+                <ul>
+                  <li>단일 기기, 기기 그룹 또는 특정 주제를 구독한 기기로 메시지 전송</li>
+                  <li>웹, Android 및 iOS 플랫폼 지원</li>
+                  <li>알림 메시지와 데이터 메시지의 두 가지 유형 제공</li>
+                  <li>안정적이고 배터리 효율적인 메시지 전달</li>
+                </ul>
+
+                <h2 id="필요한-준비물"><a href="#필요한-준비물" class="headerlink" title="필요한 준비물"></a>필요한 준비물</h2>
+                <ul>
+                  <li>Firebase 프로젝트</li>
+                  <li>서비스 계정 키 파일(JSON)</li>
+                  <li>Go 개발 환경</li>
+                </ul>
+
+                <h2 id="필요한-패키지"><a href="#필요한-패키지" class="headerlink" title="필요한 패키지"></a>필요한 패키지</h2>
+                <p>FCM을 Golang에서 사용하기 위해 공식 Firebase Admin SDK를 사용할 수 있습니다:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+go get firebase.google.com/go/v4
+go get google.golang.org/api/option</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="Firebase-프로젝트-설정"><a href="#Firebase-프로젝트-설정" class="headerlink" title="Firebase 프로젝트 설정"></a>Firebase 프로젝트 설정</h2>
+                <p>FCM을 사용하기 전에 Firebase 프로젝트를 설정해야 합니다:</p>
+                <ol>
+                  <li>Firebase 콘솔(https://console.firebase.google.com/)에 접속합니다.</li>
+                  <li>새 프로젝트를 생성하거나 기존 프로젝트를 선택합니다.</li>
+                  <li>프로젝트 설정 → 서비스 계정 탭으로 이동합니다.</li>
+                  <li>"새 비공개 키 생성" 버튼을 클릭하여 서비스 계정 키 파일(JSON)을 다운로드합니다.</li>
+                  <li>이 키 파일은 안전한 곳에 보관하고 프로젝트에서 참조할 수 있도록 합니다.</li>
+                </ol>
+
+                <h2 id="Golang-FCM-클라이언트-구현"><a href="#Golang-FCM-클라이언트-구현" class="headerlink" title="Golang FCM 클라이언트 구현"></a>Golang FCM 클라이언트 구현</h2>
+                <p>다음은 Golang으로 FCM을 구현하는 기본적인 예제 코드입니다:</p>
+
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+
+    firebase "firebase.google.com/go/v4"
+    "firebase.google.com/go/v4/messaging"
+    "google.golang.org/api/option"
+)
+
+func main() {
+    // 서비스 계정 키 파일 경로
+    serviceAccountKeyPath := "./serviceAccountKey.json"
+    
+    // Firebase 앱 초기화
+    opt := option.WithCredentialsFile(serviceAccountKeyPath)
+    app, err := firebase.NewApp(context.Background(), nil, opt)
+    if err != nil {
+        log.Fatalf("firebase.NewApp 오류: %v", err)
+    }
+    
+    // FCM 클라이언트 가져오기
+    ctx := context.Background()
+    client, err := app.Messaging(ctx)
+    if err != nil {
+        log.Fatalf("app.Messaging 오류: %v", err)
+    }
+    
+    // 알림 메시지 생성
+    message := &messaging.Message{
+        Notification: &messaging.Notification{
+            Title: "새 메시지 알림",
+            Body:  "새로운 메시지가 도착했습니다!",
+        },
+        Token: "대상_FCM_토큰", // 클라이언트 기기의 FCM 토큰
+    }
+    
+    // 메시지 보내기
+    response, err := client.Send(ctx, message)
+    if err != nil {
+        log.Fatalf("메시지 전송 오류: %v", err)
+    }
+    
+    fmt.Printf("메시지가 성공적으로 전송되었습니다: %s\n", response)
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="고급-FCM-기능-구현"><a href="#고급-FCM-기능-구현" class="headerlink" title="고급 FCM 기능 구현"></a>고급 FCM 기능 구현</h2>
+                <p>이제 몇 가지 고급 FCM 기능을 살펴보겠습니다.</p>
+
+                <h3 id="주제-기반-메시징"><a href="#주제-기반-메시징" class="headerlink" title="주제 기반 메시징"></a>주제 기반 메시징</h3>
+                <p>특정 주제를 구독한 모든 기기에 메시지를 보낼 수 있습니다:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// 주제 기반 메시지 생성
+message := &messaging.Message{
+    Notification: &messaging.Notification{
+        Title: "날씨 알림",
+        Body:  "오늘은 비가 올 예정입니다.",
+    },
+    Topic: "weather", // "weather" 주제를 구독한 모든 기기에 전송
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="조건부-주제-메시징"><a href="#조건부-주제-메시징" class="headerlink" title="조건부 주제 메시징"></a>조건부 주제 메시징</h3>
+                <p>불리언 조건을 사용하여 여러 주제에 대한 메시지를 보낼 수 있습니다:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// 조건부 주제 메시지 생성
+message := &messaging.Message{
+    Notification: &messaging.Notification{
+        Title: "스포츠 알림",
+        Body:  "축구 경기가 곧 시작됩니다!",
+    },
+    // 'sports' 주제를 구독하고 'football'을 구독하거나 'soccer'를 구독한 기기
+    Condition: "'sports' in topics && ('football' in topics || 'soccer' in topics)",
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="멀티캐스트-메시징"><a href="#멀티캐스트-메시징" class="headerlink" title="멀티캐스트 메시징"></a>멀티캐스트 메시징</h3>
+                <p>여러 기기에 동일한 메시지를 한 번에 보낼 수 있습니다:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// 여러 기기에 보낼 메시지 생성
+multicastMessage := &messaging.MulticastMessage{
+    Notification: &messaging.Notification{
+        Title: "그룹 알림",
+        Body:  "그룹 채팅방에 새 메시지가 있습니다.",
+    },
+    Tokens: []string{
+        "첫번째_기기_토큰",
+        "두번째_기기_토큰",
+        "세번째_기기_토큰",
+    },
+}
+
+// 멀티캐스트 메시지 보내기
+response, err := client.SendMulticast(ctx, multicastMessage)
+if err != nil {
+    log.Fatalf("멀티캐스트 메시지 전송 오류: %v", err)
+}
+
+fmt.Printf("성공: %d, 실패: %d\n", response.SuccessCount, response.FailureCount)</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="데이터-메시지"><a href="#데이터-메시지" class="headerlink" title="데이터 메시지"></a>데이터 메시지</h3>
+                <p>알림 없이 데이터만 전송할 수 있습니다:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// 데이터 메시지 생성
+message := &messaging.Message{
+    Data: map[string]string{
+        "score": "3-1",
+        "time":  "15:10",
+        "team":  "토트넘",
+    },
+    Token: "대상_FCM_토큰",
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="FCM-서버-구현-예제"><a href="#FCM-서버-구현-예제" class="headerlink" title="FCM 서버 구현 예제"></a>FCM 서버 구현 예제</h2>
+                <p>다음은 Echo 웹 프레임워크를 사용한 FCM 서버 구현 예제입니다:</p>
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+package main
+
+import (
+    "context"
+    "net/http"
+
+    firebase "firebase.google.com/go/v4"
+    "firebase.google.com/go/v4/messaging"
+    "github.com/labstack/echo/v4"
+    "google.golang.org/api/option"
+)
+
+type Server struct {
+    FCMClient *messaging.Client
+}
+
+type PushRequest struct {
+    Token   string `json:"token"`
+    Title   string `json:"title"`
+    Body    string `json:"body"`
+    ImageURL string `json:"image_url,omitempty"`
+    Data    map[string]string `json:"data,omitempty"`
+}
+
+func NewServer() (*Server, error) {
+    // Firebase 초기화
+    opt := option.WithCredentialsFile("./serviceAccountKey.json")
+    app, err := firebase.NewApp(context.Background(), nil, opt)
+    if err != nil {
+        return nil, err
+    }
+
+    // FCM 클라이언트 생성
+    client, err := app.Messaging(context.Background())
+    if err != nil {
+        return nil, err
+    }
+
+    return &Server{
+        FCMClient: client,
+    }, nil
+}
+
+func (s *Server) SendPushNotification(c echo.Context) error {
+    var req PushRequest
+    if err := c.Bind(&req); err != nil {
+        return c.JSON(http.StatusBadRequest, map[string]string{"error": "잘못된 요청 형식"})
+    }
+
+    // 요청 검증
+    if req.Token == "" {
+        return c.JSON(http.StatusBadRequest, map[string]string{"error": "토큰이 필요합니다"})
+    }
+
+    // 메시지 생성
+    message := &messaging.Message{
+        Notification: &messaging.Notification{
+            Title: req.Title,
+            Body:  req.Body,
+            ImageURL: req.ImageURL,
+        },
+        Data:  req.Data,
+        Token: req.Token,
+    }
+
+    // 메시지 전송
+    response, err := s.FCMClient.Send(context.Background(), message)
+    if err != nil {
+        return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+    }
+
+    return c.JSON(http.StatusOK, map[string]string{"message_id": response})
+}
+
+func main() {
+    // 서버 초기화
+    server, err := NewServer()
+    if err != nil {
+        panic(err)
+    }
+
+    // Echo 인스턴스 생성
+    e := echo.New()
+
+    // 라우트 설정
+    e.POST("/send-notification", server.SendPushNotification)
+
+    // 서버 시작
+    e.Start(":8080")
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="오류-처리-및-모범-사례"><a href="#오류-처리-및-모범-사례" class="headerlink" title="오류 처리 및 모범 사례"></a>오류 처리 및 모범 사례</h2>
+                <ol>
+                  <li><strong>토큰 관리</strong>: 각 기기 토큰은 언제든지 변경될 수 있으므로, 클라이언트 앱이 토큰 갱신을 서버에 알릴 수 있도록 해야 합니다.</li>
+                  <li><strong>일괄 처리</strong>: 대량의 메시지를 보낼 때는 멀티캐스트 API를 사용하거나 배치 작업으로 처리하세요.</li>
+                  <li><strong>속도 제한</strong>: FCM은 초당 요청 수를 제한하므로, 대규모 발송 시 속도 제한을 고려해야 합니다.</li>
+                  <li><strong>오류 코드 처리</strong>: FCM에서 반환하는 오류 코드를 적절히 처리합니다.</li>
+                </ol>
+
+                <figure class="highlight go">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// 오류 처리 예제
+response, err := client.Send(ctx, message)
+if err != nil {
+    if messaging.IsUnregistered(err) {
+        // 토큰이 더 이상 유효하지 않음 - 데이터베이스에서 제거
+        removeTokenFromDatabase(token)
+    } else if messaging.IsInvalidArgument(err) {
+        // 잘못된 인자 - 요청 수정 필요
+        log.Printf("잘못된 메시지 형식: %v", err)
+    } else {
+        // 기타 오류 처리
+        log.Printf("FCM 오류: %v", err)
+    }
+    return
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="보안-고려사항"><a href="#보안-고려사항" class="headerlink" title="보안 고려사항"></a>보안 고려사항</h2>
+                <ul>
+                  <li><strong>서비스 계정 키 보호</strong>: 서비스 계정 키는 절대 공개 저장소에 커밋하거나 클라이언트 측 코드에 포함하지 마세요.</li>
+                  <li><strong>환경 변수 사용</strong>: 서비스 계정 키 파일 경로를 환경 변수로 관리하세요.</li>
+                  <li><strong>최소 권한 원칙</strong>: FCM API에 액세스하는 서비스 계정에 필요한 최소한의 권한만 부여하세요.</li>
+                </ul>
+
+                <h2 id="웹-JavaScript에서-FCM-메시지-수신하기"><a href="#웹-JavaScript에서-FCM-메시지-수신하기" class="headerlink" title="웹 JavaScript에서 FCM 메시지 수신하기"></a>웹 JavaScript에서 FCM 메시지 수신하기</h2>
+                <p>Go 서버에서 FCM 메시지를 보내는 방법을 살펴봤으니, 이제 웹 클라이언트에서 이러한 메시지를 수신하는 방법을 알아보겠습니다.</p>
+
+                <h3 id="필요한-설정"><a href="#필요한-설정" class="headerlink" title="필요한 설정"></a>필요한 설정</h3>
+                <p>웹 앱에서 FCM을 사용하기 위해 다음과 같은 준비가 필요합니다:</p>
+                <ol>
+                  <li>Firebase 프로젝트에 웹 앱 추가</li>
+                  <li>Firebase SDK 설치</li>
+                  <li>서비스 워커 설정</li>
+                </ol>
+
+                <h3 id="Firebase-SDK-설치"><a href="#Firebase-SDK-설치" class="headerlink" title="Firebase SDK 설치"></a>Firebase SDK 설치</h3>
+                <p>NPM을 사용하는 경우:</p>
+                <figure class="highlight bash">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+npm install firebase</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <p>또는 CDN을 사용하는 경우 HTML에 다음 스크립트를 추가합니다:</p>
+                <figure class="highlight html">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+&lt;!-- Firebase App (필수) --&gt;
+&lt;script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"&gt;&lt;/script&gt;
+&lt;!-- FCM --&gt;
+&lt;script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging.js"&gt;&lt;/script&gt;</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="웹-앱에서-FCM-초기화하기"><a href="#웹-앱에서-FCM-초기화하기" class="headerlink" title="웹 앱에서 FCM 초기화하기"></a>웹 앱에서 FCM 초기화하기</h3>
+                <p>Firebase 콘솔에서 얻은 구성 정보로 Firebase를 초기화합니다:</p>
+                <figure class="highlight javascript">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// Firebase 9 버전 이상
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+
+// Firebase 구성 정보
+const firebaseConfig = {
+  apiKey: "your-api-key",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "your-sender-id",
+  appId: "your-app-id"
+};
+
+// Firebase 초기화
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="서비스-워커-설정"><a href="#서비스-워커-설정" class="headerlink" title="서비스 워커 설정"></a>서비스 워커 설정</h3>
+                <p>FCM 메시지를 백그라운드에서 수신하려면 서비스 워커가 필요합니다. 프로젝트 루트 디렉토리에 <code>firebase-messaging-sw.js</code> 파일을 생성합니다:</p>
+                <figure class="highlight javascript">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// firebase-messaging-sw.js
+importScripts('https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging-compat.js');
+
+firebase.initializeApp({
+  apiKey: "your-api-key",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "your-sender-id",
+  appId: "your-app-id"
+});
+
+const messaging = firebase.messaging();
+
+// 백그라운드 메시지 처리
+messaging.onBackgroundMessage((payload) => {
+  console.log('백그라운드 메시지 수신:', payload);
+  
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+    icon: '/firebase-logo.png'
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="FCM-토큰-얻기"><a href="#FCM-토큰-얻기" class="headerlink" title="FCM 토큰 얻기"></a>FCM 토큰 얻기</h3>
+                <p>각 클라이언트 디바이스는 고유한 FCM 토큰을 가지며, 이 토큰을 사용하여 특정 기기에 메시지를 보낼 수 있습니다. 이 토큰을 서버에 등록해야 합니다:</p>
+                <figure class="highlight javascript">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// 알림 권한 요청 및 토큰 가져오기
+async function requestPermissionAndGetToken() {
+  try {
+    // 알림 권한 요청
+    const permission = await Notification.requestPermission();
+    
+    if (permission === 'granted') {
+      // VAPID 키는 Firebase 콘솔의 "웹 구성" 섹션에서 찾을 수 있습니다
+      const token = await getToken(messaging, {
+        vapidKey: 'your-vapid-key'
+      });
+      
+      console.log('FCM 토큰:', token);
+      
+      // 토큰을 서버에 등록
+      await registerTokenWithServer(token);
+      
+      return token;
+    } else {
+      console.log('알림 권한이 거부되었습니다.');
+      return null;
+    }
+  } catch (error) {
+    console.error('토큰 얻기 실패:', error);
+    return null;
+  }
+}
+
+// 토큰을 서버에 등록하는 함수
+async function registerTokenWithServer(token) {
+  try {
+    const response = await fetch('/api/register-fcm-token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    });
+    
+    const data = await response.json();
+    console.log('토큰 등록 성공:', data);
+  } catch (error) {
+    console.error('토큰 등록 실패:', error);
+  }
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="포그라운드-메시지-수신"><a href="#포그라운드-메시지-수신" class="headerlink" title="포그라운드 메시지 수신"></a>포그라운드 메시지 수신</h3>
+                <p>앱이 활성화된 상태(포그라운드)에서 메시지를 수신하려면 <code>onMessage</code> 리스너를 설정합니다:</p>
+                <figure class="highlight javascript">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// 포그라운드 메시지 처리
+onMessage(messaging, (payload) => {
+  console.log('포그라운드 메시지 수신:', payload);
+  
+  // 사용자 인터페이스에 알림 표시
+  const title = payload.notification.title;
+  const options = {
+    body: payload.notification.body,
+    icon: '/path/to/icon.png',
+  };
+  
+  // 브라우저 알림 표시
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(title, options);
+  }
+  
+  // 또는 커스텀 UI 요소로 알림 표시
+  showCustomNotification(title, payload.notification.body);
+});
+
+// 커스텀 알림 UI 표시 함수 예시
+function showCustomNotification(title, body) {
+  // 예: 페이지에 토스트 알림 표시
+  const toast = document.createElement('div');
+  toast.className = 'notification-toast';
+  toast.innerHTML = `
+    <h4>${title}</h4>
+    <p>${body}</p>
+  `;
+  
+  document.body.appendChild(toast);
+  
+  // 3초 후 삭제
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 300);
+  }, 3000);
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="데이터-메시지-처리"><a href="#데이터-메시지-처리" class="headerlink" title="데이터 메시지 처리"></a>데이터 메시지 처리</h3>
+                <p>데이터 메시지를 받아 처리하는 방법은 다음과 같습니다:</p>
+                <figure class="highlight javascript">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// 데이터 메시지 처리 예시
+onMessage(messaging, (payload) => {
+  // 데이터 메시지인 경우
+  if (payload.data) {
+    console.log('데이터 메시지 수신:', payload.data);
+    
+    // 데이터에 따른 처리
+    if (payload.data.type === 'new_message') {
+      // 새 메시지 처리
+      updateChatUI(payload.data);
+    } else if (payload.data.type === 'update_score') {
+      // 점수 업데이트 처리
+      updateScoreUI(payload.data);
+    }
+  }
+});
+
+// 채팅 UI 업데이트 함수 예시
+function updateChatUI(data) {
+  const chatContainer = document.getElementById('chat-container');
+  const messageElement = document.createElement('div');
+  messageElement.className = 'chat-message';
+  messageElement.textContent = `${data.sender}: ${data.message}`;
+  chatContainer.appendChild(messageElement);
+  
+  // 스크롤을 최신 메시지로 이동
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="전체-구현-예시"><a href="#전체-구현-예시" class="headerlink" title="전체 구현 예시"></a>전체 구현 예시</h3>
+                <p>다음은 웹 앱에서 FCM을 구현하는 전체 예시입니다:</p>
+                <figure class="highlight javascript">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+// app.js
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+
+// Firebase 설정
+const firebaseConfig = {
+  apiKey: "your-api-key",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "your-sender-id",
+  appId: "your-app-id"
+};
+
+// Firebase 초기화
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+// 앱 초기화 시 호출
+async function initializeFirebaseMessaging() {
+  try {
+    // 알림 권한 확인
+    if (Notification.permission === 'default') {
+      await Notification.requestPermission();
+    }
+    
+    if (Notification.permission === 'granted') {
+      // FCM 토큰 얻기
+      const token = await getToken(messaging, {
+        vapidKey: 'your-vapid-key'
+      });
+      
+      console.log('FCM 토큰:', token);
+      
+      // 토큰을 서버에 등록
+      await fetch('/api/register-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
+      
+      // 포그라운드 메시지 수신 리스너 설정
+      onMessage(messaging, handleForegroundMessage);
+    }
+  } catch (error) {
+    console.error('FCM 초기화 오류:', error);
+  }
+}
+
+// 포그라운드 메시지 처리 함수
+function handleForegroundMessage(payload) {
+  console.log('메시지 수신:', payload);
+  
+  // 알림이 있는 경우
+  if (payload.notification) {
+    const { title, body } = payload.notification;
+    
+    // 커스텀 UI로 알림 표시
+    showNotification(title, body);
+  }
+  
+  // 데이터가 있는 경우
+  if (payload.data) {
+    // 데이터 유형에 따른 처리
+    handleDataMessage(payload.data);
+  }
+}
+
+// 데이터 메시지 처리 함수
+function handleDataMessage(data) {
+  switch (data.type) {
+    case 'new_message':
+      updateChatUI(data);
+      break;
+    case 'update_profile':
+      refreshUserProfile();
+      break;
+    case 'refresh_data':
+      reloadPageData();
+      break;
+    default:
+      console.log('알 수 없는 데이터 유형:', data.type);
+  }
+}
+
+// 화면에 알림 표시 함수
+function showNotification(title, body) {
+  // 알림 요소 생성
+  const notificationEl = document.createElement('div');
+  notificationEl.className = 'notification';
+  notificationEl.innerHTML = `
+    <div class="notification-header">
+      <h3>${title}</h3>
+      <button class="close-btn">&times;</button>
+    </div>
+    <div class="notification-body">
+      <p>${body}</p>
+    </div>
+  `;
+  
+  // 닫기 버튼 이벤트 리스너
+  const closeBtn = notificationEl.querySelector('.close-btn');
+  closeBtn.addEventListener('click', () => {
+    notificationEl.classList.add('closing');
+    setTimeout(() => {
+      document.body.removeChild(notificationEl);
+    }, 300);
+  });
+  
+  // 알림 추가
+  document.body.appendChild(notificationEl);
+  
+  // 5초 후 자동 제거
+  setTimeout(() => {
+    if (document.body.contains(notificationEl)) {
+      notificationEl.classList.add('closing');
+      setTimeout(() => {
+        if (document.body.contains(notificationEl)) {
+          document.body.removeChild(notificationEl);
+        }
+      }, 300);
+    }
+  }, 5000);
+}
+
+// 앱 초기화 시 FCM 설정
+document.addEventListener('DOMContentLoaded', initializeFirebaseMessaging);</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="FCM-토큰-관리-모범-사례"><a href="#FCM-토큰-관리-모범-사례" class="headerlink" title="FCM 토큰 관리 모범 사례"></a>FCM 토큰 관리 모범 사례</h3>
+                <ol>
+                  <li><strong>토큰 새로고침 처리</strong>: FCM 토큰은 여러 이유로 갱신될 수 있으므로, 토큰 갱신 이벤트를 처리해야 합니다.</li>
+                  <li><strong>사용자 인증과 연결</strong>: 토큰을 사용자 계정과 연결하여 로그인된 사용자에게 메시지를 보낼 수 있습니다.</li>
+                  <li><strong>주제 구독 관리</strong>: 사용자가 관심 있는 주제를 구독하고 관리할 수 있는 인터페이스를 제공합니다.</li>
+                  <li><strong>다중 기기 지원</strong>: 한 사용자가 여러 기기에서 로그인할 경우 모든 기기의 토큰을 관리합니다.</li>
+                </ol>
+
+                <h3 id="FCM-웹-푸시-스타일링"><a href="#FCM-웹-푸시-스타일링" class="headerlink" title="FCM 웹 푸시 스타일링"></a>FCM 웹 푸시 스타일링</h3>
+                <p>웹 푸시 알림의 모양을 개선하기 위한 CSS 예시:</p>
+                <figure class="highlight css">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+/* 인앱 알림 스타일 */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 1000;
+  animation: slide-in 0.3s ease-out forwards;
+}
+
+.notification.closing {
+  animation: slide-out 0.3s ease-in forwards;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #4285f4;
+  color: white;
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.notification-body {
+  padding: 15px;
+}
+
+.notification-body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2>
+                <p>이 글에서는 Golang을 사용하여 Firebase Cloud Messaging(FCM)을 구현하는 방법에 대해 알아보았습니다. FCM은 크로스 플랫폼 메시징 솔루션으로, Go 언어와 함께 사용하면 효율적이고 안정적인 푸시 알림 시스템을 구축할 수 있습니다.</p>
+
+                <p>Go의 강력한 동시성 모델과 FCM의 안정적인 메시징 인프라를 결합하면 수백만 명의 사용자에게 푸시 알림을 전송할 수 있는 확장 가능한 시스템을 구축할 수 있습니다.</p>
+
+                <p>이 글이 여러분의 FCM 구현에 도움이 되길 바랍니다. 질문이나 의견이 있으시면 댓글로 남겨주세요!</p>
+              </div>
+              <footer class="article-footer">
+                <a data-url="https://skarlsla.github.io/2024/05/20/golang-fcm-development/" data-id="golang-fcm-development" class="article-share-link">공유</a>
+                <ul class="article-tag-list">
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fcm/">fcm</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/firebase/">firebase</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/push-notification/">push-notification</a></li>
+                </ul>
+              </footer>
+            </div>
+          </article>
+        </section>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  <a href="/" class="mobile-nav-link">Home</a>
+  <a href="/archives" class="mobile-nav-link">Archives</a>
+</nav>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html> 
