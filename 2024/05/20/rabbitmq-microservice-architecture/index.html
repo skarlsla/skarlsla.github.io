@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RabbitMQ와 마이크로서비스를 활용한 확장 가능한 백엔드 아키텍처 설계 | </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="RabbitMQ를 중심으로 한 마이크로서비스 아키텍처의 설계, 구현 및 장단점 분석">
+<meta name="keywords" content="rabbitmq,microservice,architecture,design,amqp,scalability">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ와 마이크로서비스를 활용한 확장 가능한 백엔드 아키텍처 설계">
+<meta property="og:url" content="https://skarlsla.github.io/2024/05/20/rabbitmq-microservice-architecture/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="RabbitMQ를 중심으로 한 마이크로서비스 아키텍처의 설계, 구현 및 장단점 분석">
+<meta property="og:locale" content="ko">
+<meta property="og:image" content="https://skarlsla.github.io/css/image/bittorage-webserver-dbagent-mongo-amqp-wallet-relay.jpg">
+<meta property="og:updated_time" content="2024-05-20T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RabbitMQ와 마이크로서비스를 활용한 확장 가능한 백엔드 아키텍처 설계">
+<meta name="twitter:description" content="RabbitMQ를 중심으로 한 마이크로서비스 아키텍처의 설계, 구현 및 장단점 분석">
+<meta name="twitter:image" content="https://skarlsla.github.io/css/image/bittorage-webserver-dbagent-mongo-amqp-wallet-relay.jpg">
+
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="icon" href="/favicon.png">
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo"></a>
+      </h1>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <a class="main-nav-link" href="/">Home</a>
+        <a class="main-nav-link" href="/archives">Archives</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skarlsla.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+          <article id="post-rabbitmq-microservice-architecture" class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-meta">
+              <a href="/2024/05/20/rabbitmq-microservice-architecture/" class="article-date">
+                <time datetime="2024-05-20T00:00:00.000Z" itemprop="datePublished">2024-05-20</time>
+              </a>
+              <div class="article-category">
+                <a class="article-category-link" href="/categories/architecture/">architecture</a>
+              </div>
+            </div>
+            <div class="article-inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">
+                  RabbitMQ와 마이크로서비스를 활용한 확장 가능한 백엔드 아키텍처 설계
+                </h1>
+              </header>
+              
+              <div class="article-entry" itemprop="articleBody">
+                <h2 id="소개"><a href="#소개" class="headerlink" title="소개"></a>소개</h2>
+                <p>현대적인 웹 애플리케이션은 높은 확장성, 유연성, 그리고 견고성을 갖춘 백엔드 아키텍처가 필요합니다. 이 글에서는 진행했던 프로젝트 중 RabbitMQ를 중심으로 한 마이크로서비스 기반 시스템 아키텍처를 분석하고, 이러한 설계의 장단점을 심층적으로 살펴보겠습니다.</p>
+
+                <h2 id="아키텍처-개요"><a href="#아키텍처-개요" class="headerlink" title="아키텍처 개요"></a>아키텍처 개요</h2>
+                <p>다음은 RabbitMQ를 메시지 브로커로 활용하여 여러 서비스 간의 통신을 관리하는 마이크로서비스 아키텍처의 전체 구성도입니다:</p>
+
+                <figure class="highlight">
+                  <img src="/css/image/bittorage-webserver-dbagent-mongo-amqp-wallet-relay.jpg" alt="RabbitMQ 기반 마이크로서비스 아키텍처" style="max-width: 100%; height: auto;">
+                  <figcaption>RabbitMQ를 중심으로 한 마이크로서비스 아키텍처 구성도</figcaption>
+                </figure>
+
+                <p>이 아키텍처는 RabbitMQ를 통한 비동기 통신을 기반으로 하며, 각 컴포넌트는 명확히 정의된 책임을 가지고 있습니다. 이제 각 구성 요소와 통신 흐름을 자세히 살펴보겠습니다.</p>
+
+                <h2 id="핵심-구성-요소"><a href="#핵심-구성-요소" class="headerlink" title="핵심 구성 요소"></a>핵심 구성 요소</h2>
+
+                <h3 id="1-클라이언트-CLIENTS"><a href="#1-클라이언트-CLIENTS" class="headerlink" title="1. 클라이언트 (CLIENTS)"></a>1. 클라이언트 (CLIENTS)</h3>
+                <ul>
+                  <li>사용자 인터페이스를 제공하고 웹 서버와 통신</li>
+                  <li>요청(request)을 보내고 응답(response)을 받는 구조</li>
+                  <li>브라우저, 모바일 앱 등 다양한 클라이언트 지원</li>
+                </ul>
+
+                <h3 id="2-웹-서버-Web-서버"><a href="#2-웹-서버-Web-서버" class="headerlink" title="2. 웹 서버 (Web 서버)"></a>2. 웹 서버 (Web 서버)</h3>
+                <ul>
+                  <li>Express(Node.js) 기반의 웹 애플리케이션 서버</li>
+                  <li>express-session을 통한 세션 관리</li>
+                  <li>AMQP(rpc client)를 통해 마이크로서비스와 통신</li>
+                  <li>클라이언트 요청을 처리하고 적절한 서비스에 메시지 라우팅</li>
+                </ul>
+
+                <h3 id="3-REDIS-MemoryDB"><a href="#3-REDIS-MemoryDB" class="headerlink" title="3. REDIS (MemoryDB)"></a>3. REDIS (MemoryDB)</h3>
+                <ul>
+                  <li>세션 공유를 위한 인메모리 데이터베이스</li>
+                  <li>웹 서버 간 세션 정보 공유 담당</li>
+                  <li>높은 성능의 캐싱 레이어 제공</li>
+                  <li>세션 만료 및 지속성 관리</li>
+                </ul>
+
+                <h3 id="4-RabbitMQ-BROKER"><a href="#4-RabbitMQ-BROKER" class="headerlink" title="4. RabbitMQ BROKER"></a>4. RabbitMQ BROKER</h3>
+                <ul>
+                  <li>시스템의 핵심 메시지 브로커</li>
+                  <li>REQUEST/REPLY 큐를 통한 비동기 통신 관리</li>
+                  <li>서비스 간 메시지 라우팅 담당</li>
+                  <li>메시지 지속성 및 신뢰성 있는 전달 보장</li>
+                </ul>
+
+                <h3 id="5-지갑중계"><a href="#5-지갑중계" class="headerlink" title="5. 지갑중계"></a>5. 지갑중계</h3>
+                <ul>
+                  <li>AMQP(rpc server) 구현</li>
+                  <li>지갑 서비스와의 통신 담당</li>
+                  <li>TCP/IP를 통해 지갑 서비스와 연결</li>
+                  <li>암호화폐 지갑 작업을 추상화</li>
+                </ul>
+
+                <h3 id="6-WALLET"><a href="#6-WALLET" class="headerlink" title="6. WALLET"></a>6. WALLET</h3>
+                <ul>
+                  <li>디지털 자산 관리 서비스</li>
+                  <li>MongoDB와 연동하여, 사용자 자산 정보 관리</li>
+                  <li>안전한 암호화폐 트랜잭션 처리</li>
+                  <li>개인키 관리 및 보안 기능</li>
+                </ul>
+
+                <h3 id="7-DB-AGENT"><a href="#7-DB-AGENT" class="headerlink" title="7. DB AGENT"></a>7. DB AGENT</h3>
+                <ul>
+                  <li>mongoose를 통한 MongoDB 연결 관리</li>
+                  <li>AMQP(rpc server)를 통해 데이터베이스 작업 수행</li>
+                  <li>데이터베이스 작업 추상화 계층 제공</li>
+                  <li>데이터 유효성 검증 및 보안 관리</li>
+                </ul>
+
+                <h3 id="8-비즈니스-서버"><a href="#8-비즈니스-서버" class="headerlink" title="8. 비즈니스 서버"></a>8. 비즈니스 서버</h3>
+                <ul>
+                  <li>AMQP(rpc client)를 통해 요청 수신</li>
+                  <li>AMQP(rpc server)를 통해 응답 처리</li>
+                  <li>핵심 비즈니스 로직 구현</li>
+                  <li>다른 마이크로서비스와 협력</li>
+                </ul>
+
+                <h3 id="9-MongoDB"><a href="#9-MongoDB" class="headerlink" title="9. MongoDB"></a>9. MongoDB</h3>
+                <ul>
+                  <li>시스템의 주요 데이터 저장소</li>
+                  <li>분산 데이터베이스로 확장성 제공</li>
+                  <li>문서 기반 데이터 모델 사용</li>
+                  <li>레플리카셋 및 샤딩 지원</li>
+                </ul>
+
+                <h2 id="통신-흐름-분석"><a href="#통신-흐름-분석" class="headerlink" title="통신 흐름 분석"></a>통신 흐름 분석</h2>
+                <p>이 아키텍처의 통신 흐름은 다음과 같습니다:</p>
+
+                <ol>
+                  <li>클라이언트가 웹 서버에 요청을 보냅니다.</li>
+                  <li>웹 서버는 Express 프레임워크를 사용하여 요청을 처리하고, 필요한 경우 세션 정보를 Redis에서 조회합니다.</li>
+                  <li>웹 서버는 RabbitMQ 브로커를 통해 적절한 마이크로서비스(비즈니스 서버, 지갑중계, DB AGENT)에 메시지를 전달합니다.</li>
+                  <li>각 마이크로서비스는 요청을 처리하고 결과를 RabbitMQ의 REPLY 큐를 통해 반환합니다.</li>
+                  <li>웹 서버는 응답을 수신하여 클라이언트에게 최종 결과를 전달합니다.</li>
+                </ol>
+
+                <p>이 과정에서 RabbitMQ는 비동기 통신의 중추 역할을 하며, 서비스 간의 느슨한 결합을 가능하게 합니다. 또한 메시지 지속성을 제공하여 서비스 장애 시에도 메시지가 손실되지 않도록 보장합니다.</p>
+
+                <h2 id="아키텍처의-장점"><a href="#아키텍처의-장점" class="headerlink" title="아키텍처의 장점"></a>아키텍처의 장점</h2>
+
+                <h3 id="1-높은-확장성"><a href="#1-높은-확장성" class="headerlink" title="1. 높은 확장성"></a>1. 높은 확장성</h3>
+                <p>이 아키텍처는 수평적 확장이 용이합니다. 각 마이크로서비스는 독립적으로 스케일 아웃할 수 있어 트래픽 증가에 유연하게 대응할 수 있습니다.</p>
+
+                <figure class="highlight yaml">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+# 예: 수평 확장을 위한 Docker Compose 설정
+version: '3'
+services:
+  web-server:
+    image: express-app
+    deploy:
+      replicas: 5
+    depends_on:
+      - redis
+      - rabbitmq
+  
+  business-server:
+    image: business-service
+    deploy:
+      replicas: 3
+    depends_on:
+      - rabbitmq</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h3 id="2-견고한-메시지-큐-시스템"><a href="#2-견고한-메시지-큐-시스템" class="headerlink" title="2. 견고한 메시지 큐 시스템"></a>2. 견고한 메시지 큐 시스템</h3>
+                <p>RabbitMQ를 중심으로 한 메시지 브로커 시스템은 다음과 같은 이점을 제공합니다:</p>
+                <ul>
+                  <li><strong>비동기 통신</strong>: 서비스 간 느슨한 결합(loose coupling)으로 전체 시스템 안정성 향상</li>
+                  <li><strong>메시지 지속성</strong>: 시스템 장애 발생 시에도 메시지 손실 방지</li>
+                  <li><strong>부하 분산</strong>: 여러 서비스 인스턴스 간에 작업을 효율적으로 분배</li>
+                  <li><strong>신뢰성 있는 전달</strong>: 메시지 확인(acknowledgement) 메커니즘으로 안정적인 메시지 전달 보장</li>
+                </ul>
+
+                <h3 id="3-서비스-분리와-책임-분리"><a href="#3-서비스-분리와-책임-분리" class="headerlink" title="3. 서비스 분리와 책임 분리"></a>3. 서비스 분리와 책임 분리</h3>
+                <p>각 마이크로서비스는 명확한 책임을 가지고 있어 코드 관리와 유지보수가 용이합니다:</p>
+                <ul>
+                  <li><strong>웹 서버</strong>: 클라이언트 요청 처리 및 라우팅</li>
+                  <li><strong>지갑중계</strong>: 지갑 서비스 관련 작업 관리</li>
+                  <li><strong>DB AGENT</strong>: 데이터베이스 작업 추상화</li>
+                  <li><strong>비즈니스 서버</strong>: 핵심 비즈니스 로직 처리</li>
+                </ul>
+
+                <p>이러한 분리는 각 서비스의 독립적인 개발, 배포, 확장을 가능하게 합니다.</p>
+
+                <h3 id="4-세션-관리의-중앙화"><a href="#4-세션-관리의-중앙화" class="headerlink" title="4. 세션 관리의 중앙화"></a>4. 세션 관리의 중앙화</h3>
+                <p>Redis를 사용한 세션 관리는 다음과 같은 이점을 제공합니다:</p>
+                <ul>
+                  <li>여러 웹 서버 인스턴스 간의 세션 공유</li>
+                  <li>빠른 인메모리 접근 속도</li>
+                  <li>세션 만료 기능 내장</li>
+                  <li>장애 복구를 위한 지속성 옵션</li>
+                </ul>
+
+                <h2 id="아키텍처의-단점"><a href="#아키텍처의-단점" class="headerlink" title="아키텍처의 단점"></a>아키텍처의 단점</h2>
+
+                <h3 id="1-시스템-복잡성-증가"><a href="#1-시스템-복잡성-증가" class="headerlink" title="1. 시스템 복잡성 증가"></a>1. 시스템 복잡성 증가</h3>
+                <p>마이크로서비스 아키텍처는 분산 시스템의 복잡성을 수반합니다:</p>
+                <ul>
+                  <li>서비스 간 통신 디버깅이 어려움</li>
+                  <li>전체 시스템 모니터링과 로깅이 복잡해짐</li>
+                  <li>통합 테스트의 난이도 증가</li>
+                  <li>서비스 간 의존성 관리 필요</li>
+                </ul>
+
+                <h3 id="2-네트워크-오버헤드"><a href="#2-네트워크-오버헤드" class="headerlink" title="2. 네트워크 오버헤드"></a>2. 네트워크 오버헤드</h3>
+                <p>서비스 간 통신이 네트워크를 통해 이루어지므로 다음과 같은 단점이 있습니다:</p>
+                <ul>
+                  <li>서비스 간 통신 지연 발생</li>
+                  <li>네트워크 대역폭 사용량 증가</li>
+                  <li>네트워크 장애 시 서비스 연쇄 장애 가능성</li>
+                  <li>성능 저하 가능성</li>
+                </ul>
+
+                <h3 id="3-데이터-일관성-관리-어려움"><a href="#3-데이터-일관성-관리-어려움" class="headerlink" title="3. 데이터 일관성 관리 어려움"></a>3. 데이터 일관성 관리 어려움</h3>
+                <p>분산 시스템에서 트랜잭션과 데이터 일관성 유지는 큰 도전 과제입니다:</p>
+                <ul>
+                  <li>분산 트랜잭션 구현의 어려움</li>
+                  <li>최종 일관성(eventual consistency) 모델 적용 필요</li>
+                  <li>데이터 중복과 동기화 문제</li>
+                  <li>데이터 무결성 보장 메커니즘 필요</li>
+                </ul>
+
+                <h3 id="4-운영-복잡성"><a href="#4-운영-복잡성" class="headerlink" title="4. 운영 복잡성"></a>4. 운영 복잡성</h3>
+                <p>여러 서비스를 관리하는 운영 측면의 복잡성이 존재합니다:</p>
+                <ul>
+                  <li>배포와 버전 관리가 복잡해짐</li>
+                  <li>서비스 디스커버리 메커니즘 필요</li>
+                  <li>장애 발생 시 문제 추적 어려움</li>
+                  <li>인프라 관리 오버헤드 증가</li>
+                </ul>
+
+                <h2 id="구현-예제-Express-서버와-RabbitMQ-연동"><a href="#구현-예제-Express-서버와-RabbitMQ-연동" class="headerlink" title="구현 예제: Express 서버와 RabbitMQ 연동"></a>구현 예제: Express 서버와 RabbitMQ 연동</h2>
+                <p>다음은 웹 서버(Express)와 RabbitMQ를 연동하는 간단한 코드 예제입니다:</p>
+
+                <figure class="highlight javascript">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+const express = require('express');
+const amqp = require('amqplib');
+const session = require('express-session');
+const RedisStore = require('connect-redis').default;
+const Redis = require('ioredis');
+
+const app = express();
+const port = 3000;
+
+// Redis 클라이언트 설정
+const redisClient = new Redis({
+  host: 'redis',
+  port: 6379
+});
+
+// 세션 설정
+app.use(session({
+  store: new RedisStore({ client: redisClient }),
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false, maxAge: 86400000 }
+}));
+
+// RabbitMQ 연결 설정
+async function setupRabbitMQ() {
+  const connection = await amqp.connect('amqp://rabbitmq');
+  const channel = await connection.createChannel();
+  
+  // 요청 큐 설정
+  await channel.assertQueue('request_queue', { durable: true });
+  
+  return { connection, channel };
+}
+
+// API 엔드포인트 설정
+app.post('/api/wallet/transfer', async (req, res) => {
+  try {
+    const { channel } = await setupRabbitMQ();
+    const { amount, toAddress } = req.body;
+    
+    // 고유 상관 ID 생성
+    const correlationId = generateUuid();
+    
+    // 응답 큐 설정
+    const { queue: replyQueue } = await channel.assertQueue('', { exclusive: true });
+    
+    // 메시지 속성 설정
+    const message = {
+      amount,
+      toAddress,
+      userId: req.session.userId
+    };
+    
+    // 메시지 발행
+    channel.sendToQueue('request_queue', Buffer.from(JSON.stringify(message)), {
+      correlationId,
+      replyTo: replyQueue
+    });
+    
+    // 응답 대기
+    channel.consume(replyQueue, (msg) => {
+      if (msg.properties.correlationId === correlationId) {
+        const response = JSON.parse(msg.content.toString());
+        res.json(response);
+        channel.close();
+      }
+    }, { noAck: true });
+    
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// 서버 시작
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+// 유틸리티 함수
+function generateUuid() {
+  return Math.random().toString() + Math.random().toString();
+}</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="RabbitMQ-워커-서비스-구현-예제"><a href="#RabbitMQ-워커-서비스-구현-예제" class="headerlink" title="RabbitMQ 워커 서비스 구현 예제"></a>RabbitMQ 워커 서비스 구현 예제</h2>
+                <p>다음은 RabbitMQ를 통해 메시지를 수신하고 처리하는 비즈니스 서버의 예제 코드입니다:</p>
+
+                <figure class="highlight javascript">
+                  <table>
+                    <tr>
+                      <td class="code">
+                        <pre>
+const amqp = require('amqplib');
+
+async function startWorker() {
+  try {
+    // RabbitMQ 연결
+    const connection = await amqp.connect('amqp://rabbitmq');
+    const channel = await connection.createChannel();
+    
+    // 요청 큐 설정
+    const requestQueue = 'request_queue';
+    await channel.assertQueue(requestQueue, { durable: true });
+    
+    // 프리페치 설정 (한 번에 처리할 메시지 수 제한)
+    channel.prefetch(1);
+    
+    console.log('Worker started, waiting for messages...');
+    
+    // 메시지 소비
+    channel.consume(requestQueue, async (msg) => {
+      if (msg) {
+        try {
+          console.log('Processing message...');
+          const content = JSON.parse(msg.content.toString());
+          
+          // 비즈니스 로직 처리
+          const result = await processBusinessLogic(content);
+          
+          // 응답 전송
+          channel.sendToQueue(
+            msg.properties.replyTo,
+            Buffer.from(JSON.stringify(result)),
+            { correlationId: msg.properties.correlationId }
+          );
+          
+          // 메시지 확인
+          channel.ack(msg);
+          
+        } catch (error) {
+          console.error('Error processing message:', error);
+          // 오류 발생 시에도 메시지 확인 (선택적)
+          channel.ack(msg);
+        }
+      }
+    });
+    
+  } catch (error) {
+    console.error('Worker startup error:', error);
+  }
+}
+
+async function processBusinessLogic(data) {
+  // 실제 비즈니스 로직 구현
+  // 예: 데이터베이스 조회, 계산 수행 등
+  
+  // 샘플 응답
+  return {
+    status: 'success',
+    transactionId: generateTransactionId(),
+    timestamp: new Date().toISOString(),
+    data: {
+      amount: data.amount,
+      toAddress: data.toAddress,
+      processed: true
+    }
+  };
+}
+
+function generateTransactionId() {
+  return 'tx_' + Date.now() + '_' + Math.random().toString(36).substring(2, 15);
+}
+
+// 워커 시작
+startWorker().catch(console.error);</pre>
+                      </td>
+                    </tr>
+                  </table>
+                </figure>
+
+                <h2 id="확장성-고려사항"><a href="#확장성-고려사항" class="headerlink" title="확장성 고려사항"></a>확장성 고려사항</h2>
+                <p>이 아키텍처를 대규모 시스템으로 확장할 때 고려해야 할 사항들:</p>
+
+                <ol>
+                  <li><strong>서비스 디스커버리</strong>: 동적으로 서비스를 발견하고 연결하기 위한 메커니즘 필요 (예: Consul, etcd)</li>
+                  <li><strong>로드 밸런싱</strong>: 여러 서비스 인스턴스 간의 효율적인 부하 분산</li>
+                  <li><strong>서킷 브레이커 패턴</strong>: 장애 확산 방지를 위한 패턴 구현</li>
+                  <li><strong>API 게이트웨이</strong>: 클라이언트 요청의 중앙 집중식 처리 및 라우팅</li>
+                  <li><strong>컨테이너 오케스트레이션</strong>: Kubernetes와 같은 도구를 사용한 서비스 관리</li>
+                </ol>
+
+                <h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2>
+                <p>RabbitMQ를 중심으로 한 마이크로서비스 아키텍처는 확장성과 유연성을 제공하지만, 복잡성과 운영 오버헤드가 증가하는 트레이드오프가 있습니다. 중소 규모 애플리케이션에서는 이러한 복잡성이 불필요할 수 있으나, 대규모 시스템에서는 서비스 분리와 비동기 통신이 제공하는 이점이 단점을 상쇄할 수 있습니다.</p>
+
+                <p>이 아키텍처는 특히 다음과 같은 상황에서 적합합니다:</p>
+                <ul>
+                  <li>높은 확장성이 요구되는 시스템</li>
+                  <li>독립적으로 개발되고 배포되어야 하는 컴포넌트</li>
+                  <li>장애 격리가 중요한 미션 크리티컬 애플리케이션</li>
+                  <li>다양한 기술 스택을 사용하는 이기종 시스템</li>
+                </ul>
+
+                <p>결국, 시스템 요구사항과 개발팀의 역량을 고려하여 적절한 아키텍처를 선택하는 것이 중요합니다. 마이크로서비스는 만능 해결책이 아니며, 특정 상황에서는 모놀리식 아키텍처가 더 적합할 수 있습니다.</p>
+              </div>
+              <footer class="article-footer">
+                <a data-url="https://skarlsla.github.io/2024/05/20/rabbitmq-microservice-architecture/" data-id="rabbitmq-microservice-architecture" class="article-share-link">공유</a>
+                <ul class="article-tag-list">
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rabbitmq/">rabbitmq</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservice/">microservice</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/">architecture</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design/">design</a></li>
+                  <li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/amqp/">amqp</a></li>
+                </ul>
+              </footer>
+            </div>
+          </article>
+        </section>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  <a href="/" class="mobile-nav-link">Home</a>
+  <a href="/archives" class="mobile-nav-link">Archives</a>
+</nav>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html> 
